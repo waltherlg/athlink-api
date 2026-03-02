@@ -11,7 +11,7 @@ export enum Environments {
 }
 
 @Injectable()
-export class MainEnvConfig {
+export class EnvironmentConfig {
   @IsNumber(
     {},
     {
