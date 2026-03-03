@@ -33,11 +33,11 @@ export class EnvironmentConfig {
   })
   adminCredentials: string = this.configService.get('ADMIN_CREDENTIALS');
 
-  // @IsNotEmpty({
-  //   message:
-  //     "Set Env variable DATABASE_URL, example: 'postgresql://user:password@localhost:5432/dbname'",
-  // })
-  // dataBaseUrl: string = this.configService.get('DATABASE_URL');
+  @IsNotEmpty({
+    message:
+      "Set Env variable DATABASE_URL, example: 'postgresql://user:password@localhost:5432/dbname'",
+  })
+  dataBaseUrl: string = this.configService.get('DATABASE_URL');
 
   constructor(private configService: ConfigService<any, true>) {
     configValidationUtility.validateConfig(this);
