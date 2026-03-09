@@ -3,7 +3,7 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
     "email" VARCHAR(255) NOT NULL,
-    "password" TEXT NOT NULL,
+    "passwordHash" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
