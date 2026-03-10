@@ -8,4 +8,4 @@ import { RegistrationController } from './api/registration.controller';
   providers: [],
   exports: [],
 })
-export class RegistrationModule {}
+export class AuthModule {}

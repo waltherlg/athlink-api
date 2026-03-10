@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PATH_CONSTS_REG } from '../consts/path.consts';
 import { UserRegistrationInputDto } from './dto/registration.dto';
+import { PATH_CONSTS_AUTH } from '../consts/path.consts';
 
-@Controller(PATH_CONSTS_REG.REGISTRATION_CONTROLLER)
+@Controller(PATH_CONSTS_AUTH.REGISTRATION_CONTROLLER)
 export class RegistrationController {
   @Get()
   returnHello() {
