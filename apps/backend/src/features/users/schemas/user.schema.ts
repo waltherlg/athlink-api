@@ -10,8 +10,12 @@ export const UserSchema = z.object({
   updatedAt: z.date(),
 });
 
-type ZodUser = z.infer<typeof UserSchema>;
+type ZodUser = z.output<typeof UserSchema>;
 
 type PrismaUser = Prisma.UserGetPayload<{}>;
 
-const _typeCheck: PrismaUser = {} as ZodUser;
+type IsExact<A, B> = [A] extends [B]
+  ? ([B] extends [A] ? true : false)
+  : false;
+
+const _typeCheck: IsExact<ZodUser, PrismaUser> = true;
