@@ -1,12 +1,14 @@
-import { createZodDto } from '@anatine/zod-nestjs';
-import { z } from 'zod';
+import { IsString, Length, MinLength } from 'class-validator';
 
-export const UserRegisterSchema = z.object({
-  email: z.string(),
-  userName: z.string().min(3).max(20),
-  password: z.string().min(6),
-});
+export class UserRegistrationInputDto {
+  @IsString()
+  email: string;
 
-export class UserRegistrationInputDto extends createZodDto(
-  UserRegisterSchema,
-) {}
+  @IsString()
+  @Length(3, 20)
+  userName: string;
+
+  @IsString()
+  @MinLength(6)
+  password: string;
+}

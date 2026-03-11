@@ -1,10 +1,12 @@
-import { UserSchema } from '../../schemas/user.schema';
-import { createZodDto } from '@anatine/zod-nestjs';
+import { IsString } from 'class-validator';
 
-export const UserCreateSchema = UserSchema.pick({
-  email: true,
-  userName: true,
-  passwordHash: true,
-}).required();
+export class UserCreateDto {
+  @IsString()
+  email: string;
 
-export class UserCreateDto extends createZodDto(UserCreateSchema) {}
+  @IsString()
+  userName: string;
+
+  @IsString()
+  passwordHash: string;
+}
