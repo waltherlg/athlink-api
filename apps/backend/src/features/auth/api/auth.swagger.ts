@@ -11,6 +11,10 @@ import {
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from '../../users/application/dto/user-view.dto';
 
+export const SW_AUTH_TITLES = {
+  REGISTRATION_CONTROLLER: 'User registration',
+};
+
 export function RegisterUserSwagger() {
   return applyDecorators(
     ApiOperation({ summary: 'Register new user' }),

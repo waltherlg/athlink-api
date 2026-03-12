@@ -3,7 +3,10 @@ import { UserRegistrationInputDto } from './dto/registration.dto';
 import { PATH_CONSTS_AUTH } from '../consts/path.consts';
 import { CommandBus } from '@nestjs/cqrs';
 import { UserRegistrationCommand } from '../application/use-cases/user-registration.use-case';
+import { ApiTags } from '@nestjs/swagger';
+import { SW_AUTH_TITLES } from './auth.swagger';
 
+@ApiTags(SW_AUTH_TITLES.REGISTRATION_CONTROLLER)
 @Controller(PATH_CONSTS_AUTH.REGISTRATION_CONTROLLER)
 export class RegistrationController {
   constructor(private commandBus: CommandBus) {}
