@@ -4,7 +4,7 @@ import { PATH_CONSTS_AUTH } from '../consts/path.consts';
 import { CommandBus } from '@nestjs/cqrs';
 import { UserRegistrationCommand } from '../application/use-cases/user-registration.use-case';
 import { ApiTags } from '@nestjs/swagger';
-import { RegisterUserSwagger, SW_AUTH_TITLES } from './auth.swagger';
+import { RegisterUserSwagger, SW_AUTH_TITLES } from './registration.swagger';
 import { UserViewDto } from './dto/user-view.dto';
 
 @ApiTags(SW_AUTH_TITLES.REGISTRATION_CONTROLLER)
@@ -22,6 +22,6 @@ export class RegistrationController {
     const createdUser: UserViewDto = await this.commandBus.execute(
       new UserRegistrationCommand(dto),
     );
-    return;
+    return createdUser;
   }
 }

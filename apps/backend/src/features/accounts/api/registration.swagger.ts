@@ -10,6 +10,7 @@ import {
 } from '@nestjs/swagger';
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from './dto/user-view.dto';
+import { ErrorResponse } from '../../../core/exceptions/domain-exceptions';
 
 export const SW_AUTH_TITLES = {
   REGISTRATION_CONTROLLER: 'User registration',
@@ -30,7 +31,7 @@ export function RegisterUserSwagger() {
     ApiResponse({
       status: 400,
       description: 'Data validation failed',
-      //type: ErrorResponse,
+      type: ErrorResponse,
     }),
   );
 }

@@ -6,6 +6,9 @@ import {
   BadRequestDomainException,
   DomainException,
 } from '../../../../core/exceptions/domain-exceptions';
+import { UserMapper } from '../../mappers/user.mapper';
+import { UserViewDto } from '../../api/dto/user-view.dto';
+import { ACCOUNT_ERRORS } from '../../consts/user-errors.consts';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}
@@ -15,7 +18,7 @@ export class UserRegistrationCommand {
 export class UserRegistrationUseCase implements ICommandHandler<UserRegistrationCommand> {
   constructor(private userRepo: UsersRepository) {}
 
-  async execute(command: UserRegistrationCommand): Promise<any> {
+  async execute(command: UserRegistrationCommand): Promise<UserViewDto> {
     const { userName, email, password } = command.dto;
     const userDto: UserCreateDto = {
       userName,
@@ -24,15 +27,19 @@ export class UserRegistrationUseCase implements ICommandHandler<UserRegistration
     };
 
     if (await this.userRepo.isEmailExist(email)) {
-      throw BadRequestDomainException.create();
+      throw BadRequestDomainException.create(
+        ACCOUNT_ERRORS.EMAIL_ALREADY_EXITS,
+      );
     }
 
     if (await this.userRepo.isUserNameExist(userName)) {
-      throw BadRequestDomainException.create();
+      throw BadRequestDomainException.create(
+        ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS,
+      );
     }
 
     const createdUser = await this.userRepo.createUser(userDto);
 
-    return createdUser;
+    return UserMapper.toViewDto(createdUser);
   }
 }
