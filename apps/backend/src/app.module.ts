@@ -3,12 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoreModule } from './core/core.module';
 import { PrismaModule } from './core/database/prisma/prisma.module';
-import { UserModule } from './features/users/user.module';
-import { AuthModule } from './features/auth/auth.module';
-import { CqrsModule } from '@nestjs/cqrs';
+import { AccountModule } from './features/accounts/account.module';
 
 @Module({
-  imports: [CoreModule, PrismaModule, UserModule, AuthModule],
+  imports: [CoreModule, PrismaModule, AccountModule],
   controllers: [AppController],
   providers: [AppService],
 })

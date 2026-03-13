@@ -9,7 +9,7 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { UserRegistrationInputDto } from './dto/registration.dto';
-import { UserViewDto } from '../../users/application/dto/user-view.dto';
+import { UserViewDto } from './dto/user-view.dto';
 
 export const SW_AUTH_TITLES = {
   REGISTRATION_CONTROLLER: 'User registration',

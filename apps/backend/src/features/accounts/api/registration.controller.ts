@@ -5,7 +5,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserRegistrationCommand } from '../application/use-cases/user-registration.use-case';
 import { ApiTags } from '@nestjs/swagger';
 import { RegisterUserSwagger, SW_AUTH_TITLES } from './auth.swagger';
-import { UserViewDto } from '../../users/application/dto/user-view.dto';
+import { UserViewDto } from './dto/user-view.dto';
 
 @ApiTags(SW_AUTH_TITLES.REGISTRATION_CONTROLLER)
 @Controller(PATH_CONSTS_AUTH.REGISTRATION_CONTROLLER)

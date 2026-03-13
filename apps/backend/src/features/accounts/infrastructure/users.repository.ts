@@ -11,4 +11,18 @@ export class UsersRepository {
     const result = await this.prisma.user.create({ data: { ...dto } });
     return result;
   }
+
+  async isUserNameExist(userName: string): Promise<boolean> {
+    const count = await this.prisma.user.count({
+      where: { userName: userName },
+    });
+    return count > 0;
+  }
+
+  async isEmailExist(email: string): Promise<boolean> {
+    const count = await this.prisma.user.count({
+      where: { email: email },
+    });
+    return count > 0;
+  }
 }
