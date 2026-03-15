@@ -34,6 +34,9 @@ importers:
       '@prisma/client':
         specifier: ^7.4.2
         version: 7.4.2(prisma@7.4.2(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
+      '@shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -134,6 +137,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -156,6 +162,8 @@ importers:
       vite:
         specifier: ^5.4.11
         version: 5.4.21(@types/node@20.19.35)(terser@5.46.0)
+
+  packages/shared-types: {}
 
 packages:
 

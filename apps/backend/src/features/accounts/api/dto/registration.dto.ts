@@ -6,8 +6,9 @@ import {
   Length,
   MinLength,
 } from 'class-validator';
+import type { UserRegistrationInput } from '@shared-types/accounts';
 
-export class UserRegistrationInputDto {
+export class UserRegistrationInputDto implements UserRegistrationInput {
   @ApiProperty({ example: 'email@abc.com' })
   @IsEmail()
   @IsNotEmpty()

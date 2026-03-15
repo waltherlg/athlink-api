@@ -1,11 +1,11 @@
 import { apiFetch } from '../http';
 import type {
   UserRegistrationInput,
-  UserRegistrationResponse,
-} from '../../types/auth';
+  UserView,
+} from '@shared-types/accounts';
 
 export function registerUser(input: UserRegistrationInput) {
-  return apiFetch<UserRegistrationResponse>('/registration', {
+  return apiFetch<UserView>('/registration', {
     method: 'POST',
     body: JSON.stringify(input),
   });

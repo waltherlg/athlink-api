@@ -1,6 +1,7 @@
 import { IsString } from 'class-validator';
+import type { UserCreate } from '@shared-types/accounts';
 
-export class UserCreateDto {
+export class UserCreateDto implements UserCreate {
   @IsString()
   email: string;
 
