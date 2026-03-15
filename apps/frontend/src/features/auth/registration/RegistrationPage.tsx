@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { registerUser } from '../../../api/auth/registration';
 import type {
   UserRegistrationInput,
-  UserRegistrationResponse,
-} from '../../../types/auth';
+  UserView,
+} from '@shared-types/accounts';
 import RegistrationForm from './RegistrationForm';
 
 export default function RegistrationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<UserRegistrationResponse | null>(null);
+  const [result, setResult] = useState<UserView | null>(null);
 
   const handleSubmit = async (input: UserRegistrationInput) => {
     setIsLoading(true);
