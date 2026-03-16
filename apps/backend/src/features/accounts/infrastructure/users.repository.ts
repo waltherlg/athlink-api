@@ -12,6 +12,16 @@ export class UsersRepository {
     return result;
   }
 
+  async findUserByLoginOrEmail(loginOrEmail: string): Promise<User | null> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ userName: loginOrEmail }, { email: loginOrEmail }],
+      },
+    });
+    if (!user) return null;
+    return user;
+  }
+
   async isUserNameExist(userName: string): Promise<boolean> {
     const count = await this.prisma.user.count({
       where: { userName: userName },
