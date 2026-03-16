@@ -1,3 +1,4 @@
-export const PATH_CONSTS_AUTH = {
+export const ACCOUNTS_PATH_CONSTS = {
   REGISTRATION_CONTROLLER: 'registration',
+  AUTHORIZATION_CONTROLLER: 'auth',
 };

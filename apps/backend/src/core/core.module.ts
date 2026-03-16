@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { EnvironmentConfig } from './config/env.config';
+import { CoreEnvironmentConfig } from './config/core-env.config';
 
 @Global()
 @Module({
@@ -15,7 +15,7 @@ import { EnvironmentConfig } from './config/env.config';
       isGlobal: true,
     }),
   ],
-  providers: [EnvironmentConfig],
-  exports: [EnvironmentConfig],
+  providers: [CoreEnvironmentConfig],
+  exports: [CoreEnvironmentConfig],
 })
 export class CoreModule {}

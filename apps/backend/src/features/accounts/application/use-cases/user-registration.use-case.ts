@@ -8,7 +8,7 @@ import {
 } from '../../../../core/exceptions/domain-exceptions';
 import { UserMapper } from '../../mappers/user.mapper';
 import { UserViewDto } from '../../api/dto/user-view.dto';
-import { ACCOUNT_ERRORS } from '../../consts/user-errors.consts';
+import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}

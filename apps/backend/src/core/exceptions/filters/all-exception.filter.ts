@@ -1,11 +1,11 @@
 import { Catch, HttpException, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from './base-exception.filter';
 import { Response } from 'express';
-import { EnvironmentConfig } from '../../config/env.config';
+import { CoreEnvironmentConfig } from '../../config/core-env.config';
 
 @Catch()
 export class AllExceptionFilter extends BaseExceptionFilter {
-  constructor(private configService: EnvironmentConfig) {
+  constructor(private configService: CoreEnvironmentConfig) {
     super();
   }
   onCatch(exception: any, response: Response): void {

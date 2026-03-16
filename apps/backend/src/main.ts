@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { appSetup } from './setup/app.setup';
-import { EnvironmentConfig } from './core/config/env.config';
+import { CoreEnvironmentConfig } from './core/config/core-env.config';
 
 async function bootstrap() {
   const appContext = await NestFactory.create(AppModule);
-  const config = appContext.get<EnvironmentConfig>(EnvironmentConfig);
+  const config = appContext.get<CoreEnvironmentConfig>(CoreEnvironmentConfig);
   const port = config.port;
 
   appSetup(appContext);
