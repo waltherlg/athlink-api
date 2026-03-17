@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { UserRegistrationCommand } from '../application/use-cases/user-registration.use-case';
+import { UserRegistrationCommand } from '../application/use-cases/registration-use-cases/user-registration.use-case';
 import { ApiTags } from '@nestjs/swagger';
 import {
   RegisterUserSwagger,

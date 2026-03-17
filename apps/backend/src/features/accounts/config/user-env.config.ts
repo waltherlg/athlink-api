@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { configValidationUtility } from '../../../setup/utils/config-validation-utility';
 import { ConfigService } from '@nestjs/config';
 import { IsNotEmpty, Matches } from 'class-validator';
+import { StringValue } from 'ms';
 
 @Injectable()
 export class UserEnvironmentConfig {
@@ -16,7 +17,7 @@ export class UserEnvironmentConfig {
     message:
       'ACCESS_TOKEN_EXPIRES must match format like "15s", "20m", "5h", "7d"',
   })
-  accessTokenExpiresIn: string = this.configService.get<string>(
+  accessTokenExpiresIn: StringValue = this.configService.get<string>(
     'ACCESS_TOKEN_EXPIRES_IN',
   );
 
@@ -27,7 +28,7 @@ export class UserEnvironmentConfig {
     message:
       'REFRESH_TOKEN_EXPIRES_IN must match format like "15s", "20m", "5h", "7d"',
   })
-  refreshTokenExpiresIn: string = this.configService.get<string>(
+  refreshTokenExpiresIn: StringValue = this.configService.get<string>(
     'REFRESH_TOKEN_EXPIRES_IN',
   );
 
