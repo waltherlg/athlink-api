@@ -1,6 +1,6 @@
 # AI Context: Athlink API (NestJS)
 
-This document summarizes the architecture and conventions inferred from `src/` only.
+This document summarizes the backend architecture and conventions inferred from `apps/backend/src/` only.
 
 ## Architecture Overview
 
@@ -15,54 +15,54 @@ The project follows a feature-first, layered NestJS architecture with clear sepa
 
 The `@nestjs/cqrs` package is used for use-cases, and Zod with `@anatine/zod-nestjs` is used for DTO validation.
 
-## Folder Purposes (src/)
+## Folder Purposes (apps/backend/src/)
 
-- `src/core/`
+- `apps/backend/src/core/`
   - Cross-cutting infrastructure and global modules.
   - `core.module.ts` registers configuration globally.
   - `config/` holds environment config and validation.
   - `database/prisma/` contains Prisma schema, module, and service.
 
-- `src/features/`
+- `apps/backend/src/features/`
   - Feature modules grouped by business capability (e.g., `auth`, `users`).
   - Each feature contains its own layers: `api/`, `application/`, `infrastructure/`, `schemas/`.
   - Feature module wires providers/controllers for the feature.
 
-- `src/setup/`
+- `apps/backend/src/setup/`
   - App bootstrap configuration and infrastructure setup.
   - `app.setup.ts` composes CORS, cookies, exception filters, swagger, etc.
   - `swagger.setup.ts` defines API docs.
   - `exception-filter.setup.ts` reserved for global filters.
   - `utils/` contains reusable setup utilities (e.g., config validation).
 
-- `src/`
+- `apps/backend/src/`
   - Root Nest entry points: `main.ts`, `app.module.ts`, `app.controller.ts`, `app.service.ts`.
 
 ## Where Things Live
 
-- Controllers: `src/features/<feature>/api/*.controller.ts`
-  - Example: `src/features/auth/api/registration.controller.ts`
+- Controllers: `apps/backend/src/features/<feature>/api/*.controller.ts`
+  - Example: `apps/backend/src/features/auth/api/registration.controller.ts`
 
-- Request DTOs: `src/features/<feature>/api/dto/*.dto.ts`
+- Request DTOs: `apps/backend/src/features/<feature>/api/dto/*.dto.ts`
   - Built from Zod schemas via `createZodDto`.
 
-- Application logic (use-cases): `src/features/<feature>/application/use-cases/*.use-case.ts`
+- Application logic (use-cases): `apps/backend/src/features/<feature>/application/use-cases/*.use-case.ts`
   - CQRS `CommandHandler` + `ICommandHandler` pattern.
 
-- Application DTOs: `src/features/<feature>/application/dto/*.dto.ts`
-  - Example: `src/features/users/application/dto/create-user.dto.ts`
+- Application DTOs: `apps/backend/src/features/<feature>/application/dto/*.dto.ts`
+  - Example: `apps/backend/src/features/users/application/dto/create-user.dto.ts`
 
-- Schemas: `src/features/<feature>/schemas/*.schema.ts`
+- Schemas: `apps/backend/src/features/<feature>/schemas/*.schema.ts`
   - Zod schemas defining shapes for validation and type alignment.
   - These often mirror Prisma models for consistency.
 
-- Repositories: `src/features/<feature>/infrastructure/*.repository.ts`
+- Repositories: `apps/backend/src/features/<feature>/infrastructure/*.repository.ts`
   - Prisma-backed data access via `PrismaService`.
 
 - Global infrastructure:
-  - Config: `src/core/config/`
-  - Database: `src/core/database/prisma/`
-  - App setup: `src/setup/`
+  - Config: `apps/backend/src/core/config/`
+  - Database: `apps/backend/src/core/database/prisma/`
+  - App setup: `apps/backend/src/setup/`
 
 ## Naming Conventions
 
@@ -78,7 +78,7 @@ The `@nestjs/cqrs` package is used for use-cases, and Zod with `@anatine/zod-nes
 
 ## How To Add A New Feature
 
-Create a new folder under `src/features/<feature>/` and follow the established layering:
+Create a new folder under `apps/backend/src/features/<feature>/` and follow the established layering:
 
 1. `api/`
    - Add controller(s) under `api/*.controller.ts`.
@@ -102,7 +102,7 @@ Create a new folder under `src/features/<feature>/` and follow the established l
    - Export providers needed by other features.
    - Register controllers for HTTP endpoints.
 
-6. Wire into `src/app.module.ts`
+6. Wire into `apps/backend/src/app.module.ts`
    - Import the feature module.
 
 This keeps API, application logic, and persistence cleanly separated and consistent with the rest of the codebase.
