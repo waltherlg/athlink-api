@@ -1,5 +1,4 @@
 import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { ACCOUNTS_PATH_CONSTS } from '../consts/path.consts';
 import { RequestWithUser } from '../guards/decorators/rt-payload-from-req.deocrator';
 import type { Response } from 'express';
 import { LoginCommand } from '../application/use-cases/auth-use-cases/login.usecase';
@@ -9,13 +8,14 @@ import { SessionCreateDto } from '../application/dto/domain-session.dto';
 import { cookieSettings } from '../config/cookie.config';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';
+import { accountsPaths } from '@shared-types';
 
-@Controller(ACCOUNTS_PATH_CONSTS.AUTHORIZATION_CONTROLLER)
+@Controller(accountsPaths.authorization.controller)
 export class AuthController {
   constructor(private commandBus: CommandBus) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post(ACCOUNTS_PATH_CONSTS.LOGIN)
+  @Post(accountsPaths.authorization.login)
   async login(
     @Req() request: RequestWithUser,
     @Res({ passthrough: true }) response: Response,
@@ -40,7 +40,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get()
+  @Get(accountsPaths.authorization.me)
   async jwtCheck() {
     return 'jwt passed';
   }

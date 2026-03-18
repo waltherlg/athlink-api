@@ -8,10 +8,10 @@ import {
   SW_AUTH_TITLES,
 } from './swagger/registration.swagger';
 import { UserViewDto } from './dto/user-view.dto';
-import { ACCOUNTS_PATH_CONSTS } from '../consts/path.consts';
+import { accountsPaths } from '@shared-types';
 
 @ApiTags(SW_AUTH_TITLES.REGISTRATION_CONTROLLER)
-@Controller(ACCOUNTS_PATH_CONSTS.REGISTRATION_CONTROLLER)
+@Controller(accountsPaths.registration.controller)
 export class RegistrationController {
   constructor(private commandBus: CommandBus) {}
   @Get()

@@ -1,5 +1,0 @@
-export const ACCOUNTS_PATH_CONSTS = {
-  REGISTRATION_CONTROLLER: 'registration',
-  AUTHORIZATION_CONTROLLER: 'auth',
-  LOGIN: 'login',
-};
