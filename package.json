@@ -24,5 +24,9 @@
     "frontend:dev": "pnpm -C apps/frontend dev",
     "frontend:build": "pnpm -C apps/frontend build",
     "frontend:preview": "pnpm -C apps/frontend preview"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "typescript": "^5.9.3"
   }
 }

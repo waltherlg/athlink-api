@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@shared-types/*": ["node_modules/@shared-types/src/*"]
+      "@shared-types": ["node_modules/@shared-types/dist/index"],
+      "@shared-types/*": ["node_modules/@shared-types/dist/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

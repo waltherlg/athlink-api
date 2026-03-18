@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthController } from './api/auth.controller';
 import { UserEnvironmentConfig } from './config/user-env.config';
 import { GuardsStrategy } from './guards/strategy-providers';
+import { UsersQueryRepository } from './infrastructure/users-query.repository';
 
 @Module({
   imports: [CqrsModule],
@@ -20,6 +21,7 @@ import { GuardsStrategy } from './guards/strategy-providers';
     PasswordService,
     JwtService,
     UsersRepository,
+    UsersQueryRepository,
     TokenService,
     ...AuthUseCases,
     ...GuardsStrategy,

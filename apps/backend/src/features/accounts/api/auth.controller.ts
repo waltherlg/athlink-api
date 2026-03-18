@@ -9,10 +9,14 @@ import { cookieSettings } from '../config/cookie.config';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';
 import { accountsPaths } from '@shared-types';
+import { UsersQueryRepository } from '../infrastructure/users-query.repository';
 
 @Controller(accountsPaths.authorization.controller)
 export class AuthController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    private usersQueryRepository: UsersQueryRepository,
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post(accountsPaths.authorization.login)
@@ -41,7 +45,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get(accountsPaths.authorization.me)
-  async jwtCheck() {
-    return 'jwt passed';
+  async getMayUserName(@Req() request: RequestWithUser) {
+    return await this.usersQueryRepository.getUserNameById(request.user.id);
   }
 }
