@@ -11,9 +11,10 @@ import {
 import { UserRegistrationInputDto } from '../dto/registration.dto';
 import { UserViewDto } from '../dto/user-view.dto';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
+import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
 
 export const SW_AUTH_TITLES = {
-  REGISTRATION_CONTROLLER: 'User registration',
+  AUTH_CONTROLLER: 'Auth flow',
 };
 
 export function RegisterUserSwagger() {
@@ -31,6 +32,33 @@ export function RegisterUserSwagger() {
     ApiResponse({
       status: 400,
       description: 'Data validation failed',
+      type: ErrorResponse,
+    }),
+  );
+}
+
+export function LoginSwagger() {
+  return applyDecorators(
+    ApiOperation({
+      summary: 'User login',
+    }),
+    ApiBody({
+      description: 'User data',
+      type: LoginUserDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'The email or password are incorrect',
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description:
+        'Successful login.\n\nBody: accessToken \n\nCookie: refreshToken (HttpOnly, Secure)',
+      type: LoginResponseDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'The email or password are incorrect',
       type: ErrorResponse,
     }),
   );
