@@ -4,6 +4,18 @@ export type UserRegistrationInput = {
   password: string;
 };
 
+export type LoginInput = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  accessToken: string;
+  refreshToken?: string;
+};
+
+export type UserNameResponse = string | null;
+
 export type UserCreate = {
   email: string;
   userName: string;

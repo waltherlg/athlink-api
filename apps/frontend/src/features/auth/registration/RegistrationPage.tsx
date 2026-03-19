@@ -1,23 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../api/auth/registration';
-import type {
-  UserRegistrationInput,
-  UserView,
-} from '@shared-types/accounts';
+import type { UserRegistrationInput } from '@shared-types';
 import RegistrationForm from './RegistrationForm';
 
 export default function RegistrationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<UserView | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (input: UserRegistrationInput) => {
     setIsLoading(true);
     setError(null);
-    setResult(null);
     try {
-      const response = await registerUser(input);
-      setResult(response);
+      await registerUser(input);
+      navigate('/login');
     } catch (err) {
       if (err && typeof err === 'object' && 'message' in err) {
         setError(String((err as { message?: string }).message));
@@ -40,13 +37,6 @@ export default function RegistrationPage() {
       <RegistrationForm onSubmit={handleSubmit} isLoading={isLoading} />
 
       {error ? <div className="alert error">{error}</div> : null}
-
-      {result ? (
-        <div className="card result">
-          <h2>Response</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </div>
-      ) : null}
     </section>
   );
 }

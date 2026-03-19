@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import type { UserRegistrationInput } from '@shared-types/accounts';
+import type { UserRegistrationInput } from '@shared-types';
 
 type RegistrationFormProps = {
   onSubmit: (input: UserRegistrationInput) => void;
