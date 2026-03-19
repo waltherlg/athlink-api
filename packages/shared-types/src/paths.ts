@@ -1,9 +1,7 @@
 export const accountsPaths = {
-  registration: {
-    controller: 'registration',
-  },
   authorization: {
     controller: 'auth',
+    registration: 'registration',
     login: 'login',
     me: 'me',
   },

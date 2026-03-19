@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { RegistrationController } from './api/registration.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AuthUseCases } from './application/use-case.provider';
 import { UsersRepository } from './infrastructure/users.repository';
@@ -14,7 +13,7 @@ import { UsersQueryRepository } from './infrastructure/users-query.repository';
 
 @Module({
   imports: [CqrsModule],
-  controllers: [RegistrationController, AuthController],
+  controllers: [AuthController],
   providers: [
     UserEnvironmentConfig,
     AuthService,
