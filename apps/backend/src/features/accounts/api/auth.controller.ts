@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { RequestWithUser } from '../guards/decorators/rt-payload-from-req.deocrator';
 import type { Response } from 'express';
 import { LoginCommand } from '../application/use-cases/auth-use-cases/login.usecase';
@@ -10,6 +18,10 @@ import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';
 import { accountsPaths } from '@shared-types';
 import { UsersQueryRepository } from '../infrastructure/users-query.repository';
+import { UserRegistrationCommand } from '../application/use-cases/auth-use-cases/user-registration.use-case';
+import { UserRegistrationInputDto } from './dto/registration.dto';
+import { UserViewDto } from './dto/user-view.dto';
+import { RegisterUserSwagger } from './swagger/registration.swagger';
 
 @Controller(accountsPaths.authorization.controller)
 export class AuthController {
@@ -17,6 +29,15 @@ export class AuthController {
     private commandBus: CommandBus,
     private usersQueryRepository: UsersQueryRepository,
   ) {}
+
+  @RegisterUserSwagger()
+  @Post(accountsPaths.authorization.registration)
+  async registerUser(@Body() dto: UserRegistrationInputDto) {
+    const createdUser: UserViewDto = await this.commandBus.execute(
+      new UserRegistrationCommand(dto),
+    );
+    return createdUser;
+  }
 
   @UseGuards(LocalAuthGuard)
   @Post(accountsPaths.authorization.login)
