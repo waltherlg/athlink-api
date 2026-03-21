@@ -50,7 +50,7 @@ model TrainingLog {
   athleteId String
   athlete   User   @relation(fields: [athleteId], references: [id])
 
-  sportType SportType
+  sportType SportType @unique
 
   entries Entry[]
 
@@ -71,7 +71,6 @@ model Entry {
   coachNotes   String?
   privateNotes String?
 
-  performedAt DateTime?
-
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
