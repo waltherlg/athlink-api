@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { UserView } from '@shared-types/accounts';
+import type { UserView } from '@shared-types';
 
 export class UserViewDto implements UserView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })

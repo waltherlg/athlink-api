@@ -6,7 +6,7 @@ import {
   Length,
   MinLength,
 } from 'class-validator';
-import type { UserRegistrationInput } from '@shared-types/accounts';
+import type { UserRegistrationInput } from '@shared-types';
 import { ACCOUNT_VALIDATION_CONSTS } from '../../consts/account-validation.consts';
 
 export class UserRegistrationInputDto implements UserRegistrationInput {

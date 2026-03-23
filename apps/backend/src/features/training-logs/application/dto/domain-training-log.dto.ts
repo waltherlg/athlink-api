@@ -1,4 +1,4 @@
-import { SportTypeEnum } from '@shared-types/dist';
+import { SportTypeEnum } from '@shared-types';
 
 export class CreateTrainingLogDto {
   athleteId: string;

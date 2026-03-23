@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsNotEmpty, Length } from 'class-validator';
 import { ACCOUNT_VALIDATION_CONSTS } from '../../consts/account-validation.consts';
 import { Trim } from '../../../../core/decorators/trim.decorator';
-import { LoginInput, LoginResponse } from '@shared-types/dist';
+import { LoginInput, LoginResponse } from '@shared-types';
 
 export class LoginUserDto implements LoginInput {
   @ApiProperty({ example: 'email@abc.com' })
