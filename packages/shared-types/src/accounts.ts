@@ -1,3 +1,5 @@
+import { SportTypeEnum } from './training-logs';
+
 export type UserRegistrationInput = {
   email: string;
   userName: string;
@@ -9,18 +11,16 @@ export type LoginInput = {
   password: string;
 };
 
+export type CreateTrainingLogInput = {
+  sportType: SportTypeEnum;
+};
+
 export type LoginResponse = {
   accessToken: string;
   refreshToken?: string;
 };
 
 export type UserNameResponse = string | null;
-
-export type UserCreate = {
-  email: string;
-  userName: string;
-  passwordHash: string;
-};
 
 export type UserView = {
   id: string;

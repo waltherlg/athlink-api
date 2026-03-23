@@ -1,7 +1,6 @@
 export type {
   LoginInput,
   LoginResponse,
-  UserCreate,
   UserNameResponse,
   UserRegistrationInput,
   UserView,
