@@ -5,6 +5,7 @@ import {
   CreateEntryDto,
   CreateTrainingLogDto,
 } from '../application/dto/domain-training-log.dto';
+import { SportTypeEnum } from '@shared-types/dist';
 
 @Injectable()
 export class TrainingLogsRepository {
@@ -15,6 +16,25 @@ export class TrainingLogsRepository {
       data: { ...dto },
     });
     return createdTrainingLog;
+  }
+
+  async isTrainingLogExist(
+    athleteId: string,
+    sportType: SportTypeEnum,
+  ): Promise<boolean> {
+    const result = await this.prisma.trainingLog.count({
+      where: { athleteId, sportType },
+    });
+    return result > 0;
+  }
+
+  async getAllTrainingLogsByAthleteId(
+    athleteId: string,
+  ): Promise<TrainingLog[]> {
+    const logs = await this.prisma.trainingLog.findMany({
+      where: { athleteId },
+    });
+    return logs;
   }
 
   async createEntry(dto: CreateEntryDto): Promise<Entry> {
@@ -33,5 +53,13 @@ export class TrainingLogsRepository {
       data: { ...dateToUpdate },
     });
     return updatedEntryEntry;
+  }
+
+  async getEntryById(entryId: string): Promise<Entry | null> {
+    const entry = await this.prisma.entry.findUnique({
+      where: { id: entryId },
+    });
+    if (!entry) return null;
+    return entry;
   }
 }

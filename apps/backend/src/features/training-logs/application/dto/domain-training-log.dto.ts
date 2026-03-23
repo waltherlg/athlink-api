@@ -1,3 +1,5 @@
+import { SportTypeEnum } from '@shared-types/dist';
+
 export class CreateTrainingLogDto {
   athleteId: string;
   sportType: SportTypeEnum;
@@ -14,8 +16,4 @@ export class UpdateEntryDto {
   result?: string;
   coachNotes?: string;
   privateNotes?: string;
-}
-
-export enum SportTypeEnum {
-  SHOOTING = 'SHOOTING',
 }

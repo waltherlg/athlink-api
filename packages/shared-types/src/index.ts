@@ -7,3 +7,4 @@ export type {
   UserView,
 } from './accounts';
 export { accountsPaths } from './paths';
+export { SportTypeEnum } from './training-logs';
