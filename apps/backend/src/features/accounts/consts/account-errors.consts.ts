@@ -61,4 +61,9 @@ export const ACCOUNT_ERRORS = {
     field: 'provider',
     message: 'Unsupported provider',
   },
-};
+  EMAIL_OR_PASSWORD_INCORRECT: {
+    code: AccountErrorCodeEnum.EMAIL_OR_PASSWORD_INCORRECT,
+    field: 'email or password',
+    message: 'The email or password are incorrect',
+  },
+} as const;

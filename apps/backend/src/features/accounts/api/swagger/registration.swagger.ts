@@ -36,10 +36,10 @@ export function RegisterUserSwagger() {
       description: 'Business errors',
       content: {
         'application/json': {
-          examples: buildErrorExamples({
-            EMAIL_ALREADY_EXISTS: ACCOUNT_ERRORS.EMAIL_ALREADY_EXITS,
-            USERNAME_ALREADY_EXISTS: ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS,
-          }),
+          examples: buildErrorExamples([
+            ACCOUNT_ERRORS.EMAIL_ALREADY_EXITS,
+            ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS,
+          ]),
         },
       },
     }),

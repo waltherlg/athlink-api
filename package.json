@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "start:dev": "pnpm -C apps/backend start:dev",
+    "shared-types build": "pnpm --filter @shared-types build",
     "build": "pnpm -C apps/backend build",
     "format": "pnpm -C apps/backend format",
     "start": "pnpm -C apps/backend start",
