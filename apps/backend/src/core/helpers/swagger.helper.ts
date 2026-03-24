@@ -1,3 +1,6 @@
+import { getSchemaPath } from '@nestjs/swagger';
+import { ErrorResponse } from '../exceptions/domain-exceptions';
+
 type ErrorDef = {
   code: string;
   field: string;
@@ -21,4 +24,13 @@ export function buildErrorExamples(errors: ErrorDef[]) {
       },
     ]),
   );
+}
+
+export function buildErrorResponse(errors: ErrorDef[]) {
+  return {
+    schema: {
+      allOf: [{ $ref: getSchemaPath(ErrorResponse) }],
+    },
+    examples: buildErrorExamples(errors),
+  };
 }

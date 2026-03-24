@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DomainExceptionCode } from './domain-exception-codes';
-import { AccountErrorCodeEnum } from '@shared-types';
+import { AccountErrorCodeEnum, ErrorCode } from '@shared-types';
 
 export class ErrorResponse {
   @ApiProperty({
@@ -17,18 +17,16 @@ export class ErrorResponse {
 }
 
 export class ErrorMessage {
-  @ApiProperty({ enum: AccountErrorCodeEnum })
-  code: AccountErrorCodeEnum;
+  @ApiProperty({
+    enum: [...Object.values(AccountErrorCodeEnum)],
+  })
+  code: ErrorCode;
   @ApiProperty({ example: 'string' })
   message: string;
   @ApiProperty({ example: 'string' })
   field: string | null;
 
-  constructor(
-    code: AccountErrorCodeEnum,
-    message: string,
-    field: string | null = null,
-  ) {
+  constructor(code: ErrorCode, message: string, field: string | null = null) {
     this.code = code;
     this.message = message;
     this.field = field;
@@ -57,7 +55,7 @@ function ConcreteDomainExceptionFactory(
     //   return new this(message ? [new ErrorMessage(message, key)] : []);
     // }
     static create(errorObj?: {
-      code: AccountErrorCodeEnum;
+      code: ErrorCode;
       field: string;
       message: string;
     }) {

@@ -1,3 +1,5 @@
+export type ErrorCode = AccountErrorCodeEnum;
+
 export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
   USERNAME_ALREADY_EXISTS = 'USERNAME_ALREADY_EXISTS',

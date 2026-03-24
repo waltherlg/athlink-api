@@ -7,12 +7,16 @@ import {
   ApiOperation,
   ApiQuery,
   ApiResponse,
+  getSchemaPath,
 } from '@nestjs/swagger';
 import { UserRegistrationInputDto } from '../dto/registration.dto';
 import { UserViewDto } from '../dto/user-view.dto';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
-import { buildErrorExamples } from '../../../../core/helpers/swagger.helper';
+import {
+  buildErrorExamples,
+  buildErrorResponse,
+} from '../../../../core/helpers/swagger.helper';
 import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 
 export const SW_AUTH_TITLES = {
@@ -31,22 +35,16 @@ export function RegisterUserSwagger() {
       description: 'Returns created user',
       type: UserViewDto,
     }),
+
     ApiResponse({
       status: 400,
-      description: 'Business errors',
+      description: 'Validation and business errors',
       content: {
-        'application/json': {
-          examples: buildErrorExamples([
-            ACCOUNT_ERRORS.EMAIL_ALREADY_EXITS,
-            ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS,
-          ]),
-        },
+        'application/json': buildErrorResponse([
+          ACCOUNT_ERRORS.EMAIL_ALREADY_EXITS,
+          ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS,
+        ]),
       },
-    }),
-    ApiResponse({
-      status: 400,
-      description: 'Data validation failed',
-      type: ErrorResponse,
     }),
   );
 }

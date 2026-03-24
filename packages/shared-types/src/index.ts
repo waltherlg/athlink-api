@@ -7,4 +7,4 @@ export type {
 } from './accounts-api-types';
 export { accountsPaths } from './paths';
 export { SportTypeEnum } from './training-logs';
-export { AccountErrorCodeEnum } from './error-codes';
+export { AccountErrorCodeEnum, ErrorCode } from './error-codes';
