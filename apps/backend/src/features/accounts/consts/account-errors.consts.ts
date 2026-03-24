@@ -7,7 +7,7 @@ export const ACCOUNT_ERRORS = {
     field: 'email',
     message: 'User with this email is already registered',
   },
-  CODE_CONFIRMED: {
+  CODE_ALREADY_CONFIRMED: {
     field: 'code',
     message: 'The code has already been confirmed',
   },
@@ -23,7 +23,7 @@ export const ACCOUNT_ERRORS = {
     field: 'code',
     message: 'The confirmation code is incorrect or has expired',
   },
-  EMAIL_CONFIRMED: {
+  EMAIL_ALREADY_CONFIRMED: {
     field: 'email',
     message: 'Email address is already confirmed',
   },
@@ -43,7 +43,7 @@ export const ACCOUNT_ERRORS = {
     field: 'provider',
     message: 'no response from oauth service',
   },
-  UNSUPPORTED_PROVIDER: {
+  UNSUPPORTED__OAUTH_PROVIDER: {
     field: 'provider',
     message: 'Unsupported provider',
   },
