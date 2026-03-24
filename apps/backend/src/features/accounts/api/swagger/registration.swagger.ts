@@ -4,6 +4,7 @@ import {
   ApiBody,
   ApiConsumes,
   ApiCookieAuth,
+  ApiExtraModels,
   ApiOperation,
   ApiQuery,
   ApiResponse,
@@ -25,6 +26,8 @@ export const SW_AUTH_TITLES = {
 
 export function RegisterUserSwagger() {
   return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+
     ApiOperation({ summary: 'Register new user' }),
     ApiBody({
       description: 'User data',

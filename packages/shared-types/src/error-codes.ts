@@ -1,4 +1,4 @@
-export type ErrorCode = AccountErrorCodeEnum;
+export type ErrorCode = AccountErrorCodeEnum | CommonErrorCodeEnum;
 
 export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
@@ -14,4 +14,8 @@ export enum AccountErrorCodeEnum {
   NO_RESPONSE_FROM_OAUTH = 'NO_RESPONSE_FROM_OAUTH',
   UNSUPPORTED__OAUTH_PROVIDER = 'UNSUPPORTED__OAUTH_PROVIDER',
   EMAIL_OR_PASSWORD_INCORRECT = 'EMAIL_OR_PASSWORD_INCORRECT',
+}
+
+export enum CommonErrorCodeEnum {
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
 }
