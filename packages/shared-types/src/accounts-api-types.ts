@@ -11,10 +11,6 @@ export type LoginInput = {
   password: string;
 };
 
-export type CreateTrainingLogInput = {
-  sportType: SportTypeEnum;
-};
-
 export type LoginResponse = {
   accessToken: string;
   refreshToken?: string;

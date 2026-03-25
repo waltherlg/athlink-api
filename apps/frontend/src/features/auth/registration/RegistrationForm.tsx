@@ -46,7 +46,7 @@ export default function RegistrationForm({
           ))}
         </div>
       ) : null}
-      <label className="field">
+      <label className={`field ${fieldErrors.email?.length ? 'has-error' : ''}`}>
         <span>Email</span>
         <input
           type="email"
@@ -64,7 +64,9 @@ export default function RegistrationForm({
         ))}
       </label>
 
-      <label className="field">
+      <label
+        className={`field ${fieldErrors.userName?.length ? 'has-error' : ''}`}
+      >
         <span>Username</span>
         <input
           type="text"
@@ -84,7 +86,9 @@ export default function RegistrationForm({
         ))}
       </label>
 
-      <label className="field">
+      <label
+        className={`field ${fieldErrors.password?.length ? 'has-error' : ''}`}
+      >
         <span>Password</span>
         <input
           type="password"

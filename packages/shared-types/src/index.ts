@@ -6,9 +6,10 @@ export type {
   UserView,
 } from './accounts-api-types';
 export { accountsPaths } from './paths';
-export { SportTypeEnum } from './training-logs';
+export { SportTypeEnum, CreateTrainingLogInput } from './training-logs';
 export {
   AccountErrorCodeEnum,
   ErrorCode,
   CommonErrorCodeEnum,
+  TrainingLogErrorCodeEnum,
 } from './error-codes';

@@ -32,13 +32,13 @@ export function RegisterUserSwagger() {
       type: UserRegistrationInputDto,
     }),
     ApiResponse({
-      status: 201,
+      status: HttpStatus.CREATED,
       description: 'Returns created user',
       type: UserViewDto,
     }),
 
     ApiResponse({
-      status: 400,
+      status: HttpStatus.BAD_REQUEST,
       description: 'Validation and business errors',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
