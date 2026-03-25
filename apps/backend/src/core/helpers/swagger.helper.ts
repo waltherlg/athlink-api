@@ -7,30 +7,32 @@ type ErrorDef = {
   message: string;
 };
 
-export function buildErrorExamples(errors: ErrorDef[]) {
-  return Object.fromEntries(
-    errors.map((error) => [
-      error.code,
-      {
-        value: {
-          errorMessages: [
-            {
-              code: error.code,
-              message: error.message,
-              field: error.field,
-            },
-          ],
+export abstract class SwaggerHelper {
+  private static buildErrorExamples(errors: ErrorDef[]) {
+    return Object.fromEntries(
+      errors.map((error) => [
+        error.code,
+        {
+          value: {
+            errorMessages: [
+              {
+                code: error.code,
+                message: error.message,
+                field: error.field,
+              },
+            ],
+          },
         },
-      },
-    ]),
-  );
-}
+      ]),
+    );
+  }
 
-export function buildErrorResponse(errors: ErrorDef[]) {
-  return {
-    schema: {
-      allOf: [{ $ref: getSchemaPath(ErrorResponse) }],
-    },
-    examples: buildErrorExamples(errors),
-  };
+  static buildErrorResponse(errors: ErrorDef[]) {
+    return {
+      schema: {
+        allOf: [{ $ref: getSchemaPath(ErrorResponse) }],
+      },
+      examples: this.buildErrorExamples(errors),
+    };
+  }
 }

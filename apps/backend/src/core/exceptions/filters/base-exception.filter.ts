@@ -17,19 +17,12 @@ export abstract class BaseExceptionFilter implements ExceptionFilter {
   }
 
   getDefaultHttpBody(exception: any) {
-    const errorsMessages: { message: string; field: string }[] = [];
-
     if (exception instanceof DomainException) {
-      exception.extensions.forEach((extension) => {
-        errorsMessages.push({
-          field: extension.field || 'unknown',
-          message: extension.message || 'An error occurred',
-        });
-      });
+      return {
+        errorMessages: exception.extensions,
+      };
     }
-    if (errorsMessages.length) {
-      return { errorsMessages: errorsMessages };
-    }
+
     return [];
   }
 }

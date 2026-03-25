@@ -8,6 +8,7 @@ export class ErrorResponse {
     isArray: true,
     example: [
       {
+        code: 'string',
         message: 'string',
         field: 'string',
       },
