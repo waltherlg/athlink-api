@@ -10,7 +10,7 @@ export class LoginUserDto implements LoginInput {
   @IsEmail()
   email: string;
 
-  @ApiProperty({ example: 'somePassword' })
+  @ApiProperty({ example: 'some123PASSWORD' })
   @IsString()
   @Trim()
   @IsNotEmpty()

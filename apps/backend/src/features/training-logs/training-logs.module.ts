@@ -3,15 +3,16 @@ import { TrainingLogsRepository } from './infrastructure/training-logs.repositor
 import { TrainingLogsController } from './api/training-logs.controller';
 import { TrainingEntriesRepository } from './infrastructure/training-entries.repository';
 import { TrainingLogUseCases } from './application/training-log-use-cases.provider';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [],
+  imports: [CqrsModule],
   controllers: [TrainingLogsController],
   providers: [
     TrainingEntriesRepository,
     TrainingLogsRepository,
     ...TrainingLogUseCases,
   ],
-  exports: [],
+  exports: [TrainingEntriesRepository, TrainingLogsRepository],
 })
 export class TrainingLogsModule {}

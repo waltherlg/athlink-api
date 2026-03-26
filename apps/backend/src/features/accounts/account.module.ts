@@ -25,6 +25,6 @@ import { UsersQueryRepository } from './infrastructure/users-query.repository';
     ...AuthUseCases,
     ...GuardsStrategy,
   ],
-  exports: [],
+  exports: [UsersRepository],
 })
 export class AccountModule {}

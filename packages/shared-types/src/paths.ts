@@ -8,3 +8,9 @@ export const authPaths = {
 export const trainingLogsPaths = {
   controller: 'training-log',
 };
+
+export const dashboardPaths = {
+  controller: 'deshboard',
+  athlete: 'athlete',
+  coach: 'coach',
+};

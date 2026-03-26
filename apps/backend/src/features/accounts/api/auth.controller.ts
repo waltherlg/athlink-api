@@ -21,7 +21,7 @@ import { UsersQueryRepository } from '../infrastructure/users-query.repository';
 import { UserRegistrationCommand } from '../application/use-cases/auth-use-cases/user-registration.use-case';
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from './dto/user-view.dto';
-import { RegisterUserSwagger } from './swagger/registration.swagger';
+import { LoginSwagger, RegisterUserSwagger } from './swagger/auth.swagger';
 import { authPaths } from '@shared-types';
 
 @Controller(authPaths.controller)
@@ -40,6 +40,7 @@ export class AuthController {
     return createdUser;
   }
 
+  @LoginSwagger()
   @UseGuards(LocalAuthGuard)
   @Post(authPaths.login)
   async login(

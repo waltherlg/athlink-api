@@ -5,11 +5,13 @@ import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-fro
 import { CreateTrainingLogInputDto } from './dto/training-log.dto';
 import { trainingLogsPaths } from '@shared-types';
 import { CreateTrainingLogCommand } from '../application/use-cases/create-training-log.use-case';
+import { CreateTrainingLogSwagger } from './swagger/training-logs.swagger';
 
 @Controller(trainingLogsPaths.controller)
 export class TrainingLogsController {
   constructor(private commandBus: CommandBus) {}
 
+  @CreateTrainingLogSwagger()
   @UseGuards(JwtAuthGuard)
   @Post()
   async createTrainingLog(

@@ -70,7 +70,20 @@ export function LoginSwagger() {
     ApiResponse({
       status: HttpStatus.UNAUTHORIZED,
       description: 'The email or password are incorrect',
-      type: ErrorResponse,
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          ACCOUNT_ERRORS.EMAIL_OR_PASSWORD_INCORRECT,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.BAD_REQUEST,
+      description: 'Validation and business errors',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          COMMON_ERRORS.VALIDATION_ERROR,
+        ]),
+      },
     }),
   );
 }
