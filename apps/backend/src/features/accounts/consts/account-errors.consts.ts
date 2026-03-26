@@ -66,4 +66,9 @@ export const ACCOUNT_ERRORS = {
     field: 'email or password',
     message: 'The email or password are incorrect',
   },
+  NOT_OWNER: {
+    code: AccountErrorCodeEnum.NOT_OWNER,
+    field: 'userId',
+    message: 'only owner can change this data',
+  },
 } as const;

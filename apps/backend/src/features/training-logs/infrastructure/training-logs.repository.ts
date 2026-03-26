@@ -18,6 +18,13 @@ export class TrainingLogsRepository {
     return createdTrainingLog;
   }
 
+  async getTrainingLogById(logId: string): Promise<TrainingLog | null> {
+    const log = await this.prisma.trainingLog.findUnique({
+      where: { id: logId },
+    });
+    return log ? log : null;
+  }
+
   async isTrainingLogExist(
     athleteId: string,
     sportType: SportTypeEnum,
