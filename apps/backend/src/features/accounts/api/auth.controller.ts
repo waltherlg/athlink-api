@@ -16,14 +16,15 @@ import { SessionCreateDto } from '../application/dto/domain-session.dto';
 import { cookieSettings } from '../config/cookie.config';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';
-import { accountsPaths } from '@shared-types';
+
 import { UsersQueryRepository } from '../infrastructure/users-query.repository';
 import { UserRegistrationCommand } from '../application/use-cases/auth-use-cases/user-registration.use-case';
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from './dto/user-view.dto';
 import { RegisterUserSwagger } from './swagger/registration.swagger';
+import { authPaths } from '@shared-types';
 
-@Controller(accountsPaths.authorization.controller)
+@Controller(authPaths.controller)
 export class AuthController {
   constructor(
     private commandBus: CommandBus,
@@ -31,7 +32,7 @@ export class AuthController {
   ) {}
 
   @RegisterUserSwagger()
-  @Post(accountsPaths.authorization.registration)
+  @Post(authPaths.registration)
   async registerUser(@Body() dto: UserRegistrationInputDto) {
     const createdUser: UserViewDto = await this.commandBus.execute(
       new UserRegistrationCommand(dto),
@@ -40,7 +41,7 @@ export class AuthController {
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post(accountsPaths.authorization.login)
+  @Post(authPaths.login)
   async login(
     @Req() request: RequestWithUser,
     @Res({ passthrough: true }) response: Response,
@@ -65,7 +66,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(accountsPaths.authorization.me)
+  @Get(authPaths.me)
   async getMayUserName(@Req() request: RequestWithUser) {
     return await this.usersQueryRepository.getUserNameById(request.user.id);
   }

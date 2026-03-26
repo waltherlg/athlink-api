@@ -6,7 +6,7 @@ import { CreateTrainingLogInputDto } from './dto/training-log.dto';
 import { trainingLogsPaths } from '@shared-types';
 import { CreateTrainingLogCommand } from '../application/use-cases/create-training-log.use-case';
 
-@Controller(trainingLogsPaths.trainigLog.controller)
+@Controller(trainingLogsPaths.controller)
 export class TrainingLogsController {
   constructor(private commandBus: CommandBus) {}
 

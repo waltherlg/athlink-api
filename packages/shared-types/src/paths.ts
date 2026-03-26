@@ -1,14 +1,10 @@
-export const accountsPaths = {
-  authorization: {
-    controller: 'auth',
-    registration: 'registration',
-    login: 'login',
-    me: 'me',
-  },
+export const authPaths = {
+  controller: 'auth',
+  registration: 'registration',
+  login: 'login',
+  me: 'me',
 } as const;
 
 export const trainingLogsPaths = {
-  trainigLog: {
-    controller: 'training-log',
-  },
+  controller: 'training-log',
 };

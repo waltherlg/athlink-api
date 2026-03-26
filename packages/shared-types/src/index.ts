@@ -5,7 +5,7 @@ export type {
   UserRegistrationInput,
   UserView,
 } from './accounts-api-types';
-export { accountsPaths, trainingLogsPaths } from './paths';
+export { authPaths, trainingLogsPaths } from './paths';
 export { SportTypeEnum, CreateTrainingLogInput } from './training-logs';
 export {
   AccountErrorCodeEnum,

@@ -1,9 +1,9 @@
-import { accountsPaths } from '@shared-types';
+import { authPaths as authPathsShared } from '@shared-types';
 
-const authBase = `/${accountsPaths.authorization.controller}`;
+const authBase = `/${authPathsShared.controller}`;
 
 export const authPaths = {
-  registration: `${authBase}/${accountsPaths.authorization.registration}`,
-  login: `${authBase}/${accountsPaths.authorization.login}`,
-  me: `${authBase}/${accountsPaths.authorization.me}`,
+  registration: `${authBase}/${authPathsShared.registration}`,
+  login: `${authBase}/${authPathsShared.login}`,
+  me: `${authBase}/${authPathsShared.me}`,
 };
