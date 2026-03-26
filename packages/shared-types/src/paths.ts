@@ -6,3 +6,9 @@ export const accountsPaths = {
     me: 'me',
   },
 } as const;
+
+export const trainingLogsPaths = {
+  trainigLog: {
+    controller: 'training-log',
+  },
+};

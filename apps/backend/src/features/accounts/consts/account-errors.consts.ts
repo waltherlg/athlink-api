@@ -56,8 +56,8 @@ export const ACCOUNT_ERRORS = {
     field: 'provider',
     message: 'no response from oauth service',
   },
-  UNSUPPORTED__OAUTH_PROVIDER: {
-    code: AccountErrorCodeEnum.UNSUPPORTED__OAUTH_PROVIDER,
+  UNSUPPORTED_OAUTH_PROVIDER: {
+    code: AccountErrorCodeEnum.UNSUPPORTED_OAUTH_PROVIDER,
     field: 'provider',
     message: 'Unsupported provider',
   },
