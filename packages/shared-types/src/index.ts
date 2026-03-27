@@ -11,6 +11,13 @@ export {
   CreateTrainingLogInput,
   TrainingLogView,
 } from './training-logs-api-types';
+
+export {
+  CreateTrainingEntryInput,
+  TrainingEntryAthleteView,
+  TrainingEntryCoachView,
+} from './training-entry-api-types';
+
 export {
   AccountErrorCodeEnum,
   ErrorCode,
