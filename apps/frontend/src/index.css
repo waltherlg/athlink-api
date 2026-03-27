@@ -141,6 +141,18 @@ h2 {
   border-color: #f59e0b;
 }
 
+.field.has-error input {
+  border-color: #ef4444;
+  background: #fff5f5;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.field-error {
+  color: #b91c1c;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
 .primary {
   border: none;
   padding: 0.85rem 1.25rem;
@@ -166,7 +178,8 @@ h2 {
 .alert.error {
   background: #fee2e2;
   color: #991b1b;
-  border: 1px solid #fecaca;
+  border: 2px solid #ef4444;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
 }
 
 .result pre {

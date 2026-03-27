@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { UnauthorizedDomainException } from '../../../../core/exceptions/domain-exceptions';
 import { AuthService } from '../../application/services/auth.service';
+import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -13,8 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const id = await this.authService.checkUserCredential(email, password);
     if (!id) {
       throw UnauthorizedDomainException.create(
-        'The email or password are incorrect. Try again please',
-        'emailOrPassword',
+        ACCOUNT_ERRORS.EMAIL_OR_PASSWORD_INCORRECT,
       );
     }
     return { id };

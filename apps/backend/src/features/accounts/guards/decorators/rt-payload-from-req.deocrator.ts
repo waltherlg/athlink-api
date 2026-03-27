@@ -12,10 +12,13 @@ export const ExtractPayloadFromRequest = createParamDecorator(
     const request: RequestWithUser = context
       .switchToHttp()
       .getRequest<RequestWithUser>();
+
     const payload: JwtPayloadDto = request.user;
-    if (!payload) {
-      throw ForbiddenDomainException.create('No payload available');
+
+    if (!request.user) {
+      throw new Error('User not found in request (guard issue)');
     }
+
     return payload;
   },
 );

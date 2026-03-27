@@ -5,10 +5,9 @@ import { UnauthorizedDomainException } from '../../../../core/exceptions/domain-
 export const ExtractUserFromRequest = createParamDecorator(
   (data: unknown, context: ExecutionContext): string => {
     const request: RequestWithUser = context.switchToHttp().getRequest();
-    const user = request.user;
-    if (!user) {
-      throw UnauthorizedDomainException.create('Not authorized');
+    if (!request.user) {
+      throw new Error('User not found in request (guard issue)');
     }
-    return user.id;
+    return request.user.id;
   },
 );

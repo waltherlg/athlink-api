@@ -21,4 +21,56 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  //relation athlete - coach
+  athletes CoachAthlete[] @relation("CoachRelation")
+  coaches  CoachAthlete[] @relation("AthleteRelation")
+
+  // logs
+  trainingLogs TrainingLog[]
+}
+
+model CoachAthlete {
+  id String @id @default(uuid())
+
+  coachId   String
+  athleteId String
+
+  coach   User @relation("CoachRelation", fields: [coachId], references: [id])
+  athlete User @relation("AthleteRelation", fields: [athleteId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([coachId, athleteId])
+}
+
+model TrainingLog {
+  id String @id @default(uuid())
+
+  athleteId String
+  athlete   User   @relation(fields: [athleteId], references: [id])
+
+  sportType SportType @unique
+
+  entries Entry[]
+
+  createdAt DateTime @default(now())
+}
+
+enum SportType {
+  SHOOTING
+}
+
+model Entry {
+  id String @id @default(uuid())
+
+  trainingLogId String
+  trainingLog   TrainingLog @relation(fields: [trainingLogId], references: [id])
+
+  result       String?
+  coachNotes   String?
+  privateNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

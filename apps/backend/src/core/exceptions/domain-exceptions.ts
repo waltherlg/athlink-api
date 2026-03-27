@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DomainExceptionCode } from './domain-exception-codes';
+import { AccountErrorCodeEnum, ErrorCode } from '@shared-types';
 
 export class ErrorResponse {
   @ApiProperty({
@@ -7,6 +8,7 @@ export class ErrorResponse {
     isArray: true,
     example: [
       {
+        code: 'string',
         message: 'string',
         field: 'string',
       },
@@ -16,12 +18,17 @@ export class ErrorResponse {
 }
 
 export class ErrorMessage {
+  @ApiProperty({
+    enum: [...Object.values(AccountErrorCodeEnum)],
+  })
+  code: ErrorCode;
   @ApiProperty({ example: 'string' })
   message: string;
   @ApiProperty({ example: 'string' })
   field: string | null;
 
-  constructor(message: string, field: string | null = null) {
+  constructor(code: ErrorCode, message: string, field: string | null = null) {
+    this.code = code;
     this.message = message;
     this.field = field;
   }
@@ -48,18 +55,14 @@ function ConcreteDomainExceptionFactory(
     // static create(message?: string, key?: string) {
     //   return new this(message ? [new ErrorMessage(message, key)] : []);
     // }
-    static create(
-      messageOrErrorObj?: string | { field: string; message: string },
-      key?: string,
-    ) {
-      if (typeof messageOrErrorObj === 'object' && messageOrErrorObj !== null) {
-        return new this([
-          new ErrorMessage(messageOrErrorObj.message, messageOrErrorObj.field),
-        ]);
-      }
+    static create(errorObj?: {
+      code: ErrorCode;
+      field: string;
+      message: string;
+    }) {
       return new this(
-        messageOrErrorObj
-          ? [new ErrorMessage(messageOrErrorObj as string, key)]
+        errorObj
+          ? [new ErrorMessage(errorObj.code, errorObj.message, errorObj.field)]
           : [],
       );
     }

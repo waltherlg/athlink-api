@@ -7,10 +7,11 @@ import {
   BadRequestDomainException,
   ErrorMessage,
 } from '../core/exceptions/domain-exceptions';
+import { CommonErrorCodeEnum } from '@shared-types';
 
 export const errorFormatter = (
   errors: ValidationError[],
-  errorMessage?: any,
+  errorMessage: ErrorMessage[] = [],
 ): ErrorMessage[] => {
   const errorsForResponse = errorMessage || [];
 
@@ -21,12 +22,22 @@ export const errorFormatter = (
       const constraintKeys = Object.keys(error.constraints);
 
       for (const key of constraintKeys) {
-        errorsForResponse.push({
-          message: error.constraints[key]
-            ? `${error.constraints[key]}; Received value: ${error?.value}`
-            : '',
-          field: error.property,
-        });
+        // errorsForResponse.push({
+        //   message: error.constraints[key]
+        //     ? `${error.constraints[key]}; Received value: ${error?.value}`
+        //     : '',
+        //   field: error.property,
+        // });
+
+        errorsForResponse.push(
+          new ErrorMessage(
+            CommonErrorCodeEnum.VALIDATION_ERROR,
+            error.constraints[key]
+              ? `${error.constraints[key]}; Received value: ${error?.value}`
+              : '',
+            error.property,
+          ),
+        );
       }
     }
   }
