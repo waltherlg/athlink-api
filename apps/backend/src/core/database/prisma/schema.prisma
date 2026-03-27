@@ -22,29 +22,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  //relation athlete - coach
-  athletes CoachAthlete[] @relation("CoachRelation")
-  coaches  CoachAthlete[] @relation("AthleteRelation")
-
   // logs
-  trainingLogs TrainingLog[]
+  trainingJournals TrainingJournal[]
+  journalAccesses  JournalAccess[]
 }
 
-model CoachAthlete {
-  id String @id @default(uuid())
-
-  coachId   String
-  athleteId String
-
-  coach   User @relation("CoachRelation", fields: [coachId], references: [id])
-  athlete User @relation("AthleteRelation", fields: [athleteId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@unique([coachId, athleteId])
-}
-
-model TrainingLog {
+model TrainingJournal {
   id String @id @default(uuid())
 
   athleteId String
@@ -52,20 +35,43 @@ model TrainingLog {
 
   sportType SportType @unique
 
-  entries Entry[]
+  trainingRecords TrainingRecord[]
+
+  accesses JournalAccess[]
 
   createdAt DateTime @default(now())
+}
+
+model JournalAccess {
+  id String @id @default(uuid())
+
+  userId    String
+  journalId String
+
+  user    User            @relation(fields: [userId], references: [id])
+  journal TrainingJournal @relation(fields: [journalId], references: [id])
+
+  role AccessRole
+
+  createdAt      DateTime @default(now())
+  coachAthleteId String?
+
+  @@unique([userId, journalId])
+}
+
+enum AccessRole {
+  COACH
 }
 
 enum SportType {
   SHOOTING
 }
 
-model Entry {
+model TrainingRecord {
   id String @id @default(uuid())
 
-  trainingLogId String
-  trainingLog   TrainingLog @relation(fields: [trainingLogId], references: [id])
+  trainingJournalId String
+  trainingJournal   TrainingJournal @relation(fields: [trainingJournalId], references: [id])
 
   result       String?
   coachNotes   String?
