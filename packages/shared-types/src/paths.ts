@@ -5,12 +5,12 @@ export const authPaths = {
   me: 'me',
 } as const;
 
-export const trainingLogsPaths = {
-  controller: 'training-log',
+export const trainingJournalsPaths = {
+  controller: 'training-journal',
 };
 
 export const dashboardPaths = {
-  controller: 'deshboard',
+  controller: 'dashboard',
   athlete: 'athlete',
   coach: 'coach',
 };

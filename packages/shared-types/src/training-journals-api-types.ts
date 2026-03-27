@@ -2,11 +2,11 @@ export enum SportTypeEnum {
   SHOOTING = 'SHOOTING',
 }
 
-export type CreateTrainingLogInput = {
+export type CreateTrainingJournalInput = {
   sportType: SportTypeEnum;
 };
 
-export type TrainingLogView = {
+export type TrainingJournalView = {
   id: string;
   athleteId: string;
   sportType: SportTypeEnum;

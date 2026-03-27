@@ -1,4 +1,4 @@
-import { SportTypeEnum } from './training-logs-api-types';
+import { SportTypeEnum } from './training-journals-api-types';
 
 export type UserRegistrationInput = {
   email: string;
