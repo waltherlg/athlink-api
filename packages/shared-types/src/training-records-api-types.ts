@@ -6,7 +6,7 @@ export type CreateTrainingRecordInput = {
 
 export type TrainingRecordAthleteView = {
   id: string;
-  trainingLogId: string;
+  trainingJournalId: string;
   result: string | null;
   coachNotes: string | null;
   privateNotes: string | null;
@@ -17,7 +17,7 @@ export type TrainingRecordAthleteView = {
 export type TrainingRecordCoachView = {
   id: string;
   userName: string;
-  trainingLogId: string;
+  trainingJournalId: string;
   result: string | null;
   coachNotes: string | null;
   createdAt: string;

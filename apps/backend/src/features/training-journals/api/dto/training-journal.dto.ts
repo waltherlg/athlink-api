@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SportTypeEnum, TrainingLogView } from '@shared-types';
-import { CreateTrainingLogInput } from '@shared-types';
+import { SportTypeEnum, TrainingJournalView } from '@shared-types';
+import { CreateTrainingJournalInput } from '@shared-types';
 import { IsEnum, IsNotEmpty } from 'class-validator';
 
-export class CreateTrainingLogInputDto implements CreateTrainingLogInput {
+export class CreateTrainingJournalInputDto implements CreateTrainingJournalInput {
   @ApiProperty({
     enum: SportTypeEnum,
     example: SportTypeEnum.SHOOTING,
@@ -13,7 +13,7 @@ export class CreateTrainingLogInputDto implements CreateTrainingLogInput {
   sportType: SportTypeEnum;
 }
 
-export class TrainingLogViewDto implements TrainingLogView {
+export class TrainingJournalViewDto implements TrainingJournalView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
   id: string;
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
@@ -24,3 +24,4 @@ export class TrainingLogViewDto implements TrainingLogView {
   })
   sportType: SportTypeEnum;
 }
+

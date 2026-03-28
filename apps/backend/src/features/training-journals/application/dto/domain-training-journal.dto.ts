@@ -1,19 +1,20 @@
 import { SportTypeEnum } from '@shared-types';
 
-export class CreateTrainingLogDto {
+export class CreateTrainingJournalDto {
   athleteId: string;
   sportType: SportTypeEnum;
 }
 
-export class CreateEntryDto {
-  trainingLogId: string;
+export class CreateTrainingRecordDto {
+  trainingJournalId: string;
   result?: string;
   coachNotes?: string;
   privateNotes?: string;
 }
 
-export class UpdateEntryDto {
+export class UpdateTrainingRecordDto {
   result?: string;
   coachNotes?: string;
   privateNotes?: string;
 }
+

@@ -1,8 +1,9 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
-  CreateTrainingLogInputDto,
-  TrainingLogViewDto,
-} from '../dto/training-log.dto';
+  CreateTrainingJournalInputDto,
+  TrainingJournalViewDto,
+} from '../dto/training-journal.dto';
+import { CreateTrainingRecordInputDto } from '../dto/training-record.dto';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -13,20 +14,20 @@ import {
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
-import { TRAINING_LOG_ERRORS } from '../../consts/training-log-errors.consts';
+import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
 import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 
-export const SW_TRAINING_LOGS_TITLES = {
-  TRAINING_LOG_CONTROLLER: 'Training log operations',
+export const SW_TRAINING_JOURNALS_TITLES = {
+  TRAINING_JOURNAL_CONTROLLER: 'Training journal operations',
 };
 
-export function CreateTrainingLogSwagger() {
+export function CreateTrainingJournalSwagger() {
   return applyDecorators(
     ApiExtraModels(ErrorResponse),
-    ApiOperation({ summary: 'Register new user' }),
+    ApiOperation({ summary: 'Create training journal' }),
     ApiBody({
-      description: 'Training log data',
-      type: CreateTrainingLogInputDto,
+      description: 'Training journal data',
+      type: CreateTrainingJournalInputDto,
     }),
     ApiResponse({
       status: HttpStatus.UNAUTHORIZED,
@@ -39,8 +40,8 @@ export function CreateTrainingLogSwagger() {
     }),
     ApiResponse({
       status: HttpStatus.CREATED,
-      description: 'Returns created user',
-      type: TrainingLogViewDto,
+      description: 'Returns created training journal',
+      type: TrainingJournalViewDto,
     }),
     ApiResponse({
       status: HttpStatus.BAD_REQUEST,
@@ -48,7 +49,7 @@ export function CreateTrainingLogSwagger() {
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
           COMMON_ERRORS.VALIDATION_ERROR,
-          TRAINING_LOG_ERRORS.TRAINING_LOG_ALREADY_EXISTS,
+          TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_ALREADY_EXISTS,
         ]),
       },
     }),
@@ -56,18 +57,18 @@ export function CreateTrainingLogSwagger() {
   );
 }
 
-export function CreateEntrySwagger() {
+export function CreateTrainingRecordSwagger() {
   return applyDecorators(
     ApiExtraModels(ErrorResponse),
-    ApiOperation({ summary: 'Create training entry' }),
+    ApiOperation({ summary: 'Create training record' }),
     ApiBody({
-      description: 'Training log data',
-      type: CreateTrainingLogInputDto,
+      description: 'Training record data',
+      type: CreateTrainingRecordInputDto,
     }),
     ApiResponse({
       status: HttpStatus.CREATED,
-      description: 'Returns created entry',
-      type: TrainingLogViewDto,
+      description: 'Returns created training record',
+      type: TrainingJournalViewDto,
     }),
     ApiResponse({
       status: HttpStatus.BAD_REQUEST,
@@ -75,22 +76,22 @@ export function CreateEntrySwagger() {
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
           COMMON_ERRORS.VALIDATION_ERROR,
-          TRAINING_LOG_ERRORS.TRAINING_LOG_ALREADY_EXISTS,
+          TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_ALREADY_EXISTS,
         ]),
       },
     }),
     ApiResponse({
       status: HttpStatus.NOT_FOUND,
-      description: 'Training log not found',
+      description: 'Training journal not found',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          TRAINING_LOG_ERRORS.TRAINING_LOG_NOT_FOUND,
+          TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
         ]),
       },
     }),
     ApiResponse({
       status: HttpStatus.FORBIDDEN,
-      description: 'training log does not belong to the current user',
+      description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
           ACCOUNT_ERRORS.NOT_OWNER,
@@ -109,3 +110,4 @@ export function CreateEntrySwagger() {
     ApiBearerAuth(),
   );
 }
+
