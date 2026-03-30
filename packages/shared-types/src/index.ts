@@ -24,3 +24,9 @@ export {
   CommonErrorCodeEnum,
   TrainingJournalErrorCodeEnum,
 } from './error-codes';
+
+export {
+  PaginationOutputModel,
+  RequestQueryParamsModel,
+  DEFAULT_QUERY_PARAMS,
+} from './query-models';
