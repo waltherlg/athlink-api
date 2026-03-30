@@ -1,16 +1,14 @@
 import { SportTypeEnum } from './training-journals-api-types';
 
-export type athleteDashboardDataOutput = {
-  journals: [
-    {
+export type AthleteDashboardDataOutput = {
+  journals: {
+    id: string;
+    sportType: SportTypeEnum;
+    latestRecord: {
       id: string;
-      sportType: SportTypeEnum;
-      latestRecord: {
-        id: string;
-        date: string;
-        result: string;
-      };
-      hasTodayRecord: boolean;
-    },
-  ];
-};
+      date: string;
+      result: string;
+    };
+    hasTodayRecord: boolean;
+  } | null;
+}[];
