@@ -16,14 +16,20 @@ import { SessionCreateDto } from '../application/dto/domain-session.dto';
 import { cookieSettings } from '../config/cookie.config';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 import { UsersQueryRepository } from '../infrastructure/users-query.repository';
 import { UserRegistrationCommand } from '../application/use-cases/auth-use-cases/user-registration.use-case';
 import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from './dto/user-view.dto';
-import { LoginSwagger, RegisterUserSwagger } from './swagger/auth.swagger';
+import {
+  LoginSwagger,
+  RegisterUserSwagger,
+  SW_AUTH_TITLES,
+} from './swagger/auth.swagger';
 import { authPaths } from '@shared-types';
 
+@ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)
 @Controller(authPaths.controller)
 export class AuthController {
   constructor(

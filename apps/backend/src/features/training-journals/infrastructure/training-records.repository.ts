@@ -35,6 +35,34 @@ export class TrainingRecordsRepository {
     if (!record) return null;
     return record;
   }
+
+  async getLatestRecordsByTrainingJournalIds(
+    journalIds: string[],
+  ): Promise<TrainingRecord[]> {
+    if (journalIds.length === 0) return [];
+    const records = await this.prisma.trainingRecord.findMany({
+      where: { trainingJournalId: { in: journalIds } },
+      orderBy: { createdAt: 'desc' },
+    });
+    return records;
+  }
+
+  async getTrainingJournalIdsWithRecordsInRange(
+    journalIds: string[],
+    startDate: Date,
+    endDate: Date,
+  ): Promise<string[]> {
+    if (journalIds.length === 0) return [];
+    const records = await this.prisma.trainingRecord.findMany({
+      where: {
+        trainingJournalId: { in: journalIds },
+        createdAt: { gte: startDate, lt: endDate },
+      },
+      select: { trainingJournalId: true },
+      distinct: ['trainingJournalId'],
+    });
+    return records.map((record) => record.trainingJournalId);
+  }
 }
 
 

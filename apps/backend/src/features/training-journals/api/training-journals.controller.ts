@@ -1,12 +1,17 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { CreateTrainingJournalInputDto } from './dto/training-journal.dto';
 import { trainingJournalsPaths } from '@shared-types';
 import { CreateTrainingJournalCommand } from '../application/use-cases/create-training-journal.use-case';
-import { CreateTrainingJournalSwagger } from './swagger/training-journals.swagger';
+import {
+  CreateTrainingJournalSwagger,
+  SW_TRAINING_JOURNALS_TITLES,
+} from './swagger/training-journals.swagger';
 
+@ApiTags(SW_TRAINING_JOURNALS_TITLES.TRAINING_JOURNAL_CONTROLLER)
 @Controller(trainingJournalsPaths.controller)
 export class TrainingJournalsController {
   constructor(private commandBus: CommandBus) {}
