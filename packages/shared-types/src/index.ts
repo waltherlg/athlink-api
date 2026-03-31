@@ -31,4 +31,4 @@ export {
   DEFAULT_QUERY_PARAMS,
 } from './query-models';
 
-export { AthleteDashboardDataOutput } from './dashboards-api-types';
+export { AthleteDashboardDataView } from './dashboards-api-types';

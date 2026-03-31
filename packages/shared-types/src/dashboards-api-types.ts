@@ -1,6 +1,6 @@
 import { SportTypeEnum } from './training-journals-api-types';
 
-export type AthleteDashboardDataOutput = {
+export type AthleteDashboardDataView = {
   journals:
     | {
         id: string;
