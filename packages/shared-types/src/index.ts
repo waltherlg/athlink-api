@@ -5,22 +5,30 @@ export type {
   UserRegistrationInput,
   UserView,
 } from './accounts-api-types';
-export { authPaths, trainingLogsPaths, dashboardPaths } from './paths';
+export { authPaths, trainingJournalsPaths, dashboardPaths } from './paths';
 export {
   SportTypeEnum,
-  CreateTrainingLogInput,
-  TrainingLogView,
-} from './training-logs-api-types';
+  CreateTrainingJournalInput,
+  TrainingJournalView,
+} from './training-journals-api-types';
 
 export {
-  CreateTrainingEntryInput,
-  TrainingEntryAthleteView,
-  TrainingEntryCoachView,
-} from './training-entry-api-types';
+  CreateTrainingRecordInput,
+  TrainingRecordAthleteView,
+  TrainingRecordCoachView,
+} from './training-records-api-types';
 
 export {
   AccountErrorCodeEnum,
   ErrorCode,
   CommonErrorCodeEnum,
-  TrainingLogErrorCodeEnum,
+  TrainingJournalErrorCodeEnum,
 } from './error-codes';
+
+export {
+  PaginationOutputModel,
+  RequestQueryParamsModel,
+  DEFAULT_QUERY_PARAMS,
+} from './query-models';
+
+export { AthleteDashboardDataView } from './dashboards-api-types';

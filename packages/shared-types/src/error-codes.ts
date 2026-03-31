@@ -1,7 +1,7 @@
 export type ErrorCode =
   | AccountErrorCodeEnum
   | CommonErrorCodeEnum
-  | TrainingLogErrorCodeEnum;
+  | TrainingJournalErrorCodeEnum;
 
 export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
@@ -24,7 +24,7 @@ export enum CommonErrorCodeEnum {
   VALIDATION_ERROR = 'VALIDATION_ERROR',
 }
 
-export enum TrainingLogErrorCodeEnum {
-  TRAINING_LOG_ALREADY_EXISTS = 'TRAINING_LOG_ALREADY_EXISTS',
-  TRAINING_LOG_NOT_FOUND = 'TRAINING_LOG_NOT_FOUND',
+export enum TrainingJournalErrorCodeEnum {
+  TRAINING_JOURNAL_ALREADY_EXISTS = 'TRAINING_JOURNAL_ALREADY_EXISTS',
+  TRAINING_JOURNAL_NOT_FOUND = 'TRAINING_JOURNAL_NOT_FOUND',
 }
