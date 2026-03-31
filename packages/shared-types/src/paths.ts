@@ -7,6 +7,7 @@ export const authPaths = {
 
 export const trainingJournalsPaths = {
   controller: 'training-journal',
+  records: ':trainingJournalId/records',
 };
 
 export const dashboardPaths = {
