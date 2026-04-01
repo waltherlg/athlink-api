@@ -47,6 +47,42 @@ export class TrainingRecordsRepository {
     return records;
   }
 
+  async getLatestRecordsByTrainingJournalId(
+    trainingJournalId: string,
+    take: number,
+  ): Promise<TrainingRecord[]> {
+    const records = await this.prisma.trainingRecord.findMany({
+      where: { trainingJournalId },
+      orderBy: { createdAt: 'desc' },
+      take,
+    });
+    return records;
+  }
+
+  async getTrainingRecordsByTrainingJournalId(
+    trainingJournalId: string,
+    params: {
+      sortBy: keyof TrainingRecord;
+      sortDirection: Prisma.SortOrder;
+      skip: number;
+      take: number;
+    },
+  ): Promise<{ items: TrainingRecord[]; totalCount: number }> {
+    const { sortBy, sortDirection, skip, take } = params;
+    const [items, totalCount] = await this.prisma.$transaction([
+      this.prisma.trainingRecord.findMany({
+        where: { trainingJournalId },
+        orderBy: { [sortBy]: sortDirection },
+        skip,
+        take,
+      }),
+      this.prisma.trainingRecord.count({
+        where: { trainingJournalId },
+      }),
+    ]);
+    return { items, totalCount };
+  }
+
   async getTrainingJournalIdsWithRecordsInRange(
     journalIds: string[],
     startDate: Date,

@@ -1,3 +1,5 @@
+import { PaginationOutputModel } from './query-models';
+
 export type CreateTrainingRecordInput = {
   result?: string;
   coachNotes?: string;
@@ -23,3 +25,6 @@ export type TrainingRecordCoachView = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TrainingRecordsPaginationView =
+  PaginationOutputModel<TrainingRecordAthleteView>;

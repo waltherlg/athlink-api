@@ -7,8 +7,13 @@ export const authPaths = {
 
 export const trainingJournalsPaths = {
   controller: 'training-journal',
-  records: ':trainingJournalId/records',
-};
+  list: '',
+  byId: ':trainingJournalId',
+  records: 'records',
+
+  buildPostRecordsPath: (id: string) =>
+    `${trainingJournalsPaths.controller}/${id}/${trainingJournalsPaths.records}`,
+} as const;
 
 export const dashboardPaths = {
   controller: 'dashboard',

@@ -10,12 +10,14 @@ export {
   SportTypeEnum,
   CreateTrainingJournalInput,
   TrainingJournalView,
+  TrainingJournalWithLatestRecordsView,
 } from './training-journals-api-types';
 
 export {
   CreateTrainingRecordInput,
   TrainingRecordAthleteView,
   TrainingRecordCoachView,
+  TrainingRecordsPaginationView,
 } from './training-records-api-types';
 
 export {

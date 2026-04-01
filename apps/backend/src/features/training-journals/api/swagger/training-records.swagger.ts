@@ -5,6 +5,7 @@ import {
   ApiExtraModels,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
@@ -15,6 +16,7 @@ import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 import {
   CreateTrainingRecordInputDto,
   TrainingRecordAthleteViewDto,
+  TrainingRecordsPaginationViewDto,
 } from '../dto/training-record.dto';
 import { trainingJournalsPaths } from '@shared-types';
 
@@ -26,7 +28,7 @@ export function CreateTrainingRecordSwagger() {
   return applyDecorators(
     ApiExtraModels(ErrorResponse),
     ApiOperation({
-      summary: `Create training record (POST /${trainingJournalsPaths.controller}/${trainingJournalsPaths.records})`,
+      summary: `Create training record (POST /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records})`,
     }),
     ApiParam({
       name: 'trainingJournalId',
@@ -50,6 +52,73 @@ export function CreateTrainingRecordSwagger() {
           COMMON_ERRORS.VALIDATION_ERROR,
         ]),
       },
+    }),
+    ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Training journal not found',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.FORBIDDEN,
+      description: 'training journal does not belong to the current user',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          ACCOUNT_ERRORS.NOT_OWNER,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'unauthorized',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          ACCOUNT_ERRORS.UNAUTHORIZED,
+        ]),
+      },
+    }),
+    ApiBearerAuth(),
+  );
+}
+
+export function GetTrainingRecordsSwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiOperation({
+      summary: `Get training records (GET /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records})`,
+    }),
+    ApiParam({
+      name: 'trainingJournalId',
+      description: 'Training journal id',
+      required: true,
+    }),
+    ApiQuery({
+      name: 'sortBy',
+      required: false,
+      example: 'createdAt',
+    }),
+    ApiQuery({
+      name: 'sortDirection',
+      required: false,
+      example: 'DESC',
+    }),
+    ApiQuery({
+      name: 'pageNumber',
+      required: false,
+      example: '1',
+    }),
+    ApiQuery({
+      name: 'pageSize',
+      required: false,
+      example: '10',
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Returns paginated training records',
+      type: TrainingRecordsPaginationViewDto,
     }),
     ApiResponse({
       status: HttpStatus.NOT_FOUND,
