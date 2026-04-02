@@ -8,6 +8,7 @@ import { getAccessToken } from '../auth/token-storage';
 import { getAthleteDashboard } from '../../api/dashboard/get-athlete-dashboard';
 import { createTrainingRecord } from '../../api/training-journals/create-training-record';
 import { t } from '../../i18n';
+import { usePageTitle } from '../../components/page-title-context';
 
 type JournalFormState = Record<string, CreateTrainingRecordInput>;
 
@@ -35,6 +36,7 @@ const formatDate = (value: string) => {
 };
 
 export default function DashboardPage() {
+  usePageTitle(t('dashboard.title'));
   const [data, setData] = useState<AthleteDashboardDataView | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -103,8 +105,7 @@ export default function DashboardPage() {
 
   return (
     <section className="page dashboard">
-      <header className="page-header">
-        <h1>{t('dashboard.title')}</h1>
+      <header className="page-header compact">
         <p className="subtitle">{t('dashboard.subtitle')}</p>
         <div className="journal-actions">
           <Link className="button-link" to="/journal/new">
@@ -173,8 +174,8 @@ export default function DashboardPage() {
                       <div className="quick-form">
                         <label className="field">
                           <span>{t('dashboard.field.result')}</span>
-                          <input
-                            type="text"
+                          <textarea
+                            rows={1}
                             value={formState.result ?? ''}
                             onChange={(event) =>
                               handleFormChange(
@@ -189,8 +190,8 @@ export default function DashboardPage() {
 
                         <label className="field">
                           <span>{t('dashboard.field.coachNotes')}</span>
-                          <input
-                            type="text"
+                          <textarea
+                            rows={4}
                             value={formState.coachNotes ?? ''}
                             onChange={(event) =>
                               handleFormChange(
@@ -205,8 +206,8 @@ export default function DashboardPage() {
 
                         <label className="field">
                           <span>{t('dashboard.field.privateNotes')}</span>
-                          <input
-                            type="text"
+                          <textarea
+                            rows={4}
                             value={formState.privateNotes ?? ''}
                             onChange={(event) =>
                               handleFormChange(

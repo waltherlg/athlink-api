@@ -4,6 +4,7 @@ import type { CreateTrainingRecordInput } from '@shared-types';
 import { createTrainingRecord } from '../../api/training-journals/create-training-record';
 import { getAccessToken } from '../auth/token-storage';
 import { t } from '../../i18n';
+import { usePageTitle } from '../../components/page-title-context';
 
 const EMPTY_FORM: CreateTrainingRecordInput = {
   result: '',
@@ -20,6 +21,7 @@ const normalizeInput = (input: CreateTrainingRecordInput) => ({
 });
 
 export default function CreateTrainingRecordPage() {
+  usePageTitle(t('record.title'));
   const { trainingJournalId } = useParams();
   const [form, setForm] = useState<CreateTrainingRecordInput>(EMPTY_FORM);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,22 +49,6 @@ export default function CreateTrainingRecordPage() {
 
   return (
     <section className="page">
-      <header className="page-header">
-        <h1>{t('record.title')}</h1>
-      </header>
-
-      <div className="journal-actions">
-        {trainingJournalId ? (
-          <Link className="button-link ghost" to={`/journal/${trainingJournalId}`}>
-            {t('record.backJournal')}
-          </Link>
-        ) : (
-          <Link className="button-link ghost" to="/">
-            {t('record.backDashboard')}
-          </Link>
-        )}
-      </div>
-
       <form
         className="card form"
         onSubmit={(event) => {
@@ -72,8 +58,8 @@ export default function CreateTrainingRecordPage() {
       >
         <label className="field">
           <span>{t('record.field.result')}</span>
-          <input
-            type="text"
+          <textarea
+            rows={1}
             value={form.result ?? ''}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, result: event.target.value }))
@@ -84,8 +70,8 @@ export default function CreateTrainingRecordPage() {
 
         <label className="field">
           <span>{t('record.field.coachNotes')}</span>
-          <input
-            type="text"
+          <textarea
+            rows={4}
             value={form.coachNotes ?? ''}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, coachNotes: event.target.value }))
@@ -96,8 +82,8 @@ export default function CreateTrainingRecordPage() {
 
         <label className="field">
           <span>{t('record.field.privateNotes')}</span>
-          <input
-            type="text"
+          <textarea
+            rows={4}
             value={form.privateNotes ?? ''}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, privateNotes: event.target.value }))
@@ -106,9 +92,23 @@ export default function CreateTrainingRecordPage() {
           />
         </label>
 
-        <button className="primary" type="submit" disabled={isLoading}>
-          {isLoading ? t('record.saving') : t('record.save')}
-        </button>
+        <div className="form-actions">
+          {trainingJournalId ? (
+            <Link
+              className="button-link ghost"
+              to={`/journal/${trainingJournalId}`}
+            >
+              {t('record.backJournal')}
+            </Link>
+          ) : (
+            <Link className="button-link ghost" to="/">
+              {t('record.backDashboard')}
+            </Link>
+          )}
+          <button className="primary compact" type="submit" disabled={isLoading}>
+            {isLoading ? t('record.saving') : t('record.save')}
+          </button>
+        </div>
       </form>
 
       {error ? <div className="alert error">{error}</div> : null}

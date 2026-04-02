@@ -6,6 +6,7 @@ import { AccountErrorCodeEnum, CommonErrorCodeEnum } from '@shared-types';
 import RegistrationForm from './RegistrationForm';
 import type { ApiError } from '../../../api/http';
 import { t } from '../../../i18n';
+import { usePageTitle } from '../../../components/page-title-context';
 
 type FieldKey = keyof UserRegistrationInput;
 
@@ -36,6 +37,7 @@ const isFieldKey = (value: string): value is FieldKey =>
   value === 'email' || value === 'userName' || value === 'password';
 
 export default function RegistrationPage() {
+  usePageTitle(t('register.title'));
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>(EMPTY_ERRORS);
   const navigate = useNavigate();
@@ -119,10 +121,7 @@ export default function RegistrationPage() {
 
   return (
     <section className="page">
-      <header className="page-header">
-        <h1>{t('register.title')}</h1>
-        <p className="subtitle">{t('register.subtitle')}</p>
-      </header>
+      <p className="subtitle">{t('register.subtitle')}</p>
 
       <RegistrationForm
         onSubmit={handleSubmit}

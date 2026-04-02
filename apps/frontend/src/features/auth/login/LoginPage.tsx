@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { LoginInput } from '@shared-types';
 import { useAuth } from '../auth-context';
 import { t } from '../../../i18n';
+import { usePageTitle } from '../../../components/page-title-context';
 
 const DEFAULT_FORM: LoginInput = {
   email: '',
@@ -11,6 +12,7 @@ const DEFAULT_FORM: LoginInput = {
 };
 
 export default function LoginPage() {
+  usePageTitle(t('login.title'));
   const [form, setForm] = useState<LoginInput>(DEFAULT_FORM);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,10 +46,7 @@ export default function LoginPage() {
 
   return (
     <section className="page">
-      <header className="page-header">
-        <h1>{t('login.title')}</h1>
-        <p className="subtitle">{t('login.subtitle')}</p>
-      </header>
+      <p className="subtitle">{t('login.subtitle')}</p>
 
       <form className="card form" onSubmit={handleSubmit}>
         <label className="field">

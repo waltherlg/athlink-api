@@ -5,12 +5,14 @@ import { SportTypeEnum } from '@shared-types';
 import { createTrainingJournal } from '../../api/training-journals/create-training-journal';
 import { getAccessToken } from '../auth/token-storage';
 import { t } from '../../i18n';
+import { usePageTitle } from '../../components/page-title-context';
 
 const EMPTY_FORM: CreateTrainingJournalInput = {
   sportType: SportTypeEnum.SHOOTING,
 };
 
 export default function CreateTrainingJournalPage() {
+  usePageTitle(t('journalCreate.title'));
   const [form, setForm] = useState<CreateTrainingJournalInput>(EMPTY_FORM);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,10 +39,6 @@ export default function CreateTrainingJournalPage() {
 
   return (
     <section className="page">
-      <header className="page-header">
-        <h1>{t('journalCreate.title')}</h1>
-      </header>
-
       <div className="journal-actions">
         <Link className="button-link ghost" to="/">
           {t('journalCreate.back')}

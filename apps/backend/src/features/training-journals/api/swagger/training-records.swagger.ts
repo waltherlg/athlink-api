@@ -150,3 +150,55 @@ export function GetTrainingRecordsSwagger() {
     ApiBearerAuth(),
   );
 }
+
+export function GetTrainingRecordByIdSwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiOperation({
+      summary: `Get training record (GET /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records}/:recordId)`,
+    }),
+    ApiParam({
+      name: 'trainingJournalId',
+      description: 'Training journal id',
+      required: true,
+    }),
+    ApiParam({
+      name: 'recordId',
+      description: 'Training record id',
+      required: true,
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Returns training record',
+      type: TrainingRecordAthleteViewDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Training journal not found',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.FORBIDDEN,
+      description: 'training journal does not belong to the current user',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          ACCOUNT_ERRORS.NOT_OWNER,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'unauthorized',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          ACCOUNT_ERRORS.UNAUTHORIZED,
+        ]),
+      },
+    }),
+    ApiBearerAuth(),
+  );
+}

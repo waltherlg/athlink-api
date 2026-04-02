@@ -28,11 +28,13 @@ import {
 } from './swagger/training-journals.swagger';
 import {
   CreateTrainingRecordSwagger,
+  GetTrainingRecordByIdSwagger,
   GetTrainingRecordsSwagger,
 } from './swagger/training-records.swagger';
 import { GetTrainingJournalsQuery } from '../application/query-handlers/get-training-journals.query-handler';
 import { GetTrainingJournalByIdQuery } from '../application/query-handlers/get-training-journal-by-id.query-handler';
 import { GetTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-training-records-by-journal-id.query-handler';
+import { GetTrainingRecordByIdQuery } from '../application/query-handlers/get-training-record-by-id.query-handler';
 
 @ApiTags(SW_TRAINING_JOURNALS_TITLES.TRAINING_JOURNAL_CONTROLLER)
 @Controller(trainingJournalsPaths.controller)
@@ -78,6 +80,22 @@ export class TrainingJournalsController {
         trainingJournalId,
         query,
       ),
+    );
+  }
+
+  @GetTrainingRecordByIdSwagger()
+  @UseGuards(JwtAuthGuard)
+  @Get(
+    `${trainingJournalsPaths.byId}/${trainingJournalsPaths.records}/:recordId`,
+  )
+  async getTrainingRecordById(
+    @Req() request: RequestWithUser,
+    @Param('trainingJournalId') trainingJournalId: string,
+    @Param('recordId') recordId: string,
+  ) {
+    const athleteId = request.user.id;
+    return this.queryBus.execute(
+      new GetTrainingRecordByIdQuery(athleteId, trainingJournalId, recordId),
     );
   }
 

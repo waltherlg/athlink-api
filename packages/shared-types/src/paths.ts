@@ -10,9 +10,12 @@ export const trainingJournalsPaths = {
   list: '',
   byId: ':trainingJournalId',
   records: 'records',
+  recordById: 'records/:recordId',
 
   buildPostRecordsPath: (id: string) =>
     `${trainingJournalsPaths.controller}/${id}/${trainingJournalsPaths.records}`,
+  buildRecordByIdPath: (journalId: string, recordId: string) =>
+    `${trainingJournalsPaths.controller}/${journalId}/${trainingJournalsPaths.records}/${recordId}`,
 } as const;
 
 export const dashboardPaths = {
