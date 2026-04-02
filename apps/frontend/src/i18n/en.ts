@@ -2,7 +2,7 @@ export const en = {
   'header.tagline': 'Stay connected with your coach',
   'header.checking': 'Checking...',
   'header.greeting': 'Hello, {name}',
-  'header.dashboard': 'Athlete Dashboard',
+  'header.dashboard': 'Home',
   'header.logout': 'Logout',
   'header.login': 'Login',
 
@@ -33,7 +33,7 @@ export const en = {
   'register.placeholder.username': 'newUserName',
   'register.placeholder.password': 'some123PASSWORD',
 
-  'dashboard.title': 'Athlete Dashboard',
+  'dashboard.title': 'Athlink — stay linked with your coach',
   'dashboard.subtitle': 'Track progress and log your trainings here.',
   'dashboard.createJournal': 'Create journal',
   'dashboard.loading': 'Loading dashboard...',
@@ -59,7 +59,7 @@ export const en = {
   'dashboard.nextTitle': "What's next?",
   'dashboard.nextText': 'Open a journal to see all records or create a new one.',
   'dashboard.goToJournal': 'Go to journal',
-  'dashboard.addRecord': 'Add record',
+  'dashboard.addRecord': 'Log a record',
 
   'journal.titleFallback': 'Training Journal',
   'journal.titleWithSport': 'Training Journal "{sport}"',

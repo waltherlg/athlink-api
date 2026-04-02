@@ -2,7 +2,7 @@ export const ru = {
   'header.tagline': 'будь на связи с тренером',
   'header.checking': 'Проверяем...',
   'header.greeting': 'Привет, {name}',
-  'header.dashboard': 'Дэшборд атлета',
+  'header.dashboard': 'Главная',
   'header.logout': 'Выйти',
   'header.login': 'Войти',
 
@@ -33,7 +33,7 @@ export const ru = {
   'register.placeholder.username': 'newUserName',
   'register.placeholder.password': 'some123PASSWORD',
 
-  'dashboard.title': 'Дэшборд атлета',
+  'dashboard.title': 'Athlink — будь на связи с тренером',
   'dashboard.subtitle': 'Следи за прогрессом и отмечай тренировки.',
   'dashboard.createJournal': 'Создать журнал',
   'dashboard.loading': 'Загружаем дэшборд...',
@@ -56,10 +56,10 @@ export const ru = {
   'dashboard.save': 'Записать тренировку',
   'dashboard.saving': 'Сохраняем...',
   'dashboard.openJournal': 'Открыть журнал',
+  'dashboard.addRecord': 'Сделать запись',
   'dashboard.nextTitle': 'Что дальше?',
   'dashboard.nextText': 'Открой журнал, чтобы увидеть все записи и либо создать новую.',
   'dashboard.goToJournal': 'Перейти к журналу',
-  'dashboard.addRecord': 'Сделать текущую запись',
 
   'journal.titleFallback': 'Журнал',
   'journal.titleWithSport': 'Дневник "{sport}"',

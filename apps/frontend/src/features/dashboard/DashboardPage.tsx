@@ -150,7 +150,6 @@ export default function DashboardPage() {
                           {formatDate(latestRecord?.date ?? '')}
                         </p>
                       </Link>
-                      <span className="journal-badge">Athlete</span>
                     </div>
 
                     <div className="record-preview">
@@ -233,34 +232,25 @@ export default function DashboardPage() {
                       </div>
                     ) : null}
 
-                    <Link className="button-link ghost" to={`/journal/${journal.id}`}>
-                      {t('dashboard.openJournal')}
-                    </Link>
+                    <div className="journal-actions">
+                      <Link
+                        className="button-link ghost"
+                        to={`/journal/${journal.id}`}
+                      >
+                        {t('dashboard.openJournal')}
+                      </Link>
+                      <Link
+                        className="button-link"
+                        to={`/journal/${journal.id}/new-record`}
+                      >
+                        {t('dashboard.addRecord')}
+                      </Link>
+                    </div>
                   </article>
                 );
               })}
             </div>
           </aside>
-
-          <section className="dashboard-spotlight">
-            <div className="card spotlight-card">
-              <h2>{t('dashboard.nextTitle')}</h2>
-              <p className="subtitle">
-                {t('dashboard.nextText')}
-              </p>
-              <div className="spotlight-actions">
-                <Link className="primary" to={`/journal/${journals[0].id}`}>
-                  {t('dashboard.goToJournal')}
-                </Link>
-                <Link
-                  className="button-link ghost"
-                  to={`/journal/${journals[0].id}/new-record`}
-                >
-                  {t('dashboard.addRecord')}
-                </Link>
-              </div>
-            </div>
-          </section>
         </div>
       ) : null}
     </section>
