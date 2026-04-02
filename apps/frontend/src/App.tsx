@@ -1,23 +1,126 @@
+import type { ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
-import { AuthProvider } from './features/auth/auth-context';
+import { PageTitleProvider } from './components/page-title-context';
+import { AuthProvider, useAuth } from './features/auth/auth-context';
+import { t } from './i18n';
 import LoginPage from './features/auth/login/LoginPage';
 import RegistrationPage from './features/auth/registration/RegistrationPage';
-import HomePage from './features/home/HomePage';
+import DashboardPage from './features/dashboard/DashboardPage';
+import TrainingJournalPage from './features/training-journals/TrainingJournalPage';
+import CreateTrainingJournalPage from './features/training-journals/CreateTrainingJournalPage';
+import CreateTrainingRecordPage from './features/training-journals/CreateTrainingRecordPage';
+import TrainingRecordsPage from './features/training-journals/TrainingRecordsPage';
+import TrainingRecordPage from './features/training-journals/TrainingRecordPage';
+
+function RequireAuth({ children }: { children: ReactNode }) {
+  const { userName, isChecking } = useAuth();
+  if (isChecking) {
+    return (
+      <section className="page">
+        <div className="card">{t('auth.checking')}</div>
+      </section>
+    );
+  }
+  if (!userName) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+}
+
+function RedirectIfAuth({ children }: { children: ReactNode }) {
+  const { userName, isChecking } = useAuth();
+  if (isChecking) {
+    return (
+      <section className="page">
+        <div className="card">{t('auth.checking')}</div>
+      </section>
+    );
+  }
+  if (userName) {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <main className="app">
-          <AppHeader />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegistrationPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
+        <PageTitleProvider>
+          <div className="app-shell">
+            <AppHeader />
+            <main className="app">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <RequireAuth>
+                      <DashboardPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <RedirectIfAuth>
+                      <LoginPage />
+                    </RedirectIfAuth>
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <RedirectIfAuth>
+                      <RegistrationPage />
+                    </RedirectIfAuth>
+                  }
+                />
+                <Route
+                  path="/journal/:trainingJournalId"
+                  element={
+                    <RequireAuth>
+                      <TrainingJournalPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/journal/new"
+                  element={
+                    <RequireAuth>
+                      <CreateTrainingJournalPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/journal/:trainingJournalId/new-record"
+                  element={
+                    <RequireAuth>
+                      <CreateTrainingRecordPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/journal/:trainingJournalId/records"
+                  element={
+                    <RequireAuth>
+                      <TrainingRecordsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/journal/:trainingJournalId/records/:recordId"
+                  element={
+                    <RequireAuth>
+                      <TrainingRecordPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+          </div>
+        </PageTitleProvider>
       </AuthProvider>
     </BrowserRouter>
   );

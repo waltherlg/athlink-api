@@ -5,6 +5,8 @@ import type { ErrorCode, UserRegistrationInput } from '@shared-types';
 import { AccountErrorCodeEnum, CommonErrorCodeEnum } from '@shared-types';
 import RegistrationForm from './RegistrationForm';
 import type { ApiError } from '../../../api/http';
+import { t } from '../../../i18n';
+import { usePageTitle } from '../../../components/page-title-context';
 
 type FieldKey = keyof UserRegistrationInput;
 
@@ -24,7 +26,7 @@ type FormErrors = {
 };
 
 const EMPTY_ERRORS: FormErrors = { fieldErrors: {}, globalErrors: [] };
-const FALLBACK_MESSAGE = 'Registration failed. Please try again.';
+const FALLBACK_MESSAGE = t('register.failed');
 const CODE_FIELD_MAP: Partial<Record<ErrorCode, FieldKey | null>> = {
   [AccountErrorCodeEnum.EMAIL_ALREADY_EXISTS]: 'email',
   [AccountErrorCodeEnum.USERNAME_ALREADY_EXISTS]: 'userName',
@@ -35,6 +37,7 @@ const isFieldKey = (value: string): value is FieldKey =>
   value === 'email' || value === 'userName' || value === 'password';
 
 export default function RegistrationPage() {
+  usePageTitle(t('register.title'));
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>(EMPTY_ERRORS);
   const navigate = useNavigate();
@@ -118,11 +121,7 @@ export default function RegistrationPage() {
 
   return (
     <section className="page">
-      <header className="page-header">
-        <p className="eyebrow">Athlink Auth</p>
-        <h1>Create your account</h1>
-        <p className="subtitle">Register with email, username, and password.</p>
-      </header>
+      <p className="subtitle">{t('register.subtitle')}</p>
 
       <RegistrationForm
         onSubmit={handleSubmit}
