@@ -12,12 +12,13 @@ export async function apiFetch<TResponse>(
   path: string,
   options: RequestInit = {},
 ): Promise<TResponse> {
+  const { headers, ...rest } = options;
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...rest,
     headers: {
       'Content-Type': 'application/json',
-      ...(options.headers ?? {}),
+      ...(headers ?? {}),
     },
-    ...options,
   });
 
   const contentType = response.headers.get('content-type');

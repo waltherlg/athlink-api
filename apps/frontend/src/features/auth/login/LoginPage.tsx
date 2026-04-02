@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { LoginInput } from '@shared-types';
 import { useAuth } from '../auth-context';
+import { t } from '../../../i18n';
 
 const DEFAULT_FORM: LoginInput = {
   email: '',
@@ -27,14 +28,14 @@ export default function LoginPage() {
       if (err && typeof err === 'object' && 'status' in err) {
         const status = Number((err as { status?: number }).status);
         if (status === 401 || status === 400) {
-          setError('Invalid credentials.');
+          setError(t('login.invalid'));
         } else {
-          setError('Login failed. Please try again.');
+          setError(t('login.failed'));
         }
       } else if (err && typeof err === 'object' && 'message' in err) {
         setError(String((err as { message?: string }).message));
       } else {
-        setError('Login failed. Please try again.');
+        setError(t('login.failed'));
       }
     } finally {
       setIsLoading(false);
@@ -44,18 +45,17 @@ export default function LoginPage() {
   return (
     <section className="page">
       <header className="page-header">
-        <p className="eyebrow">Athlink Auth</p>
-        <h1>Sign in</h1>
-        <p className="subtitle">Use your email and password.</p>
+        <h1>{t('login.title')}</h1>
+        <p className="subtitle">{t('login.subtitle')}</p>
       </header>
 
       <form className="card form" onSubmit={handleSubmit}>
         <label className="field">
-          <span>Email</span>
+          <span>{t('login.field.email')}</span>
           <input
             type="email"
             name="email"
-            placeholder="email@abc.com"
+            placeholder={t('login.placeholder.email')}
             value={form.email}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, email: event.target.value }))
@@ -66,11 +66,11 @@ export default function LoginPage() {
         </label>
 
         <label className="field">
-          <span>Password</span>
+          <span>{t('login.field.password')}</span>
           <input
             type="password"
             name="password"
-            placeholder="some123PASSWORD"
+            placeholder={t('login.placeholder.password')}
             value={form.password}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, password: event.target.value }))
@@ -82,14 +82,15 @@ export default function LoginPage() {
         </label>
 
         <button className="primary" type="submit" disabled={isLoading}>
-          {isLoading ? 'Signing in...' : 'Login'}
+          {isLoading ? t('login.loading') : t('login.button')}
         </button>
       </form>
 
       {error ? <div className="alert error">{error}</div> : null}
 
       <p className="footer-note">
-        Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+        {t('login.noAccount')}{' '}
+        <Link to="/register">{t('login.createOne')}</Link>
       </p>
     </section>
   );

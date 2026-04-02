@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { UserRegistrationInput } from '@shared-types';
+import { t } from '../../../i18n';
 
 type RegistrationFormProps = {
   onSubmit: (input: UserRegistrationInput) => void;
@@ -47,11 +48,11 @@ export default function RegistrationForm({
         </div>
       ) : null}
       <label className={`field ${fieldErrors.email?.length ? 'has-error' : ''}`}>
-        <span>Email</span>
+        <span>{t('register.field.email')}</span>
         <input
           type="email"
           name="email"
-          placeholder="email@abc.com"
+          placeholder={t('register.placeholder.email')}
           value={form.email}
           onChange={handleChange('email')}
           required
@@ -67,11 +68,11 @@ export default function RegistrationForm({
       <label
         className={`field ${fieldErrors.userName?.length ? 'has-error' : ''}`}
       >
-        <span>Username</span>
+        <span>{t('register.field.username')}</span>
         <input
           type="text"
           name="userName"
-          placeholder="newUserName"
+          placeholder={t('register.placeholder.username')}
           value={form.userName}
           onChange={handleChange('userName')}
           minLength={3}
@@ -89,11 +90,11 @@ export default function RegistrationForm({
       <label
         className={`field ${fieldErrors.password?.length ? 'has-error' : ''}`}
       >
-        <span>Password</span>
+        <span>{t('register.field.password')}</span>
         <input
           type="password"
           name="password"
-          placeholder="some123PASSWORD"
+          placeholder={t('register.placeholder.password')}
           value={form.password}
           onChange={handleChange('password')}
           minLength={6}
@@ -108,7 +109,7 @@ export default function RegistrationForm({
       </label>
 
       <button className="primary" type="submit" disabled={isLoading}>
-        {isLoading ? 'Creating account...' : 'Create account'}
+        {isLoading ? t('register.loading') : t('register.button')}
       </button>
     </form>
   );
