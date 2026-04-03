@@ -58,10 +58,8 @@ export class AuthController {
     const ip: string = request.ip || SESSION_CONSTS.IP_DEFAULT;
     const userId = request.user.id;
 
-    const dto: SessionCreateDto = { userId, userAgent, ip };
-
     const { accessToken, refreshToken } = await this.commandBus.execute(
-      new LoginCommand(dto),
+      new LoginCommand(userId, userAgent, ip),
     );
 
     response.cookie(

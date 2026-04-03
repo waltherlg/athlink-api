@@ -1,5 +1,6 @@
 export class SessionCreateDto {
   userId: string;
-  userAgent: string;
+  refreshTokenHash: string;
   ip: string;
+  userAgent: string;
 }

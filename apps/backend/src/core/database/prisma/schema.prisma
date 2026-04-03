@@ -38,9 +38,9 @@ model Session {
   ip        String
   userAgent String
 
-  createdAt    DateTime
+  createdAt    DateTime @default(now())
   expiresAt    DateTime
-  lastActiveAt DateTime
+  lastActiveAt DateTime @default(now())
 }
 
 model TrainingJournal {

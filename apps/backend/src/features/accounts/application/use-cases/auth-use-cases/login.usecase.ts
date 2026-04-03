@@ -5,10 +5,13 @@ import {
   JwtPayloadDto,
 } from '../../dto/domain-auth.dto';
 import { TokenService } from '../../services/token.service';
-import { SessionCreateDto } from '../../dto/domain-session.dto';
 
 export class LoginCommand {
-  constructor(public dto: SessionCreateDto) {}
+  constructor(
+    public userId: string,
+    public userAgent: string,
+    public ip: string,
+  ) {}
 }
 
 @CommandHandler(LoginCommand)
@@ -16,7 +19,7 @@ export class LoginUseCase implements ICommandHandler<LoginCommand> {
   constructor(private readonly tokenService: TokenService) {}
 
   async execute(command: LoginCommand): Promise<accessAndRefreshTokenDto> {
-    const { userId, userAgent, ip } = command.dto;
+    const { userId, userAgent, ip } = command;
 
     const newDeviceId = randomUUID();
     const { accessToken, refreshToken } = await this.tokenService.createTokens(
