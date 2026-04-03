@@ -6,7 +6,7 @@ CREATE TYPE "SportType" AS ENUM ('SHOOTING');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL,
     "userName" TEXT NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "passwordHash" TEXT NOT NULL,
@@ -17,9 +17,23 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "Session" (
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+    "refreshTokenHash" TEXT NOT NULL,
+    "ip" TEXT NOT NULL,
+    "userAgent" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "lastActiveAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "TrainingJournal" (
-    "id" TEXT NOT NULL,
-    "athleteId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "athleteId" UUID NOT NULL,
     "sportType" "SportType" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -28,9 +42,9 @@ CREATE TABLE "TrainingJournal" (
 
 -- CreateTable
 CREATE TABLE "JournalAccess" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "journalId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+    "journalId" UUID NOT NULL,
     "role" "AccessRole" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "coachAthleteId" TEXT,
@@ -40,8 +54,8 @@ CREATE TABLE "JournalAccess" (
 
 -- CreateTable
 CREATE TABLE "TrainingRecord" (
-    "id" TEXT NOT NULL,
-    "trainingJournalId" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "trainingJournalId" UUID NOT NULL,
     "result" TEXT,
     "coachNotes" TEXT,
     "privateNotes" TEXT,
@@ -62,6 +76,9 @@ CREATE UNIQUE INDEX "TrainingJournal_sportType_key" ON "TrainingJournal"("sportT
 
 -- CreateIndex
 CREATE UNIQUE INDEX "JournalAccess_userId_journalId_key" ON "JournalAccess"("userId", "journalId");
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "TrainingJournal" ADD CONSTRAINT "TrainingJournal_athleteId_fkey" FOREIGN KEY ("athleteId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
