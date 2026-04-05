@@ -1,12 +1,18 @@
 import { Session } from '@prisma/client';
 
-export class SessionCreateDto {
+export class CreateSessionDto {
   userId: string;
   refreshTokenHash: string;
   ip: string;
   userAgent: string;
   expiresAt: Date;
-  lastActiveAt: Date;
+}
+
+export class CreateSessionData {
+  userId: string;
+  refreshTokenHash: string;
+  ip: string;
+  userAgent: string;
 }
 
 export class SessionDto implements Session {

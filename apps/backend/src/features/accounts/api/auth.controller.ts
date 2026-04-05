@@ -12,7 +12,6 @@ import type { Response } from 'express';
 import { LoginCommand } from '../application/use-cases/auth-use-cases/login.usecase';
 import { CommandBus } from '@nestjs/cqrs';
 import { SESSION_CONSTS } from '../consts/session.consts';
-import { SessionCreateDto } from '../application/dto/domain-session.dto';
 import { cookieSettings } from '../config/cookie.config';
 import { LocalAuthGuard } from '../guards/local/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt/jwt-auth.guard';

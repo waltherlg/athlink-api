@@ -10,6 +10,8 @@ import { AuthController } from './api/auth.controller';
 import { UserEnvironmentConfig } from './config/user-env.config';
 import { GuardsStrategy } from './guards/strategy-providers';
 import { UsersQueryRepository } from './infrastructure/users-query.repository';
+import { SessionsService } from './application/services/session.service';
+import { SessionsRepository } from './infrastructure/sessions.repository';
 
 @Module({
   imports: [CqrsModule],
@@ -21,7 +23,9 @@ import { UsersQueryRepository } from './infrastructure/users-query.repository';
     JwtService,
     UsersRepository,
     UsersQueryRepository,
+    SessionsRepository,
     TokenService,
+    SessionsService,
     ...AuthUseCases,
     ...GuardsStrategy,
   ],

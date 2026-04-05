@@ -1,11 +1,11 @@
 import {
-  SessionCreateDto,
+  CreateSessionDto,
   SessionDto,
 } from '../../application/dto/domain-session.dto';
 
 export interface SessionsRepositoryInterface {
   findOne(deviceId: string): Promise<SessionDto | null>;
-  create(dto: SessionCreateDto): Promise<string>;
+  create(dto: CreateSessionDto): Promise<string>;
   delete(deviceId: string): Promise<boolean>;
   deleteAllExceptCurrent(deviceId: string, userId: string): Promise<boolean>;
 }

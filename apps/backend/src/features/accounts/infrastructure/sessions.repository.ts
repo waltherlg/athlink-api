@@ -5,7 +5,7 @@ import { Session, User } from '@prisma/client';
 import { SessionsRepositoryInterface } from './interfaces/sessions-repository.interface';
 import {
   SessionDto,
-  SessionCreateDto,
+  CreateSessionDto,
 } from '../application/dto/domain-session.dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class SessionsRepository implements SessionsRepositoryInterface {
     return session ? session : null;
   }
 
-  async create(dto: SessionCreateDto): Promise<string> {
+  async create(dto: CreateSessionDto): Promise<string> {
     const createdSession = await this.prisma.session.create({
       data: { ...dto },
     });
