@@ -5,6 +5,8 @@ export class SessionCreateDto {
   refreshTokenHash: string;
   ip: string;
   userAgent: string;
+  expiresAt: Date;
+  lastActiveAt: Date;
 }
 
 export class SessionDto implements Session {

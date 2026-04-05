@@ -6,7 +6,7 @@ import { BadRequestDomainException } from '../../../../../core/exceptions/domain
 import { UserMapper } from '../../../mappers/user.mapper';
 import { UserViewDto } from '../../../api/dto/user-view.dto';
 import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
-import { PasswordService } from '../../services/password.service';
+import { PasswordService } from '../../services/crypto.service';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}

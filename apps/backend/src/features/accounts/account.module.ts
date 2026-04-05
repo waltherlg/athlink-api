@@ -3,7 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { AuthUseCases } from './application/account-use-case.provider';
 import { UsersRepository } from './infrastructure/users.repository';
 import { AuthService } from './application/services/auth.service';
-import { PasswordService } from './application/services/password.service';
+import { CryptoService } from './application/services/crypto.service';
 import { TokenService } from './application/services/token.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthController } from './api/auth.controller';
@@ -17,7 +17,7 @@ import { UsersQueryRepository } from './infrastructure/users-query.repository';
   providers: [
     UserEnvironmentConfig,
     AuthService,
-    PasswordService,
+    CryptoService,
     JwtService,
     UsersRepository,
     UsersQueryRepository,
