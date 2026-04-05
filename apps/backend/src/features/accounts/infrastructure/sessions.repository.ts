@@ -24,8 +24,10 @@ export class SessionsRepository implements SessionsRepositoryInterface {
     return createdSession.id;
   }
 
-  async delete(id: string): Promise<boolean> {
-    const result = await this.prisma.session.delete({ where: { id } });
+  async delete(userId: string, sessionId: string): Promise<boolean> {
+    const result = await this.prisma.session.delete({
+      where: { id: sessionId, userId },
+    });
     return !!result;
   }
 

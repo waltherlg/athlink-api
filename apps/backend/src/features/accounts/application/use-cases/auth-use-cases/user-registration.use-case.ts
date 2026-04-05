@@ -6,7 +6,7 @@ import { BadRequestDomainException } from '../../../../../core/exceptions/domain
 import { UserMapper } from '../../../mappers/user.mapper';
 import { UserViewDto } from '../../../api/dto/user-view.dto';
 import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
-import { PasswordService } from '../../services/crypto.service';
+import { CryptoService } from '../../services/crypto.service';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}
@@ -16,7 +16,7 @@ export class UserRegistrationCommand {
 export class UserRegistrationUseCase implements ICommandHandler<UserRegistrationCommand> {
   constructor(
     private userRepo: UsersRepository,
-    private passwordService: PasswordService,
+    private passwordService: CryptoService,
   ) {}
 
   async execute(command: UserRegistrationCommand): Promise<UserViewDto> {
