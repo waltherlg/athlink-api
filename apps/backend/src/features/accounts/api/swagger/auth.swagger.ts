@@ -17,6 +17,7 @@ import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
 import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
+import { AUTH_ERRORS } from '../../consts/auth.errors';
 
 export const SW_AUTH_TITLES = {
   AUTH_CONTROLLER: 'Auth flow',
@@ -72,7 +73,7 @@ export function LoginSwagger() {
       description: 'The email or password are incorrect',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.EMAIL_OR_PASSWORD_INCORRECT,
+          AUTH_ERRORS.EMAIL_OR_PASSWORD_INCORRECT,
         ]),
       },
     }),
