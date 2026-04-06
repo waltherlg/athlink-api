@@ -6,6 +6,7 @@ import { SessionsRepositoryInterface } from './interfaces/sessions-repository.in
 import {
   SessionDto,
   CreateSessionDto,
+  UpdateSessionDto,
 } from '../application/dto/domain-session.dto';
 
 @Injectable()
@@ -22,6 +23,14 @@ export class SessionsRepository implements SessionsRepositoryInterface {
       data: { ...dto },
     });
     return createdSession.id;
+  }
+
+  async update(sessionId: string, dto: UpdateSessionDto): Promise<boolean> {
+    const result = await this.prisma.session.update({
+      where: { id: sessionId },
+      data: { ...dto },
+    });
+    return !!result;
   }
 
   async delete(userId: string, sessionId: string): Promise<boolean> {

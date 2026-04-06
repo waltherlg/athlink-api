@@ -3,6 +3,7 @@ export const authPaths = {
   registration: 'registration',
   login: 'login',
   logout: 'logout',
+  refreshToken: 'refresh-token',
   me: 'me',
 } as const;
 
