@@ -26,7 +26,7 @@ export class TokenService {
     );
 
     const refreshToken = await this.jwtService.signAsync(
-      { id: userId, sessionId },
+      { userId, sessionId },
       {
         expiresIn: this.userConfig.refreshTokenExpiresIn,
         secret: this.userConfig.refreshTokenSecret,

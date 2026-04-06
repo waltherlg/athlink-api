@@ -2,6 +2,7 @@ export const authPaths = {
   controller: 'auth',
   registration: 'registration',
   login: 'login',
+  logout: 'logout',
   me: 'me',
 } as const;
 

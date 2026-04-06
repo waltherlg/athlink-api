@@ -1,6 +1,6 @@
 export class JwtPayloadDto {
-  id: string;
-  deviceId: string;
+  userId: string;
+  sessionId: string;
   iat: number;
   exp: number;
 }

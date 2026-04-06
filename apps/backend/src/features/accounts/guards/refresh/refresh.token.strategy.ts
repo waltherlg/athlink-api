@@ -3,12 +3,10 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { UnauthorizedDomainException } from '../../../../core/exceptions/domain-exceptions';
-import { CoreEnvironmentConfig } from '../../../../core/config/core-env.config';
 import { UserEnvironmentConfig } from '../../config/user-env.config';
 import { SessionsRepository } from '../../infrastructure/sessions.repository';
 import { SESSION_CONSTS } from '../../consts/session.consts';
 import { JwtPayloadDto } from '../../application/dto/domain-auth.dto';
-import { SESSION_ERRORS } from '../../consts/session-errors.consts';
 import { AUTH_ERRORS } from '../../consts/auth.errors';
 import { CryptoService } from '../../application/services/crypto.service';
 
@@ -43,13 +41,13 @@ export class RefreshTokenStrategy extends PassportStrategy(
       throw UnauthorizedDomainException.create(AUTH_ERRORS.UNAUTHORIZED);
     }
 
-    const session = await this.sessionsAdapter.findOne(payload.deviceId);
+    const session = await this.sessionsAdapter.findOne(payload.sessionId);
 
     if (!session) {
       throw UnauthorizedDomainException.create(AUTH_ERRORS.UNAUTHORIZED);
     }
 
-    if (session.userId !== payload.id) {
+    if (session.userId !== payload.userId) {
       throw UnauthorizedDomainException.create(AUTH_ERRORS.UNAUTHORIZED);
     }
 
