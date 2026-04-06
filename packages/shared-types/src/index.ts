@@ -25,6 +25,8 @@ export {
   ErrorCode,
   CommonErrorCodeEnum,
   TrainingJournalErrorCodeEnum,
+  SessionErrorCodeEnum,
+  AuthErrorCodeEnum,
 } from './error-codes';
 
 export {
