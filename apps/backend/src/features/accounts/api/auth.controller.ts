@@ -35,6 +35,7 @@ import { authPaths } from '@shared-types';
 import { RefreshTokenGuard } from '../guards/refresh/refresh.token.guard';
 import { LogoutCommand } from '../application/use-cases/auth-use-cases/logout.usecese';
 import { JwtPayloadDto } from '../application/dto/domain-auth.dto';
+import { RefreshTokenCommand } from '../application/use-cases/auth-use-cases/refresh-token.usecase';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)
 @Controller(authPaths.controller)
@@ -87,6 +88,24 @@ export class AuthController {
     );
 
     res.clearCookie(SESSION_CONSTS.REFRESH_TOKEN_NAME, baseCookieSettings);
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post(authPaths.refreshToken)
+  async refreshToken(
+    @Res({ passthrough: true }) response: Response,
+    @ExtractPayloadFromRequest() payload: JwtPayloadDto,
+  ) {
+    const { accessToken, refreshToken } = await this.commandBus.execute(
+      new RefreshTokenCommand(payload),
+    );
+
+    response.cookie(SESSION_CONSTS.REFRESH_TOKEN_NAME, refreshToken, {
+      ...baseCookieSettings,
+    });
+
+    return { accessToken };
   }
 
   @UseGuards(JwtAuthGuard)
