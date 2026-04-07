@@ -1,6 +1,8 @@
 export type {
+  ConfirmEmailParams,
   LoginInput,
   LoginResponse,
+  ResendConfirmationInput,
   UserNameResponse,
   UserRegistrationInput,
   UserView,

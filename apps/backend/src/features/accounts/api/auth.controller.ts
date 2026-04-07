@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Req,
   Res,
@@ -29,6 +30,8 @@ import { UserViewDto } from './dto/user-view.dto';
 import {
   LoginSwagger,
   LogoutSwagger,
+  ConfirmEmailSwagger,
+  ResendConfirmationSwagger,
   RefreshTokenSwagger,
   RegisterUserSwagger,
   SW_AUTH_TITLES,
@@ -38,6 +41,12 @@ import { RefreshTokenGuard } from '../guards/refresh/refresh.token.guard';
 import { LogoutCommand } from '../application/use-cases/auth-use-cases/logout.usecese';
 import { JwtPayloadDto } from '../application/dto/domain-auth.dto';
 import { RefreshTokenCommand } from '../application/use-cases/auth-use-cases/refresh-token.usecase';
+import { ConfirmEmailCommand } from '../application/use-cases/auth-use-cases/confirm-email.use-case';
+import { ResendConfirmationCommand } from '../application/use-cases/auth-use-cases/resend-confirmation.use-case';
+import {
+  ConfirmEmailCodeParamDto,
+  ResendConfirmationInputDto,
+} from './dto/confirmation.dto';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)
 @Controller(authPaths.controller)
@@ -110,6 +119,22 @@ export class AuthController {
     });
 
     return { accessToken };
+  }
+
+  @ConfirmEmailSwagger()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post(authPaths.confirmEmail)
+  async confirmEmail(@Param() params: ConfirmEmailCodeParamDto): Promise<void> {
+    await this.commandBus.execute(new ConfirmEmailCommand(params.code));
+  }
+
+  @ResendConfirmationSwagger()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post(authPaths.resendConfirmation)
+  async resendConfirmation(
+    @Body() dto: ResendConfirmationInputDto,
+  ): Promise<void> {
+    await this.commandBus.execute(new ResendConfirmationCommand(dto.email));
   }
 
   @UseGuards(JwtAuthGuard)
