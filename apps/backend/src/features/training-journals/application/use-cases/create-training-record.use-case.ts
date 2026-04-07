@@ -8,6 +8,7 @@ import {
 } from '../../../../core/exceptions/domain-exceptions';
 import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
 import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export class CreateTrainingRecordCommand {
   constructor(
@@ -17,9 +18,7 @@ export class CreateTrainingRecordCommand {
 }
 
 @CommandHandler(CreateTrainingRecordCommand)
-export class CreateTrainingRecordUseCase
-  implements ICommandHandler<CreateTrainingRecordCommand>
-{
+export class CreateTrainingRecordUseCase implements ICommandHandler<CreateTrainingRecordCommand> {
   constructor(
     private entriesRepo: TrainingRecordsRepository,
     private journalsRepo: TrainingJournalsRepository,
@@ -36,7 +35,7 @@ export class CreateTrainingRecordUseCase
       );
 
     if (trainingJournal.athleteId !== command.userId)
-      throw ForbiddenDomainException.create(ACCOUNT_ERRORS.NOT_OWNER);
+      throw ForbiddenDomainException.create(AUTH_ERRORS.NOT_OWNER);
 
     const createdRecord = await this.entriesRepo.createTrainingRecord(
       command.dto,
@@ -44,5 +43,3 @@ export class CreateTrainingRecordUseCase
     return createdRecord;
   }
 }
-
-

@@ -17,7 +17,7 @@ import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
 import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
-import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export const SW_TRAINING_JOURNALS_TITLES = {
   TRAINING_JOURNAL_CONTROLLER: 'Training journal operations',
@@ -36,7 +36,7 @@ export function CreateTrainingJournalSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
@@ -74,7 +74,7 @@ export function GetTrainingJournalsSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
@@ -110,7 +110,7 @@ export function GetTrainingJournalByIdSwagger() {
       description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.NOT_OWNER,
+          AUTH_ERRORS.NOT_OWNER,
         ]),
       },
     }),
@@ -119,7 +119,7 @@ export function GetTrainingJournalByIdSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
@@ -164,7 +164,7 @@ export function CreateTrainingRecordSwagger() {
       description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.NOT_OWNER,
+          AUTH_ERRORS.NOT_OWNER,
         ]),
       },
     }),
@@ -173,11 +173,10 @@ export function CreateTrainingRecordSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
     ApiBearerAuth(),
   );
 }
-

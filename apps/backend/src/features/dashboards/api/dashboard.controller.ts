@@ -19,7 +19,7 @@ export class DashboardController {
   @GetAthleteDashboardSwagger()
   @Get(dashboardPaths.athlete)
   async getAthleteDesboard(@Req() request: RequestWithUser) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     return this.queryBus.execute(new GetAthleteDesboardQuery(athleteId));
   }
 }

@@ -8,6 +8,6 @@ export const ExtractUserFromRequest = createParamDecorator(
     if (!request.user) {
       throw new Error('User not found in request (guard issue)');
     }
-    return request.user.id;
+    return request.user.userId;
   },
 );

@@ -9,6 +9,7 @@ import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.co
 import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 import { TrainingRecord } from '@prisma/client';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export class GetTrainingRecordByIdQuery {
   constructor(
@@ -19,9 +20,7 @@ export class GetTrainingRecordByIdQuery {
 }
 
 @QueryHandler(GetTrainingRecordByIdQuery)
-export class GetTrainingRecordByIdQueryHandler
-  implements IQueryHandler<GetTrainingRecordByIdQuery>
-{
+export class GetTrainingRecordByIdQueryHandler implements IQueryHandler<GetTrainingRecordByIdQuery> {
   constructor(
     private trainingRecordsRepo: TrainingRecordsRepository,
     private trainingJournalsRepo: TrainingJournalsRepository,
@@ -55,7 +54,7 @@ export class GetTrainingRecordByIdQueryHandler
       );
 
     if (trainingJournal.athleteId !== query.athleteId)
-      throw ForbiddenDomainException.create(ACCOUNT_ERRORS.NOT_OWNER);
+      throw ForbiddenDomainException.create(AUTH_ERRORS.NOT_OWNER);
 
     return mapTrainingRecord(record);
   }
