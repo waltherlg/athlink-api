@@ -7,6 +7,7 @@ export const en = {
   'header.login': 'Login',
 
   'auth.checking': 'Checking authorization...',
+  'auth.unauthorized': 'Your session has expired. Please sign in again.',
 
   'login.title': 'Sign in',
   'login.subtitle': 'Use your email and password.',

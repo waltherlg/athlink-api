@@ -1,14 +1,10 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
-  ApiBearerAuth,
   ApiBody,
-  ApiConsumes,
   ApiCookieAuth,
   ApiExtraModels,
   ApiOperation,
-  ApiQuery,
   ApiResponse,
-  getSchemaPath,
 } from '@nestjs/swagger';
 import { UserRegistrationInputDto } from '../dto/registration.dto';
 import { UserViewDto } from '../dto/user-view.dto';
@@ -18,6 +14,7 @@ import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
 import { AUTH_ERRORS } from '../../consts/auth.errors';
+import { SESSION_ERRORS } from '../../consts/session-errors.consts';
 
 export const SW_AUTH_TITLES = {
   AUTH_CONTROLLER: 'Auth flow',
@@ -83,6 +80,72 @@ export function LoginSwagger() {
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
           COMMON_ERRORS.VALIDATION_ERROR,
+        ]),
+      },
+    }),
+  );
+}
+
+export function RefreshTokenSwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiCookieAuth(),
+    ApiOperation({
+      summary: 'Refresh access token',
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description:
+        'Successful refresh.\n\nBody: accessToken \n\nCookie: refreshToken (HttpOnly, Secure)',
+      type: LoginResponseDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'User unauthorized',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          AUTH_ERRORS.UNAUTHORIZED,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Session not found',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          SESSION_ERRORS.SESSION_NOT_FOUND,
+        ]),
+      },
+    }),
+  );
+}
+
+export function LogoutSwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiCookieAuth(),
+    ApiOperation({
+      summary: 'Logout',
+    }),
+    ApiResponse({
+      status: HttpStatus.NO_CONTENT,
+      description: 'Successful logout',
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'User unauthorized',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          AUTH_ERRORS.UNAUTHORIZED,
+        ]),
+      },
+    }),
+    ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Session not found',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          SESSION_ERRORS.SESSION_NOT_FOUND,
         ]),
       },
     }),

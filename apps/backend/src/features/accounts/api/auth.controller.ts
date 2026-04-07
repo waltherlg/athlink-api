@@ -28,6 +28,8 @@ import { UserRegistrationInputDto } from './dto/registration.dto';
 import { UserViewDto } from './dto/user-view.dto';
 import {
   LoginSwagger,
+  LogoutSwagger,
+  RefreshTokenSwagger,
   RegisterUserSwagger,
   SW_AUTH_TITLES,
 } from './swagger/auth.swagger';
@@ -77,6 +79,7 @@ export class AuthController {
   }
 
   @UseGuards(RefreshTokenGuard)
+  @LogoutSwagger()
   @Post(authPaths.logout)
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(
@@ -91,6 +94,7 @@ export class AuthController {
   }
 
   @UseGuards(RefreshTokenGuard)
+  @RefreshTokenSwagger()
   @HttpCode(HttpStatus.OK)
   @Post(authPaths.refreshToken)
   async refreshToken(
