@@ -1,5 +1,7 @@
 ﻿param(
-  [string]$OutFile = ""
+  [string]$OutFile = "",
+  [switch]$Auto,
+  [switch]$Quick
 )
 
 $ErrorActionPreference = "Stop"
@@ -37,6 +39,10 @@ $lines += "## git log -5 --oneline"
 $lines += ($log -join "`n")
 
 $content = $lines -join "`n"
+
+if (($Auto -or $Quick) -and $OutFile -eq "") {
+  $OutFile = "AI_CONTEXT.md"
+}
 
 if ($OutFile -ne "") {
   $resolved = Resolve-Path -Path $OutFile -ErrorAction SilentlyContinue
