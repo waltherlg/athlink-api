@@ -39,6 +39,18 @@ export class CoreEnvironmentConfig {
   })
   dataBaseUrl: string = this.configService.get('DATABASE_URL');
 
+  @IsNotEmpty({
+    message:
+      "Set Env variable EMAIL_USER, example: 'example@gmail.com', !!sensitive data!!",
+  })
+  emailUser: string = this.configService.get('EMAIL_USER');
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable EMAIL_PASSWORD, example: 'app-password', !!sensitive data!!",
+  })
+  emailPassword: string = this.configService.get('EMAIL_PASSWORD');
+
   constructor(private configService: ConfigService<any, true>) {
     configValidationUtility.validateConfig(this);
   }

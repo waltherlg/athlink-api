@@ -12,6 +12,7 @@ import { GuardsStrategy } from './guards/strategy-providers';
 import { UsersQueryRepository } from './infrastructure/users-query.repository';
 import { SessionsService } from './application/services/session.service';
 import { SessionsRepository } from './infrastructure/sessions.repository';
+import { AccountEventHandlers } from './application/account-event-handlers.provider';
 
 @Module({
   imports: [CqrsModule],
@@ -28,6 +29,7 @@ import { SessionsRepository } from './infrastructure/sessions.repository';
     SessionsService,
     ...AuthUseCases,
     ...GuardsStrategy,
+    ...AccountEventHandlers,
   ],
   exports: [UsersRepository],
 })

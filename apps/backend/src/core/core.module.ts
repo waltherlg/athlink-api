@@ -1,21 +1,10 @@
 import { Global, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { CoreEnvironmentConfig } from './config/core-env.config';
+import { CoreConfigModule } from './config/core-config.module';
+import { EmailModule } from './email/email.module';
 
 @Global()
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: [
-        process.env.ENV_FILE_PATH?.trim(),
-        `.${process.env.NODE_ENV}.local.env`,
-        `.${process.env.NODE_ENV}.env`,
-        '.production.env',
-      ].filter(Boolean),
-      isGlobal: true,
-    }),
-  ],
-  providers: [CoreEnvironmentConfig],
-  exports: [CoreEnvironmentConfig],
+  imports: [CoreConfigModule, EmailModule],
+  exports: [CoreConfigModule, EmailModule],
 })
 export class CoreModule {}

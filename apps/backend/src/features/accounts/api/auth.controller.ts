@@ -75,6 +75,7 @@ export class AuthController {
     const userAgent: string =
       request.headers['user-agent'] || SESSION_CONSTS.USER_AGENT_DEFAULT;
     const ip: string = request.ip || SESSION_CONSTS.IP_DEFAULT;
+    console.log(request.user);
     const userId = request.user.userId;
 
     const { accessToken, refreshToken } = await this.commandBus.execute(
@@ -140,6 +141,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get(authPaths.me)
   async getMayUserName(@Req() request: RequestWithUser) {
+    console.log(request.user);
     return await this.usersQueryRepository.getUserNameById(request.user.userId);
   }
 }

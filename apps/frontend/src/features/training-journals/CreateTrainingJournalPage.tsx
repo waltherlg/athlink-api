@@ -25,7 +25,12 @@ export default function CreateTrainingJournalPage() {
     setError(null);
     try {
       const created = await createTrainingJournal(token, form);
-      navigate(`/journal/${created.id}`);
+      const createdId =
+        typeof created === 'string' ? created : created?.id ?? '';
+      if (!createdId) {
+        throw new Error(t('journalCreate.error'));
+      }
+      navigate(`/journal/${createdId}`);
     } catch (err) {
       if (err && typeof err === 'object' && 'message' in err) {
         setError(String((err as { message?: string }).message));

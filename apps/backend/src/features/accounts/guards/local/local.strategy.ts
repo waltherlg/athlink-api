@@ -11,12 +11,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'email' });
   }
   async validate(email: string, password: string) {
-    const id = await this.authService.checkUserCredential(email, password);
-    if (!id) {
+    const userId = await this.authService.checkUserCredential(email, password);
+    if (!userId) {
       throw UnauthorizedDomainException.create(
         AUTH_ERRORS.EMAIL_OR_PASSWORD_INCORRECT,
       );
     }
-    return { id };
+    return { userId };
   }
 }

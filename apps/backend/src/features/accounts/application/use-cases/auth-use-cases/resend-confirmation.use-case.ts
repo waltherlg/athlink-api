@@ -1,8 +1,9 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'node:crypto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
 import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
+import { ConfirmationEmailResentEvent } from '../../events/confirmation-email-resent.event';
 
 export class ResendConfirmationCommand {
   constructor(public email: string) {}
@@ -12,7 +13,10 @@ export class ResendConfirmationCommand {
 export class ResendConfirmationUseCase
   implements ICommandHandler<ResendConfirmationCommand, void>
 {
-  constructor(private userRepo: UsersRepository) {}
+  constructor(
+    private userRepo: UsersRepository,
+    private eventBus: EventBus,
+  ) {}
 
   async execute(command: ResendConfirmationCommand): Promise<void> {
     const user = await this.userRepo.findUserByEmail(command.email);
@@ -34,6 +38,10 @@ export class ResendConfirmationUseCase
       user.id,
       confirmationCode,
       confirmCodeExpiryDate,
+    );
+
+    this.eventBus.publish(
+      new ConfirmationEmailResentEvent(user.email, confirmationCode),
     );
   }
 }

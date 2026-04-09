@@ -3,6 +3,7 @@ import { LogoutUseCase } from './use-cases/auth-use-cases/logout.usecese';
 import { UserRegistrationUseCase } from './use-cases/auth-use-cases/user-registration.use-case';
 import { ConfirmEmailUseCase } from './use-cases/auth-use-cases/confirm-email.use-case';
 import { ResendConfirmationUseCase } from './use-cases/auth-use-cases/resend-confirmation.use-case';
+import { RefreshTokenUseCase } from './use-cases/auth-use-cases/refresh-token.usecase';
 
 export const AuthUseCases = [
   UserRegistrationUseCase,
@@ -10,4 +11,5 @@ export const AuthUseCases = [
   LogoutUseCase,
   ConfirmEmailUseCase,
   ResendConfirmationUseCase,
+  RefreshTokenUseCase,
 ];
