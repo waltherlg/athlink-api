@@ -19,6 +19,7 @@ import {
   TrainingRecordsPaginationViewDto,
 } from '../dto/training-record.dto';
 import { trainingJournalsPaths } from '@shared-types';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export const SW_TRAINING_RECORDS_TITLES = {
   TRAINING_RECORDS_CONTROLLER: 'Training record operations',
@@ -67,7 +68,7 @@ export function CreateTrainingRecordSwagger() {
       description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.NOT_OWNER,
+          AUTH_ERRORS.NOT_OWNER,
         ]),
       },
     }),
@@ -76,7 +77,7 @@ export function CreateTrainingRecordSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
@@ -134,7 +135,7 @@ export function GetTrainingRecordsSwagger() {
       description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.NOT_OWNER,
+          AUTH_ERRORS.NOT_OWNER,
         ]),
       },
     }),
@@ -143,7 +144,7 @@ export function GetTrainingRecordsSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),
@@ -186,7 +187,7 @@ export function GetTrainingRecordByIdSwagger() {
       description: 'training journal does not belong to the current user',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.NOT_OWNER,
+          AUTH_ERRORS.NOT_OWNER,
         ]),
       },
     }),
@@ -195,7 +196,7 @@ export function GetTrainingRecordByIdSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),

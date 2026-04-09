@@ -7,6 +7,7 @@ export const ru = {
   'header.login': 'Войти',
 
   'auth.checking': 'Проверяем авторизацию...',
+  'auth.unauthorized': 'Сессия истекла. Войдите снова.',
 
   'login.title': 'Вход',
   'login.subtitle': 'Введите email и пароль.',

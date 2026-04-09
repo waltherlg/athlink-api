@@ -8,11 +8,9 @@ import {
 import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
 import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 import { TrainingRecord } from '@prisma/client';
-import {
-  DEFAULT_QUERY_PARAMS,
-  RequestQueryParamsModel,
-} from '@shared-types';
+import { DEFAULT_QUERY_PARAMS, RequestQueryParamsModel } from '@shared-types';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export class GetTrainingRecordsByJournalIdQuery {
   constructor(
@@ -23,17 +21,13 @@ export class GetTrainingRecordsByJournalIdQuery {
 }
 
 @QueryHandler(GetTrainingRecordsByJournalIdQuery)
-export class GetTrainingRecordsByJournalIdQueryHandler
-  implements IQueryHandler<GetTrainingRecordsByJournalIdQuery>
-{
+export class GetTrainingRecordsByJournalIdQueryHandler implements IQueryHandler<GetTrainingRecordsByJournalIdQuery> {
   constructor(
     private trainingJournalsRepo: TrainingJournalsRepository,
     private trainingRecordsRepo: TrainingRecordsRepository,
   ) {}
 
-  async execute(
-    query: GetTrainingRecordsByJournalIdQuery,
-  ): Promise<{
+  async execute(query: GetTrainingRecordsByJournalIdQuery): Promise<{
     pagesCount: number;
     page: number;
     pageSize: number;
@@ -51,7 +45,7 @@ export class GetTrainingRecordsByJournalIdQueryHandler
       );
 
     if (trainingJournal.athleteId !== query.athleteId)
-      throw ForbiddenDomainException.create(ACCOUNT_ERRORS.NOT_OWNER);
+      throw ForbiddenDomainException.create(AUTH_ERRORS.NOT_OWNER);
 
     const parsed = parseQueryParams(query.query);
     const { items, totalCount } =

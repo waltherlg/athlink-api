@@ -1,6 +1,8 @@
 export type {
+  ConfirmEmailParams,
   LoginInput,
   LoginResponse,
+  ResendConfirmationInput,
   UserNameResponse,
   UserRegistrationInput,
   UserView,
@@ -25,6 +27,8 @@ export {
   ErrorCode,
   CommonErrorCodeEnum,
   TrainingJournalErrorCodeEnum,
+  SessionErrorCodeEnum,
+  AuthErrorCodeEnum,
 } from './error-codes';
 
 export {

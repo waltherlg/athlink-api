@@ -6,7 +6,8 @@ import { BadRequestDomainException } from '../../../../../core/exceptions/domain
 import { UserMapper } from '../../../mappers/user.mapper';
 import { UserViewDto } from '../../../api/dto/user-view.dto';
 import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
-import { PasswordService } from '../../services/password.service';
+import { CryptoService } from '../../services/crypto.service';
+import { randomUUID } from 'node:crypto';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}
@@ -16,7 +17,7 @@ export class UserRegistrationCommand {
 export class UserRegistrationUseCase implements ICommandHandler<UserRegistrationCommand> {
   constructor(
     private userRepo: UsersRepository,
-    private passwordService: PasswordService,
+    private passwordService: CryptoService,
   ) {}
 
   async execute(command: UserRegistrationCommand): Promise<UserViewDto> {
@@ -35,11 +36,16 @@ export class UserRegistrationUseCase implements ICommandHandler<UserRegistration
     }
 
     const passwordHash = await this.passwordService.hash(password);
+    const confirmationCode = randomUUID();
+    const confirmCodeExpiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     const userDto: UserCreateDto = {
       userName,
       email,
       passwordHash,
+      confirmationCode,
+      confirmCodeExpiryDate,
+      isConfirmed: false,
     };
 
     const createdUser = await this.userRepo.createUser(userDto);

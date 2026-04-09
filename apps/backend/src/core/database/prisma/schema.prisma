@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id           String @id @default(uuid())
+  id           String @id @default(uuid()) @db.Uuid
   userName     String @unique
   email        String @unique @db.VarChar(255)
   passwordHash String
@@ -22,15 +22,35 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  isConfirmed          Boolean   @default(false)
+  confirmationCode      String?   @db.Uuid
+  confirmCodeExpiryDate DateTime?
+
   // logs
   trainingJournals TrainingJournal[]
   journalAccesses  JournalAccess[]
+  sessions         Session[]
+}
+
+model Session {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  refreshTokenHash String
+
+  ip        String
+  userAgent String
+
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+  lastActiveAt DateTime @default(now())
 }
 
 model TrainingJournal {
-  id String @id @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
-  athleteId String
+  athleteId String @db.Uuid
   athlete   User   @relation(fields: [athleteId], references: [id])
 
   sportType SportType @unique
@@ -43,10 +63,10 @@ model TrainingJournal {
 }
 
 model JournalAccess {
-  id String @id @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
-  userId    String
-  journalId String
+  userId    String @db.Uuid
+  journalId String @db.Uuid
 
   user    User            @relation(fields: [userId], references: [id])
   journal TrainingJournal @relation(fields: [journalId], references: [id])
@@ -68,9 +88,9 @@ enum SportType {
 }
 
 model TrainingRecord {
-  id String @id @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
-  trainingJournalId String
+  trainingJournalId String          @db.Uuid
   trainingJournal   TrainingJournal @relation(fields: [trainingJournalId], references: [id])
 
   result       String?

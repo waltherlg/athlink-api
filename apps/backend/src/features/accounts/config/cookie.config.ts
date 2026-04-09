@@ -1,6 +1,8 @@
 import { CookieOptions } from 'express';
 
-export const cookieSettings: CookieOptions = {
+export const baseCookieSettings: CookieOptions = {
   httpOnly: true,
   secure: true,
+  sameSite: 'strict',
+  path: '/',
 };

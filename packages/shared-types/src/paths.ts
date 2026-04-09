@@ -2,7 +2,11 @@ export const authPaths = {
   controller: 'auth',
   registration: 'registration',
   login: 'login',
+  logout: 'logout',
+  refreshToken: 'refresh-token',
   me: 'me',
+  confirmEmail: 'confirm-email/:code',
+  resendConfirmation: 'resend-confirmation',
 } as const;
 
 export const trainingJournalsPaths = {

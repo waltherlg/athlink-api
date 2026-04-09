@@ -7,8 +7,8 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 import { AthleteDashboardDataViewDto } from '../dto/dashboard-api.dto';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export const SW_DASHBOARD_TITLES = {
   DASHBOARD_CONTROLLER: 'Dashboard operations',
@@ -28,7 +28,7 @@ export function GetAthleteDashboardSwagger() {
       description: 'unauthorized',
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
-          ACCOUNT_ERRORS.UNAUTHORIZED,
+          AUTH_ERRORS.UNAUTHORIZED,
         ]),
       },
     }),

@@ -15,7 +15,7 @@ export class TokenService {
 
   async createTokens(
     userId: string,
-    deviceId: string,
+    sessionId: string,
   ): Promise<accessAndRefreshTokenDto> {
     const accessToken = await this.jwtService.signAsync(
       { id: userId },
@@ -26,7 +26,7 @@ export class TokenService {
     );
 
     const refreshToken = await this.jwtService.signAsync(
-      { id: userId, deviceId },
+      { userId, sessionId },
       {
         expiresIn: this.userConfig.refreshTokenExpiresIn,
         secret: this.userConfig.refreshTokenSecret,

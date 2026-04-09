@@ -11,6 +11,7 @@ import { TrainingJournalWithLatestRecordsViewDto } from '../../api/dto/training-
 import { SportTypeEnum } from '@shared-types';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
 import { TrainingRecord } from '@prisma/client';
+import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 
 export class GetTrainingJournalByIdQuery {
   constructor(
@@ -20,9 +21,7 @@ export class GetTrainingJournalByIdQuery {
 }
 
 @QueryHandler(GetTrainingJournalByIdQuery)
-export class GetTrainingJournalByIdQueryHandler
-  implements IQueryHandler<GetTrainingJournalByIdQuery>
-{
+export class GetTrainingJournalByIdQueryHandler implements IQueryHandler<GetTrainingJournalByIdQuery> {
   constructor(
     private trainingJournalsRepo: TrainingJournalsRepository,
     private trainingRecordsRepo: TrainingRecordsRepository,
@@ -42,7 +41,7 @@ export class GetTrainingJournalByIdQueryHandler
       );
 
     if (trainingJournal.athleteId !== query.athleteId)
-      throw ForbiddenDomainException.create(ACCOUNT_ERRORS.NOT_OWNER);
+      throw ForbiddenDomainException.create(AUTH_ERRORS.NOT_OWNER);
 
     const latestRecords =
       await this.trainingRecordsRepo.getLatestRecordsByTrainingJournalId(

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PasswordService } from './password.service';
+import { CryptoService } from './crypto.service';
 import { UsersRepository } from '../../infrastructure/users.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly passwordService: PasswordService,
+    private readonly cryptoService: CryptoService,
     private readonly usersRepository: UsersRepository,
   ) {}
 
@@ -18,7 +18,7 @@ export class AuthService {
 
     if (!user) return null;
 
-    const isPasswordValid = await this.passwordService.verify(
+    const isPasswordValid = await this.cryptoService.verify(
       user.passwordHash,
       password,
     );

@@ -48,7 +48,7 @@ export class TrainingJournalsController {
   @UseGuards(JwtAuthGuard)
   @Get(trainingJournalsPaths.list)
   async getTrainingJournals(@Req() request: RequestWithUser) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     return this.queryBus.execute(new GetTrainingJournalsQuery(athleteId));
   }
 
@@ -59,7 +59,7 @@ export class TrainingJournalsController {
     @Req() request: RequestWithUser,
     @Param('trainingJournalId') trainingJournalId: string,
   ) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     return this.queryBus.execute(
       new GetTrainingJournalByIdQuery(athleteId, trainingJournalId),
     );
@@ -73,7 +73,7 @@ export class TrainingJournalsController {
     @Param('trainingJournalId') trainingJournalId: string,
     @Query() query: TrainingRecordsQueryParamsDto,
   ) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     return this.queryBus.execute(
       new GetTrainingRecordsByJournalIdQuery(
         athleteId,
@@ -93,7 +93,7 @@ export class TrainingJournalsController {
     @Param('trainingJournalId') trainingJournalId: string,
     @Param('recordId') recordId: string,
   ) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     return this.queryBus.execute(
       new GetTrainingRecordByIdQuery(athleteId, trainingJournalId, recordId),
     );
@@ -106,7 +106,7 @@ export class TrainingJournalsController {
     @Req() request: RequestWithUser,
     @Body() dto: CreateTrainingJournalInputDto,
   ) {
-    const athleteId = request.user.id;
+    const athleteId = request.user.userId;
     const sportType = dto.sportType;
     const result = await this.commandBus.execute(
       new CreateTrainingJournalCommand({ athleteId, sportType }),
@@ -122,7 +122,7 @@ export class TrainingJournalsController {
     @Param('trainingJournalId') trainingJournalId: string,
     @Body() dto: CreateTrainingRecordInputDto,
   ) {
-    const userId = request.user.id;
+    const userId = request.user.userId;
     const result = await this.commandBus.execute(
       new CreateTrainingRecordCommand(userId, {
         trainingJournalId,

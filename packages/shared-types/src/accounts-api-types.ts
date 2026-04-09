@@ -6,6 +6,14 @@ export type UserRegistrationInput = {
   password: string;
 };
 
+export type ConfirmEmailParams = {
+  code: string;
+};
+
+export type ResendConfirmationInput = {
+  email: string;
+};
+
 export type LoginInput = {
   email: string;
   password: string;

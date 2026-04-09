@@ -1,7 +1,9 @@
 export type ErrorCode =
   | AccountErrorCodeEnum
   | CommonErrorCodeEnum
-  | TrainingJournalErrorCodeEnum;
+  | TrainingJournalErrorCodeEnum
+  | SessionErrorCodeEnum
+  | AuthErrorCodeEnum;
 
 export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
@@ -13,11 +15,18 @@ export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_CONFIRMED = 'EMAIL_ALREADY_CONFIRMED',
   EMAIL_NOT_FOUND = 'EMAIL_NOT_FOUND',
   EMAIL_NOT_CONFIRMED = 'EMAIL_NOT_CONFIRMED',
+}
+
+export enum AuthErrorCodeEnum {
+  NOT_OWNER = 'NOT_OWNER',
   UNAUTHORIZED = 'UNAUTHORIZED',
+  EMAIL_OR_PASSWORD_INCORRECT = 'EMAIL_OR_PASSWORD_INCORRECT',
   NO_RESPONSE_FROM_OAUTH = 'NO_RESPONSE_FROM_OAUTH',
   UNSUPPORTED_OAUTH_PROVIDER = 'UNSUPPORTED__OAUTH_PROVIDER',
-  EMAIL_OR_PASSWORD_INCORRECT = 'EMAIL_OR_PASSWORD_INCORRECT',
-  NOT_OWNER = 'NOT_OWNER',
+}
+
+export enum SessionErrorCodeEnum {
+  SESSION_NOT_FOUND = 'SESSION_NOT_FOUND',
 }
 
 export enum CommonErrorCodeEnum {

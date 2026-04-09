@@ -46,29 +46,4 @@ export const ACCOUNT_ERRORS = {
     field: 'email',
     message: 'Email address is not confirmed',
   },
-  UNAUTHORIZED: {
-    code: AccountErrorCodeEnum.UNAUTHORIZED,
-    field: 'user',
-    message: 'User unauthorized',
-  },
-  NO_RESPONSE_FROM_OAUTH: {
-    code: AccountErrorCodeEnum.NO_RESPONSE_FROM_OAUTH,
-    field: 'provider',
-    message: 'no response from oauth service',
-  },
-  UNSUPPORTED_OAUTH_PROVIDER: {
-    code: AccountErrorCodeEnum.UNSUPPORTED_OAUTH_PROVIDER,
-    field: 'provider',
-    message: 'Unsupported provider',
-  },
-  EMAIL_OR_PASSWORD_INCORRECT: {
-    code: AccountErrorCodeEnum.EMAIL_OR_PASSWORD_INCORRECT,
-    field: 'email or password',
-    message: 'The email or password are incorrect',
-  },
-  NOT_OWNER: {
-    code: AccountErrorCodeEnum.NOT_OWNER,
-    field: 'userId',
-    message: 'only owner can change this data',
-  },
 } as const;

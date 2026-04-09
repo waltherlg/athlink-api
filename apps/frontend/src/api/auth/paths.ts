@@ -5,5 +5,7 @@ const authBase = `/${authPathsShared.controller}`;
 export const authPaths = {
   registration: `${authBase}/${authPathsShared.registration}`,
   login: `${authBase}/${authPathsShared.login}`,
+  logout: `${authBase}/${authPathsShared.logout}`,
+  refreshToken: `${authBase}/${authPathsShared.refreshToken}`,
   me: `${authBase}/${authPathsShared.me}`,
 };

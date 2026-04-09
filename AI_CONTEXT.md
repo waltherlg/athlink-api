@@ -1,108 +1,187 @@
-# AI Context: Athlink API (NestJS)
+﻿# AI Snapshot (light)
+Timestamp: 2026-04-07 08:58:45
+Repo: C:\Users\user\Desktop\projects\athlink-api
 
-This document summarizes the backend architecture and conventions inferred from `apps/backend/src/` only.
+## git status -sb
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
 
-## Architecture Overview
+These are common Git commands used in various situations:
 
-The project follows a feature-first, layered NestJS architecture with clear separation of:
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
 
-- `api` layer for HTTP controllers and request DTOs
-- `application` layer for use-cases (CQRS command handlers)
-- `infrastructure` layer for repositories and persistence adapters
-- `schemas` layer for Zod schemas shared across DTOs and domain-ish validation
-- `core` for cross-cutting services (config, database)
-- `setup` for application bootstrap and framework configuration
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
 
-The `@nestjs/cqrs` package is used for use-cases, and Zod with `@anatine/zod-nestjs` is used for DTO validation.
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
 
-## Folder Purposes (apps/backend/src/)
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
 
-- `apps/backend/src/core/`
-  - Cross-cutting infrastructure and global modules.
-  - `core.module.ts` registers configuration globally.
-  - `config/` holds environment config and validation.
-  - `database/prisma/` contains Prisma schema, module, and service.
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
 
-- `apps/backend/src/features/`
-  - Feature modules grouped by business capability (e.g., `auth`, `users`).
-  - Each feature contains its own layers: `api/`, `application/`, `infrastructure/`, `schemas/`.
-  - Feature module wires providers/controllers for the feature.
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
 
-- `apps/backend/src/setup/`
-  - App bootstrap configuration and infrastructure setup.
-  - `app.setup.ts` composes CORS, cookies, exception filters, swagger, etc.
-  - `swagger.setup.ts` defines API docs.
-  - `exception-filter.setup.ts` reserved for global filters.
-  - `utils/` contains reusable setup utilities (e.g., config validation).
+## git diff --stat
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
 
-- `apps/backend/src/`
-  - Root Nest entry points: `main.ts`, `app.module.ts`, `app.controller.ts`, `app.service.ts`.
+These are common Git commands used in various situations:
 
-## Where Things Live
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
 
-- Controllers: `apps/backend/src/features/<feature>/api/*.controller.ts`
-  - Example: `apps/backend/src/features/auth/api/registration.controller.ts`
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
 
-- Request DTOs: `apps/backend/src/features/<feature>/api/dto/*.dto.ts`
-  - Built from Zod schemas via `createZodDto`.
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
 
-- Application logic (use-cases): `apps/backend/src/features/<feature>/application/use-cases/*.use-case.ts`
-  - CQRS `CommandHandler` + `ICommandHandler` pattern.
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
 
-- Application DTOs: `apps/backend/src/features/<feature>/application/dto/*.dto.ts`
-  - Example: `apps/backend/src/features/users/application/dto/create-user.dto.ts`
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
 
-- Schemas: `apps/backend/src/features/<feature>/schemas/*.schema.ts`
-  - Zod schemas defining shapes for validation and type alignment.
-  - These often mirror Prisma models for consistency.
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
 
-- Repositories: `apps/backend/src/features/<feature>/infrastructure/*.repository.ts`
-  - Prisma-backed data access via `PrismaService`.
+## git diff --name-only
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
 
-- Global infrastructure:
-  - Config: `apps/backend/src/core/config/`
-  - Database: `apps/backend/src/core/database/prisma/`
-  - App setup: `apps/backend/src/setup/`
+These are common Git commands used in various situations:
 
-## Naming Conventions
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
 
-- File names use `kebab-case` with role suffixes:
-  - `*.module.ts`, `*.controller.ts`, `*.service.ts`
-  - `*.dto.ts`, `*.schema.ts`, `*.repository.ts`
-  - `*.use-case.ts`, `*.setup.ts`, `*.consts.ts`
-- Folder names are lowercase and descriptive (`features`, `core`, `setup`, `api`, `application`, `infrastructure`, `schemas`).
-- DTO classes use `PascalCase` with suffix `Dto`.
-- Use-case classes use `PascalCase` with suffix `UseCase`.
-- Constants use `UPPER_SNAKE_CASE` inside objects.
-- Prisma models are consumed via `@prisma/client` types.
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
 
-## How To Add A New Feature
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
 
-Create a new folder under `apps/backend/src/features/<feature>/` and follow the established layering:
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
 
-1. `api/`
-   - Add controller(s) under `api/*.controller.ts`.
-   - Add request DTOs under `api/dto/*.dto.ts`.
-   - Use Zod schemas and `createZodDto` for validation.
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
 
-2. `application/`
-   - Add use-cases under `application/use-cases/*.use-case.ts`.
-   - If needed, define feature-specific application DTOs under `application/dto/`.
-   - Use `@nestjs/cqrs` command handlers for business flows.
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
 
-3. `schemas/`
-   - Define Zod schemas for data shapes that align with Prisma models.
+## git log -5 --oneline
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--config-env=<name>=<envvar>] <command> [<args>]
 
-4. `infrastructure/`
-   - Add repositories under `infrastructure/*.repository.ts` using `PrismaService`.
-   - Keep persistence details here; do not embed database logic in controllers.
+These are common Git commands used in various situations:
 
-5. `feature.module.ts`
-   - Provide repositories and use-cases.
-   - Export providers needed by other features.
-   - Register controllers for HTTP endpoints.
+start a working area (see also: git help tutorial)
+   clone     Clone a repository into a new directory
+   init      Create an empty Git repository or reinitialize an existing one
 
-6. Wire into `apps/backend/src/app.module.ts`
-   - Import the feature module.
+work on the current change (see also: git help everyday)
+   add       Add file contents to the index
+   mv        Move or rename a file, a directory, or a symlink
+   restore   Restore working tree files
+   rm        Remove files from the working tree and from the index
 
-This keeps API, application logic, and persistence cleanly separated and consistent with the rest of the codebase.
+examine the history and state (see also: git help revisions)
+   bisect    Use binary search to find the commit that introduced a bug
+   diff      Show changes between commits, commit and working tree, etc
+   grep      Print lines matching a pattern
+   log       Show commit logs
+   show      Show various types of objects
+   status    Show the working tree status
+
+grow, mark and tweak your common history
+   branch    List, create, or delete branches
+   commit    Record changes to the repository
+   merge     Join two or more development histories together
+   rebase    Reapply commits on top of another base tip
+   reset     Reset current HEAD to the specified state
+   switch    Switch branches
+   tag       Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch     Download objects and refs from another repository
+   pull      Fetch from and integrate with another repository or a local branch
+   push      Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+See 'git help git' for an overview of the system.
