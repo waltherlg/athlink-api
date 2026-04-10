@@ -49,6 +49,18 @@ export default function CreateTrainingRecordPage() {
 
   return (
     <section className="page">
+      <div className="journal-actions">
+        {trainingJournalId ? (
+          <Link className="button-link ghost" to={`/journal/${trainingJournalId}`}>
+            {t('record.backJournal')}
+          </Link>
+        ) : (
+          <Link className="button-link ghost" to="/">
+            {t('record.backDashboard')}
+          </Link>
+        )}
+      </div>
+
       <form
         className="card form"
         onSubmit={(event) => {
@@ -83,7 +95,7 @@ export default function CreateTrainingRecordPage() {
         <label className="field">
           <span>{t('record.field.privateNotes')}</span>
           <textarea
-            rows={4}
+            rows={2}
             value={form.privateNotes ?? ''}
             onChange={(event) =>
               setForm((prev) => ({ ...prev, privateNotes: event.target.value }))
@@ -92,20 +104,8 @@ export default function CreateTrainingRecordPage() {
           />
         </label>
 
-        <div className="form-actions">
-          {trainingJournalId ? (
-            <Link
-              className="button-link ghost"
-              to={`/journal/${trainingJournalId}`}
-            >
-              {t('record.backJournal')}
-            </Link>
-          ) : (
-            <Link className="button-link ghost" to="/">
-              {t('record.backDashboard')}
-            </Link>
-          )}
-          <button className="primary compact" type="submit" disabled={isLoading}>
+        <div className="form-actions start">
+          <button className="primary" type="submit" disabled={isLoading}>
             {isLoading ? t('record.saving') : t('record.save')}
           </button>
         </div>

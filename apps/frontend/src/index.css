@@ -188,6 +188,10 @@ h2 {
   flex-wrap: wrap;
 }
 
+.form-actions.start {
+  justify-content: flex-start;
+}
+
 .field {
   display: grid;
   gap: 0.4rem;
@@ -523,7 +527,7 @@ h2 {
 }
 
 .record-note {
-  color: var(--muted);
+  color: var(--ink);
   font-size: 0.9rem;
   white-space: pre-wrap;
 }

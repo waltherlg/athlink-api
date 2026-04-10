@@ -98,12 +98,12 @@ export default function PasswordResetPage() {
       </form>
 
       {success ? (
-        <div className="alert success">
-          <p>{t('passwordReset.success')}</p>
+        <>
+          <div className="alert success">{t('passwordReset.success')}</div>
           <Link className="button-link ghost" to="/login">
             {t('passwordReset.toLogin')}
           </Link>
-        </div>
+        </>
       ) : null}
       {error ? <div className="alert error">{error}</div> : null}
     </section>
