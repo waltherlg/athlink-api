@@ -7,6 +7,7 @@ export const authPaths = {
   me: 'me',
   confirmEmail: 'confirm-email/:code',
   resendConfirmation: 'resend-confirmation',
+  passwordRecovery: 'password-recovery',
 } as const;
 
 export const trainingJournalsPaths = {

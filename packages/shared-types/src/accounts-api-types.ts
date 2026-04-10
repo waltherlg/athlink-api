@@ -14,6 +14,10 @@ export type ResendConfirmationInput = {
   email: string;
 };
 
+export type PasswordRecoveryInput = {
+  email: string;
+};
+
 export type LoginInput = {
   email: string;
   password: string;

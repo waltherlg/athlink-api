@@ -16,8 +16,11 @@ export class EmailService {
     email: string,
     confirmationCode: string,
   ): Promise<void> {
-    const message =
-      this.templatesService.buildRegistrationConfirmation(confirmationCode);
+    const confirmUrl = this.buildConfirmEmailUrl(confirmationCode);
+    const message = this.templatesService.buildRegistrationConfirmation(
+      confirmationCode,
+      confirmUrl,
+    );
 
     await this.provider.sendEmail({
       to: email,
@@ -32,8 +35,11 @@ export class EmailService {
     email: string,
     confirmationCode: string,
   ): Promise<void> {
-    const message =
-      this.templatesService.buildConfirmationResend(confirmationCode);
+    const confirmUrl = this.buildConfirmEmailUrl(confirmationCode);
+    const message = this.templatesService.buildConfirmationResend(
+      confirmationCode,
+      confirmUrl,
+    );
 
     await this.provider.sendEmail({
       to: email,
@@ -54,5 +60,11 @@ export class EmailService {
       text: message.text,
       html: message.html,
     });
+  }
+
+  private buildConfirmEmailUrl(confirmationCode: string): string {
+    const baseUrl = this.coreEnv.frontendBaseUrl.replace(/\/+$/, '');
+    const code = encodeURIComponent(confirmationCode);
+    return `${baseUrl}/confirm-email?code=${code}`;
   }
 }

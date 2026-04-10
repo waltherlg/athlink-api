@@ -32,6 +32,7 @@ import {
   LogoutSwagger,
   ConfirmEmailSwagger,
   ResendConfirmationSwagger,
+  PasswordRecoverySwagger,
   RefreshTokenSwagger,
   RegisterUserSwagger,
   SW_AUTH_TITLES,
@@ -47,6 +48,8 @@ import {
   ConfirmEmailCodeParamDto,
   ResendConfirmationInputDto,
 } from './dto/confirmation.dto';
+import { PasswordRecoveryInputDto } from './dto/password-recovery.dto';
+import { PasswordRecoveryCommand } from '../application/use-cases/auth-use-cases/password-recovery.use-case';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)
 @Controller(authPaths.controller)
@@ -136,6 +139,13 @@ export class AuthController {
     @Body() dto: ResendConfirmationInputDto,
   ): Promise<void> {
     await this.commandBus.execute(new ResendConfirmationCommand(dto.email));
+  }
+
+  @PasswordRecoverySwagger()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post(authPaths.passwordRecovery)
+  async passwordRecovery(@Body() dto: PasswordRecoveryInputDto): Promise<void> {
+    await this.commandBus.execute(new PasswordRecoveryCommand(dto.email));
   }
 
   @UseGuards(JwtAuthGuard)

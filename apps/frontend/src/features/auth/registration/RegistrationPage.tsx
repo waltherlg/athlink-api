@@ -106,7 +106,7 @@ export default function RegistrationPage() {
     setErrors(EMPTY_ERRORS);
     try {
       await registerUser(input);
-      navigate('/login');
+      navigate('/login?registered=1');
     } catch (err) {
       const apiError = err as ApiError | undefined;
       const normalized = normalizeErrors(apiError?.details);

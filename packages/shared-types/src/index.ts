@@ -2,6 +2,7 @@ export type {
   ConfirmEmailParams,
   LoginInput,
   LoginResponse,
+  PasswordRecoveryInput,
   ResendConfirmationInput,
   UserNameResponse,
   UserRegistrationInput,

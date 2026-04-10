@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CryptoService } from './crypto.service';
 import { UsersRepository } from '../../infrastructure/users.repository';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
   async checkUserCredential(
     loginOrEmail: string,
     password: string,
-  ): Promise<string | null> {
+  ): Promise<User | null> {
     const user =
       await this.usersRepository.findUserByLoginOrEmail(loginOrEmail);
 
@@ -25,6 +26,6 @@ export class AuthService {
 
     if (!isPasswordValid) return null;
 
-    return user.id;
+    return user;
   }
 }

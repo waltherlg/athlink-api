@@ -12,6 +12,7 @@ import { UserViewDto } from '../dto/user-view.dto';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
 import { ResendConfirmationInputDto } from '../dto/confirmation.dto';
+import { PasswordRecoveryInputDto } from '../dto/password-recovery.dto';
 import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
@@ -200,6 +201,31 @@ export function ResendConfirmationSwagger() {
       content: {
         'application/json': SwaggerHelper.buildErrorResponse([
           ACCOUNT_ERRORS.EMAIL_ALREADY_CONFIRMED,
+          ACCOUNT_ERRORS.EMAIL_NOT_FOUND,
+          COMMON_ERRORS.VALIDATION_ERROR,
+        ]),
+      },
+    }),
+  );
+}
+
+export function PasswordRecoverySwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiOperation({ summary: 'Request password recovery code' }),
+    ApiBody({
+      description: 'User email',
+      type: PasswordRecoveryInputDto,
+    }),
+    ApiResponse({
+      status: HttpStatus.NO_CONTENT,
+      description: 'Recovery code sent',
+    }),
+    ApiResponse({
+      status: HttpStatus.BAD_REQUEST,
+      description: 'Validation and business errors',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
           ACCOUNT_ERRORS.EMAIL_NOT_FOUND,
           COMMON_ERRORS.VALIDATION_ERROR,
         ]),
