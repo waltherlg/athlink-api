@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { UserRegistrationInputDto } from '../../../api/dto/registration.dto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { UserCreateDto } from '../../dto/domain-user.dto';
@@ -8,6 +8,7 @@ import { UserViewDto } from '../../../api/dto/user-view.dto';
 import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
 import { CryptoService } from '../../services/crypto.service';
 import { randomUUID } from 'node:crypto';
+import { UserRegisteredEvent } from '../../events/user-registered.event';
 
 export class UserRegistrationCommand {
   constructor(public dto: UserRegistrationInputDto) {}
@@ -18,6 +19,7 @@ export class UserRegistrationUseCase implements ICommandHandler<UserRegistration
   constructor(
     private userRepo: UsersRepository,
     private passwordService: CryptoService,
+    private eventBus: EventBus,
   ) {}
 
   async execute(command: UserRegistrationCommand): Promise<UserViewDto> {
@@ -49,6 +51,8 @@ export class UserRegistrationUseCase implements ICommandHandler<UserRegistration
     };
 
     const createdUser = await this.userRepo.createUser(userDto);
+
+    this.eventBus.publish(new UserRegisteredEvent(email, confirmationCode));
 
     return UserMapper.toViewDto(createdUser);
   }

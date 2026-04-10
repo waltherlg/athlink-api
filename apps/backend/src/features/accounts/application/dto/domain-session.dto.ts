@@ -1,6 +1,7 @@
 import { Session } from '@prisma/client';
 
 export class CreateSessionDto {
+  id: string;
   userId: string;
   refreshTokenHash: string;
   ip: string;

@@ -18,7 +18,7 @@ export class TokenService {
     sessionId: string,
   ): Promise<accessAndRefreshTokenDto> {
     const accessToken = await this.jwtService.signAsync(
-      { id: userId },
+      { userId, sessionId },
       {
         expiresIn: this.userConfig.accessTokenExpiresIn,
         secret: this.userConfig.accessTokenSecret,

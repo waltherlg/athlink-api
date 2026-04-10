@@ -8,4 +8,8 @@ export const authPaths = {
   logout: `${authBase}/${authPathsShared.logout}`,
   refreshToken: `${authBase}/${authPathsShared.refreshToken}`,
   me: `${authBase}/${authPathsShared.me}`,
+  confirmEmail: `${authBase}/${authPathsShared.confirmEmail}`,
+  resendConfirmation: `${authBase}/${authPathsShared.resendConfirmation}`,
+  passwordRecoveryRequest: `${authBase}/${authPathsShared.passwordRecoveryRequest}`,
+  passwordReset: `${authBase}/${authPathsShared.passwordReset}`,
 };

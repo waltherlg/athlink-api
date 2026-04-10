@@ -15,6 +15,7 @@ export class SessionsRepository implements SessionsRepositoryInterface {
 
   async findOne(id: string): Promise<Session | null> {
     const session = await this.prisma.session.findUnique({ where: { id } });
+
     return session ? session : null;
   }
 

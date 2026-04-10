@@ -39,6 +39,30 @@ export class CoreEnvironmentConfig {
   })
   dataBaseUrl: string = this.configService.get('DATABASE_URL');
 
+  @IsNotEmpty({
+    message:
+      "Set Env variable BACKEND_BASE_URL, example: 'http://localhost:3000'",
+  })
+  backendBaseUrl: string = this.configService.get('BACKEND_BASE_URL');
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable FRONTEND_BASE_URL, example: 'http://localhost:4173'",
+  })
+  frontendBaseUrl: string = this.configService.get('FRONTEND_BASE_URL');
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable EMAIL_USER, example: 'example@gmail.com', !!sensitive data!!",
+  })
+  emailUser: string = this.configService.get('EMAIL_USER');
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable EMAIL_PASSWORD, example: 'app-password', !!sensitive data!!",
+  })
+  emailPassword: string = this.configService.get('EMAIL_PASSWORD');
+
   constructor(private configService: ConfigService<any, true>) {
     configValidationUtility.validateConfig(this);
   }

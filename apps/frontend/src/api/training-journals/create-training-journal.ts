@@ -5,11 +5,13 @@ import type {
 } from '@shared-types';
 import { trainingJournalsPaths } from './paths';
 
+export type CreateTrainingJournalResponse = TrainingJournalView | string;
+
 export function createTrainingJournal(
   accessToken: string,
   input: CreateTrainingJournalInput,
-) {
-  return apiFetch<TrainingJournalView>(trainingJournalsPaths.list, {
+): Promise<CreateTrainingJournalResponse> {
+  return apiFetch<CreateTrainingJournalResponse>(trainingJournalsPaths.list, {
     method: 'POST',
     body: JSON.stringify(input),
     headers: {

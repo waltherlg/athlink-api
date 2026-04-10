@@ -63,6 +63,45 @@ export class UsersRepository {
     });
   }
 
+  async updatePasswordRecoveryData(
+    userId: string,
+    recoveryCode: string,
+    recoveryExpiresAt: Date,
+  ): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        passwordRecoveryCode: recoveryCode,
+        passwordRecoveryExpiresAt: recoveryExpiresAt,
+      },
+    });
+  }
+
+  async findUserByEmailAndRecoveryCode(
+    email: string,
+    recoveryCode: string,
+  ): Promise<User | null> {
+    const user = await this.prisma.user.findFirst({
+      where: { email, passwordRecoveryCode: recoveryCode },
+    });
+    if (!user) return null;
+    return user;
+  }
+
+  async updatePasswordByRecovery(
+    userId: string,
+    passwordHash: string,
+  ): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        passwordHash,
+        passwordRecoveryCode: null,
+        passwordRecoveryExpiresAt: null,
+      },
+    });
+  }
+
   async isUserNameExist(userName: string): Promise<boolean> {
     const count = await this.prisma.user.count({
       where: { userName: userName },

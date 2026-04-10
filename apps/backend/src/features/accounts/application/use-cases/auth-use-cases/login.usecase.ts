@@ -41,6 +41,7 @@ export class LoginUseCase implements ICommandHandler<LoginCommand> {
     const refreshTokenHash = await this.cryptoService.hash(refreshToken);
 
     const createSessionDto: CreateSessionDto = {
+      id: sessionId,
       userId,
       refreshTokenHash,
       ip,
