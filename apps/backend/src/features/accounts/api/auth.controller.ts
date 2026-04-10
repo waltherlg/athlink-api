@@ -32,7 +32,8 @@ import {
   LogoutSwagger,
   ConfirmEmailSwagger,
   ResendConfirmationSwagger,
-  PasswordRecoverySwagger,
+  PasswordRecoveryRequestSwagger,
+  PasswordResetSwagger,
   RefreshTokenSwagger,
   RegisterUserSwagger,
   SW_AUTH_TITLES,
@@ -48,8 +49,12 @@ import {
   ConfirmEmailCodeParamDto,
   ResendConfirmationInputDto,
 } from './dto/confirmation.dto';
-import { PasswordRecoveryInputDto } from './dto/password-recovery.dto';
-import { PasswordRecoveryCommand } from '../application/use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordRecoveryRequestInputDto } from './dto/password-recovery.dto';
+import { PasswordResetInputDto } from './dto/password-reset.dto';
+import {
+  PasswordRecoveryRequestCommand,
+} from '../application/use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordResetCommand } from '../application/use-cases/auth-use-cases/password-reset.use-case';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)
 @Controller(authPaths.controller)
@@ -141,11 +146,24 @@ export class AuthController {
     await this.commandBus.execute(new ResendConfirmationCommand(dto.email));
   }
 
-  @PasswordRecoverySwagger()
+  @PasswordRecoveryRequestSwagger()
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Post(authPaths.passwordRecovery)
-  async passwordRecovery(@Body() dto: PasswordRecoveryInputDto): Promise<void> {
-    await this.commandBus.execute(new PasswordRecoveryCommand(dto.email));
+  @Post(authPaths.passwordRecoveryRequest)
+  async passwordRecoveryRequest(
+    @Body() dto: PasswordRecoveryRequestInputDto,
+  ): Promise<void> {
+    await this.commandBus.execute(
+      new PasswordRecoveryRequestCommand(dto.email),
+    );
+  }
+
+  @PasswordResetSwagger()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post(authPaths.passwordReset)
+  async passwordReset(@Body() dto: PasswordResetInputDto): Promise<void> {
+    await this.commandBus.execute(
+      new PasswordResetCommand(dto.email, dto.code, dto.newPassword),
+    );
   }
 
   @UseGuards(JwtAuthGuard)

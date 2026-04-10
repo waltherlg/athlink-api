@@ -10,5 +10,6 @@ export const authPaths = {
   me: `${authBase}/${authPathsShared.me}`,
   confirmEmail: `${authBase}/${authPathsShared.confirmEmail}`,
   resendConfirmation: `${authBase}/${authPathsShared.resendConfirmation}`,
-  passwordRecovery: `${authBase}/${authPathsShared.passwordRecovery}`,
+  passwordRecoveryRequest: `${authBase}/${authPathsShared.passwordRecoveryRequest}`,
+  passwordReset: `${authBase}/${authPathsShared.passwordReset}`,
 };

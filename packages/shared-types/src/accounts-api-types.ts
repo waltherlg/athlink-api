@@ -14,8 +14,14 @@ export type ResendConfirmationInput = {
   email: string;
 };
 
-export type PasswordRecoveryInput = {
+export type PasswordRecoveryRequestInput = {
   email: string;
+};
+
+export type PasswordResetInput = {
+  email: string;
+  code: string;
+  newPassword: string;
 };
 
 export type LoginInput = {

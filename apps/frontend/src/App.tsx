@@ -8,6 +8,7 @@ import LoginPage from './features/auth/login/LoginPage';
 import RegistrationPage from './features/auth/registration/RegistrationPage';
 import ConfirmEmailPage from './features/auth/confirm-email/ConfirmEmailPage';
 import PasswordRecoveryPage from './features/auth/password-recovery/PasswordRecoveryPage';
+import PasswordResetPage from './features/auth/password-reset/PasswordResetPage';
 import DashboardPage from './features/dashboard/DashboardPage';
 import TrainingJournalPage from './features/training-journals/TrainingJournalPage';
 import CreateTrainingJournalPage from './features/training-journals/CreateTrainingJournalPage';
@@ -83,6 +84,14 @@ export default function App() {
                   element={
                     <RedirectIfAuth>
                       <PasswordRecoveryPage />
+                    </RedirectIfAuth>
+                  }
+                />
+                <Route
+                  path="/password-reset"
+                  element={
+                    <RedirectIfAuth>
+                      <PasswordResetPage />
                     </RedirectIfAuth>
                   }
                 />

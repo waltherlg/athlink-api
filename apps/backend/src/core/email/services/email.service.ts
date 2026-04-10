@@ -51,7 +51,11 @@ export class EmailService {
   }
 
   async sendPasswordReset(email: string, resetCode: string): Promise<void> {
-    const message = this.templatesService.buildPasswordReset(resetCode);
+    const resetUrl = this.buildPasswordResetUrl(email, resetCode);
+    const message = this.templatesService.buildPasswordReset(
+      resetCode,
+      resetUrl,
+    );
 
     await this.provider.sendEmail({
       to: email,
@@ -66,5 +70,12 @@ export class EmailService {
     const baseUrl = this.coreEnv.frontendBaseUrl.replace(/\/+$/, '');
     const code = encodeURIComponent(confirmationCode);
     return `${baseUrl}/confirm-email?code=${code}`;
+  }
+
+  private buildPasswordResetUrl(email: string, resetCode: string): string {
+    const baseUrl = this.coreEnv.frontendBaseUrl.replace(/\/+$/, '');
+    const emailParam = encodeURIComponent(email);
+    const codeParam = encodeURIComponent(resetCode);
+    return `${baseUrl}/password-reset?email=${emailParam}&code=${codeParam}`;
   }
 }

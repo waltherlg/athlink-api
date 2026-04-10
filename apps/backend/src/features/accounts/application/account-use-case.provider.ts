@@ -4,7 +4,8 @@ import { UserRegistrationUseCase } from './use-cases/auth-use-cases/user-registr
 import { ConfirmEmailUseCase } from './use-cases/auth-use-cases/confirm-email.use-case';
 import { ResendConfirmationUseCase } from './use-cases/auth-use-cases/resend-confirmation.use-case';
 import { RefreshTokenUseCase } from './use-cases/auth-use-cases/refresh-token.usecase';
-import { PasswordRecoveryUseCase } from './use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordRecoveryRequestUseCase } from './use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordResetUseCase } from './use-cases/auth-use-cases/password-reset.use-case';
 
 export const AuthUseCases = [
   UserRegistrationUseCase,
@@ -12,6 +13,7 @@ export const AuthUseCases = [
   LogoutUseCase,
   ConfirmEmailUseCase,
   ResendConfirmationUseCase,
-  PasswordRecoveryUseCase,
+  PasswordRecoveryRequestUseCase,
+  PasswordResetUseCase,
   RefreshTokenUseCase,
 ];

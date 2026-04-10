@@ -1,9 +1,9 @@
 import { apiFetch } from '../http';
-import type { PasswordRecoveryInput } from '@shared-types';
+import type { PasswordRecoveryRequestInput } from '@shared-types';
 import { authPaths } from './paths';
 
-export function requestPasswordRecovery(input: PasswordRecoveryInput) {
-  return apiFetch<void>(authPaths.passwordRecovery, {
+export function requestPasswordRecovery(input: PasswordRecoveryRequestInput) {
+  return apiFetch<void>(authPaths.passwordRecoveryRequest, {
     method: 'POST',
     body: JSON.stringify(input),
   });

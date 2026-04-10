@@ -1,9 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Trim } from '../../../../core/decorators/trim.decorator';
-import type { PasswordRecoveryInput } from '@shared-types';
+import type { PasswordRecoveryRequestInput } from '@shared-types';
 
-export class PasswordRecoveryInputDto implements PasswordRecoveryInput {
+export class PasswordRecoveryRequestInputDto
+  implements PasswordRecoveryRequestInput
+{
   @ApiProperty({ example: 'email@abc.com' })
   @Trim()
   @IsEmail()
