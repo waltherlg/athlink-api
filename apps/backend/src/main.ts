@@ -6,11 +6,12 @@ import { CoreEnvironmentConfig } from './core/config/core-env.config';
 async function bootstrap() {
   const appContext = await NestFactory.create(AppModule);
   const config = appContext.get<CoreEnvironmentConfig>(CoreEnvironmentConfig);
-  const port = config.port;
   appContext.enableCors({
-    origin: config.frontendBaseUrl,
+    origin: true,
     credentials: true,
   });
+  const port = config.port;
+
   appSetup(appContext);
   await appContext.listen(port);
 
