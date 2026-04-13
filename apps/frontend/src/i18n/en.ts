@@ -109,6 +109,7 @@ export const en = {
   'journal.titleFallback': 'Training Journal',
   'journal.titleWithSport': 'Training Journal "{sport}"',
   'journal.back': 'Back to dashboard',
+  'journal.backDashboard': 'Back to home',
   'journal.addRecord': 'Add record',
   'journal.loading': 'Loading journal...',
   'journal.errorLoad': 'Failed to load journal.',

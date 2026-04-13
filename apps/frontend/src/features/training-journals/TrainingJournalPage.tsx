@@ -67,12 +67,23 @@ export default function TrainingJournalPage() {
   return (
     <section className="page journal-page">
       <div className="journal-actions">
+        <Link className="button-link ghost" to="/">
+          {t('journal.backDashboard')}
+        </Link>
         {trainingJournalId ? (
           <Link
             className="primary"
             to={`/journal/${trainingJournalId}/new-record`}
           >
             {t('journal.addRecord')}
+          </Link>
+        ) : null}
+        {trainingJournalId ? (
+          <Link
+            className="button-link ghost"
+            to={`/journal/${trainingJournalId}/records`}
+          >
+            {t('journal.viewAll')}
           </Link>
         ) : null}
       </div>
@@ -114,16 +125,6 @@ export default function TrainingJournalPage() {
             )}
           </section>
 
-          {trainingJournalId ? (
-            <div className="journal-actions">
-              <Link
-                className="button-link ghost"
-                to={`/journal/${trainingJournalId}/records`}
-              >
-                {t('journal.viewAll')}
-              </Link>
-            </div>
-          ) : null}
         </div>
       ) : null}
     </section>
