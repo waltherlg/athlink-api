@@ -6,7 +6,10 @@ import { pipesSetup } from './pipes.setup';
 import { validationConstraintSetup } from './validation-constraint.setup';
 
 export function appSetup(app: INestApplication) {
-  app.enableCors({ origin: true, credentials: true });
+  app.enableCors({
+    origin: process.env.FRONTEND_BASE_URL,
+    credentials: true,
+  });
   app.use(cookieParser());
   //app.useGlobalPipes(new ValidationPipe({ transform: true }));
   pipesSetup(app);
