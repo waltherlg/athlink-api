@@ -8,7 +8,7 @@
   "scripts": {
     "start:dev": "pnpm -C apps/backend start:dev",
     "shared-types build": "pnpm --filter @shared-types build",
-    "build": "pnpm -C apps/backend build",
+    "build": "pnpm --filter @shared-types build && pnpm -C apps/backend prisma-generate && pnpm -C apps/backend build",
     "format": "pnpm -C apps/backend format",
     "start": "pnpm -C apps/backend start",
     "start:debug": "pnpm -C apps/backend start:debug",

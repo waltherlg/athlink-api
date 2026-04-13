@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 "start": "nest start",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main.js",
     "prisma-generate": "pnpm prisma generate --schema=src/core/database/prisma/schema.prisma",
     "prisma-migrate: create only": "npx cross-env dotenv -e .development.local.env -- prisma migrate dev --create-only",
     "prisma-migrate-deploy": "npx cross-env dotenv -e .development.local.env -- pnpm prisma migrate deploy",
