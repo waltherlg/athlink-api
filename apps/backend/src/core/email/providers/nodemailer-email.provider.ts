@@ -24,12 +24,14 @@ export class NodemailerEmailProvider implements EmailProvider {
   }
 
   async sendEmail(options: EmailSendOptions): Promise<void> {
-    await this.transporter.sendMail({
+    console.log('sending email...');
+    const result = await this.transporter.sendMail({
       from: options.from ?? this.defaultFrom,
       to: options.to,
       subject: options.subject,
       text: options.text,
       html: options.html,
     });
+    console.log(result);
   }
 }
