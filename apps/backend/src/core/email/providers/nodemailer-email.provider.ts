@@ -20,6 +20,9 @@ export class NodemailerEmailProvider implements EmailProvider {
         user: this.coreEnv.emailUser,
         pass: this.coreEnv.emailPassword,
       },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     });
   }
 
