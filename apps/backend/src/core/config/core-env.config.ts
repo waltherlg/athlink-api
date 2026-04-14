@@ -66,4 +66,16 @@ export class CoreEnvironmentConfig {
   constructor(private configService: ConfigService<any, true>) {
     configValidationUtility.validateConfig(this);
   }
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable RESEND_API_KEY, example: 'app-password', !!sensitive data!!",
+  })
+  resendApiKey: string = this.configService.get('RESEND_API_KEY');
+
+  @IsNotEmpty({
+    message:
+      "Set Env variable RESEND_EMAIL_FROM, example: 'app-password', !!sensitive data!!",
+  })
+  resendEmailFrom: string = this.configService.get('RESEND_EMAIL_FROM');
 }

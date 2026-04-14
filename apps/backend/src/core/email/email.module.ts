@@ -4,6 +4,7 @@ import { EMAIL_PROVIDER } from './email.constants';
 import { NodemailerEmailProvider } from './providers/nodemailer-email.provider';
 import { EmailTemplatesService } from './services/email-templates.service';
 import { EmailService } from './services/email.service';
+import { ResendEmailProvider } from './providers/resend-email.provider';
 
 @Module({
   imports: [CoreConfigModule],
@@ -12,7 +13,7 @@ import { EmailService } from './services/email.service';
     EmailService,
     {
       provide: EMAIL_PROVIDER,
-      useClass: NodemailerEmailProvider,
+      useClass: ResendEmailProvider,
     },
   ],
   exports: [EmailService, EmailTemplatesService],
