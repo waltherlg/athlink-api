@@ -2,7 +2,7 @@ import { authPaths as authPathsShared } from '@shared-types';
 import { setAccessToken } from '../features/auth/token-storage';
 
 export const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
+  (import.meta.env.VITE_API_URL as string | undefined) ??
   'http://localhost:3000';
 
 export const AUTH_UNAUTHORIZED_EVENT = 'auth:unauthorized';
@@ -109,7 +109,10 @@ export async function apiFetch<TResponse>(
           status: retryResponse.status,
           details: typeof retryData === 'string' ? undefined : retryData,
         };
-        if (retryResponse.status === 401 && requestHeaders.has('Authorization')) {
+        if (
+          retryResponse.status === 401 &&
+          requestHeaders.has('Authorization')
+        ) {
           notifyUnauthorized();
         }
         throw error;
