@@ -25,13 +25,18 @@ export class NodemailerEmailProvider implements EmailProvider {
 
   async sendEmail(options: EmailSendOptions): Promise<void> {
     console.log('sending email...');
-    const result = await this.transporter.sendMail({
-      from: options.from ?? this.defaultFrom,
-      to: options.to,
-      subject: options.subject,
-      text: options.text,
-      html: options.html,
-    });
-    console.log(result);
+    try {
+      const result = await this.transporter.sendMail({
+        from: options.from ?? this.defaultFrom,
+        to: options.to,
+        subject: options.subject,
+        text: options.text,
+        html: options.html,
+      });
+
+      console.log('email sent:', result);
+    } catch (error) {
+      console.error('EMAIL ERROR:', error);
+    }
   }
 }
