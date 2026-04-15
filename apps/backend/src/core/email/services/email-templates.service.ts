@@ -52,21 +52,18 @@ export class EmailTemplatesService {
     return { subject, text, html };
   }
 
-  buildPasswordReset(
-    resetCode: string,
-    resetUrl: string,
-  ): EmailTemplateResult {
-    const subject = 'Сброс пароля';
+  buildPasswordReset(resetCode: string, resetUrl: string): EmailTemplateResult {
+    const subject = 'Смена пароля';
     const text = [
       'Вы запросили сброс пароля.',
-      `Код для сброса пароля: ${resetCode}`,
+      `Код для смены пароля: ${resetCode}`,
       `Ссылка для смены пароля: ${resetUrl}`,
       'Если это были не вы, просто проигнорируйте это письмо.',
     ].join('\n');
 
     const html = [
-      '<h2>Сброс пароля</h2>',
-      `<p>Код для сброса пароля: <b>${resetCode}</b></p>`,
+      '<h2>Смена пароля</h2>',
+      `<p>Код для смены пароля: <b>${resetCode}</b></p>`,
       `<p>Ссылка для смены пароля: <a href="${resetUrl}">${resetUrl}</a></p>`,
       '<p>Если это были не вы, просто проигнорируйте это письмо.</p>',
     ].join('');

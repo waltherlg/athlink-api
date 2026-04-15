@@ -21,10 +21,10 @@ export const ru = {
   'confirmEmail.error.alreadyConfirmed': 'Почта уже подтверждена.',
   'confirmEmail.error.failed': 'Не удалось подтвердить почту.',
 
-  'login.title': 'Вход',
+  'login.title': 'Будь на связи с тренером',
   'login.subtitle': 'Введите email и пароль.',
   'login.registered':
-    'Регистрация успешна. Мы отправили письмо с подтверждением.',
+    'Для завершении регистрации, следуйте инструкции которые мы выслали Вам на почту.',
   'login.invalid': 'Неверные данные.',
   'login.failed': 'Не удалось войти. Попробуйте еще раз.',
   'login.button': 'Войти',
@@ -87,7 +87,8 @@ export const ru = {
   'dashboard.errorCreateRecord': 'Не удалось создать запись.',
   'dashboard.emptyTitle': 'Дневников пока нет',
   'dashboard.emptyAction': 'Создай',
-  'dashboard.emptyText': 'тренировочный дневник, чтобы видеть прогресс и записи.',
+  'dashboard.emptyText':
+    'тренировочный дневник, чтобы видеть прогресс и записи.',
   'dashboard.yourJournals': 'Твои дневники',
   'dashboard.lastResult': 'Последний результат',
   'dashboard.noResult': 'Нет результата',
@@ -96,15 +97,15 @@ export const ru = {
   'dashboard.field.coachNotes': 'Общие заметки',
   'dashboard.field.privateNotes': 'Личные заметки',
   'dashboard.placeholder.result': 'Например 612.5',
-  'dashboard.placeholder.coachNotes':
-    'Эту запись будет видеть ваш тренер',
+  'dashboard.placeholder.coachNotes': 'Эту запись будет видеть ваш тренер',
   'dashboard.placeholder.privateNotes': 'Эта запись видна только вам',
   'dashboard.save': 'Записать тренировку',
   'dashboard.saving': 'Сохраняем...',
   'dashboard.openJournal': 'Открыть дневник',
   'dashboard.addRecord': 'Сделать запись',
   'dashboard.nextTitle': 'Что дальше?',
-  'dashboard.nextText': 'Открой дневник, чтобы увидеть все записи или создать новую.',
+  'dashboard.nextText':
+    'Открой дневник, чтобы увидеть все записи или создать новую.',
   'dashboard.goToJournal': 'Перейти к дневнику',
 
   'journal.titleFallback': 'Дневник',
@@ -136,8 +137,7 @@ export const ru = {
   'record.field.coachNotes': 'Общие заметки',
   'record.field.privateNotes': 'Личные заметки',
   'record.placeholder.result': 'Например 612.5',
-  'record.placeholder.coachNotes':
-    'Эту запись будет видеть ваш тренер',
+  'record.placeholder.coachNotes': 'Эту запись будет видеть ваш тренер',
   'record.placeholder.privateNotes': 'Эта запись видна только вам',
   'record.save': 'Сохранить запись',
   'record.saving': 'Сохраняем...',
