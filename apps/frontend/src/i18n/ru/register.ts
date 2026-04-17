@@ -1,6 +1,7 @@
 export const register = {
   'register.title': 'Создать аккаунт',
-  'register.subtitle': 'Регистрация по email, имени пользователя и паролю.',
+  'register.subtitle':
+    'Для регистрации нужно ввести email имя пользователя и пароль',
   'register.loading': 'Создаем аккаунт...',
   'register.button': 'Создать аккаунт',
   'register.failed': 'Не удалось зарегистрироваться.',
