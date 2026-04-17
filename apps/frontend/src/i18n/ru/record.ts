@@ -1,0 +1,18 @@
+export const record = {
+  'record.title': 'Новая запись',
+  'record.viewTitle': 'Запись',
+  'record.backJournal': 'Назад к дневнику',
+  'record.backDashboard': 'Назад к дэшборду',
+  'record.field.result': 'Результат',
+  'record.field.coachNotes': 'Общие заметки',
+  'record.field.privateNotes': 'Личные заметки',
+  'record.placeholder.result': 'Например 612.5',
+  'record.placeholder.coachNotes': 'Эту запись будет видеть ваш тренер',
+  'record.placeholder.privateNotes': 'Эта запись видна только вам',
+  'record.save': 'Сохранить запись',
+  'record.saving': 'Сохраняем...',
+  'record.open': 'Открыть запись',
+  'record.loading': 'Загружаем запись...',
+  'record.errorCreate': 'Не удалось создать запись.',
+  'record.errorLoad': 'Не удалось загрузить запись.',
+} as const;

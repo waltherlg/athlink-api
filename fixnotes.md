@@ -1,21 +1,9 @@
-Я слегка подправил файл
-apps/frontend/src/i18n/ru.ts
-нужно в соответсвии с ним нужно перевести английскую версию.
+ты сделал файы C:\Users\user\Desktop\projects\athlink-api\apps\frontend\src\i18n\ru\legal.ts и C:\Users\user\Desktop\projects\athlink-api\apps\frontend\src\i18n\en\legal.ts
 
-Проблема: файлы apps/frontend/src/i18n/ru.ts и C:\Users\user\Desktop\projects\athlink-api\apps\frontend\src\i18n\en.ts уже слишком большие.
+проблема: я не могу вставить полный текст соглашения в 'legal.terms.placeholder': 'Текст условий использования будет добавлен здесь.'
 
-Нужно разнести по разным папкам, например
-ru/
-common.ts
-header.ts
-auth.ts
-login.ts
-register.ts
-dashboard.ts
-journal.ts
-record.ts
-en/
-common.ts
-header.ts
-auth.ts
-...
+GPT советует использовать legal страницы = markdown / CMS
+
+сделай заготовки markdown для 'legal.privacy.placeholder' и 'legal.terms.placeholder'
+
+и укажи путь к этим файлам

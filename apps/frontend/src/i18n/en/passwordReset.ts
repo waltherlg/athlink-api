@@ -1,0 +1,15 @@
+export const passwordReset = {
+  'passwordReset.title': 'Reset password',
+  'passwordReset.back': 'Back to login',
+  'passwordReset.field.email': 'Email',
+  'passwordReset.field.code': 'Code',
+  'passwordReset.field.password': 'New password',
+  'passwordReset.placeholder.email': 'email@abc.com',
+  'passwordReset.placeholder.code': 'Code from email',
+  'passwordReset.placeholder.password': 'Enter new password',
+  'passwordReset.save': 'Update password',
+  'passwordReset.loading': 'Saving...',
+  'passwordReset.success': 'Password updated successfully.',
+  'passwordReset.toLogin': 'Go to login',
+  'passwordReset.error': 'Failed to reset password.',
+} as const;
