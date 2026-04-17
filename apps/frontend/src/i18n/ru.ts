@@ -79,7 +79,7 @@ export const ru = {
   'passwordReset.toLogin': 'Перейти к логину',
   'passwordReset.error': 'Не удалось сменить пароль.',
 
-  'dashboard.title': 'Athlink — будь на связи с тренером',
+  'dashboard.title': 'Atlok — будь на связи с тренером',
   'dashboard.subtitle': 'Следи за прогрессом и отмечай тренировки.',
   'dashboard.createJournal': 'Создать дневник',
   'dashboard.loading': 'Загружаем дэшборд...',
