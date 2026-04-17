@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../features/auth/auth-context';
 import { t } from '../i18n';
 import { usePageTitleValue } from './page-title-context';
+import { BackendStatusIndicator } from './backend-status/BackendStatusIndicator';
+import { useBackendStatus } from './backend-status/useBackendStatus';
 
 export default function AppHeader() {
   const { userName, isChecking, logout } = useAuth();
   const title = usePageTitleValue();
+  const backendStatus = useBackendStatus();
 
   return (
     <header className="app-header">
@@ -38,6 +41,7 @@ export default function AppHeader() {
               {t('header.login')}
             </Link>
           )}
+          <BackendStatusIndicator status={backendStatus} />
         </div>
       </div>
     </header>

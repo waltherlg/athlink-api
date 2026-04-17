@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import type { UserRegistrationInput } from '@shared-types';
+import { Link } from 'react-router-dom';
 import { t } from '../../../i18n';
 
 type RegistrationFormProps = {
@@ -24,6 +25,9 @@ export default function RegistrationForm({
   errors,
 }: RegistrationFormProps) {
   const [form, setForm] = useState<UserRegistrationInput>(DEFAULT_FORM);
+  const [agreeTos, setAgreeTos] = useState(false);
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
+  const [confirmAge, setConfirmAge] = useState(false);
   const fieldErrors = errors?.fieldErrors ?? {};
   const globalErrors = errors?.globalErrors ?? [];
 
@@ -35,8 +39,11 @@ export default function RegistrationForm({
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!agreeTos || !agreePrivacy || !confirmAge) return;
     onSubmit(form);
   };
+
+  const isAgreementsValid = agreeTos && agreePrivacy && confirmAge;
 
   return (
     <form className="card form" onSubmit={handleSubmit}>
@@ -108,7 +115,53 @@ export default function RegistrationForm({
         ))}
       </label>
 
-      <button className="primary" type="submit" disabled={isLoading}>
+      <div className="agreement-block">
+        <p className="agreement-hint">{t('register.agreement.hint')}</p>
+
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={agreeTos}
+            onChange={(e) => setAgreeTos(e.target.checked)}
+            required
+          />
+          <span>
+            <Link className="inline-link" to="/terms">
+              {t('register.agreement.tos')}
+            </Link>
+          </span>
+        </label>
+
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={agreePrivacy}
+            onChange={(e) => setAgreePrivacy(e.target.checked)}
+            required
+          />
+          <span>
+            <Link className="inline-link" to="/privacy">
+              {t('register.agreement.privacy')}
+            </Link>
+          </span>
+        </label>
+
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={confirmAge}
+            onChange={(e) => setConfirmAge(e.target.checked)}
+            required
+          />
+          <span>{t('register.agreement.age')}</span>
+        </label>
+      </div>
+
+      <button
+        className="primary"
+        type="submit"
+        disabled={isLoading || !isAgreementsValid}
+      >
         {isLoading ? t('register.loading') : t('register.button')}
       </button>
     </form>
