@@ -9,6 +9,8 @@ import RegistrationPage from './features/auth/registration/RegistrationPage';
 import ConfirmEmailPage from './features/auth/confirm-email/ConfirmEmailPage';
 import PasswordRecoveryPage from './features/auth/password-recovery/PasswordRecoveryPage';
 import PasswordResetPage from './features/auth/password-reset/PasswordResetPage';
+import TermsPage from './features/legal/TermsPage';
+import PrivacyPage from './features/legal/PrivacyPage';
 import DashboardPage from './features/dashboard/DashboardPage';
 import TrainingJournalPage from './features/training-journals/TrainingJournalPage';
 import CreateTrainingJournalPage from './features/training-journals/CreateTrainingJournalPage';
@@ -103,6 +105,8 @@ export default function App() {
                     </RedirectIfAuth>
                   }
                 />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
                 <Route
                   path="/journal/:trainingJournalId"
                   element={

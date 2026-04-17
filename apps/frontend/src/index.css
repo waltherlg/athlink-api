@@ -67,6 +67,68 @@ body {
   gap: 0.5rem;
 }
 
+.backend-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.8rem;
+  user-select: none;
+}
+
+.backend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+  background: #94a3b8;
+}
+
+.backend-dot.is-checking {
+  background: #94a3b8;
+}
+
+.backend-dot.is-awake {
+  background: #22c55e;
+}
+
+.backend-dot.is-waking {
+  background: #f59e0b;
+}
+
+.backend-dot.is-error {
+  background: #ef4444;
+}
+
+.backend-label {
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.backend-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: #fff;
+  font-weight: 900;
+  font-size: 0.75rem;
+}
+
+.backend-help:hover {
+  color: var(--ink);
+}
+
 .button-link {
   display: inline-flex;
   align-items: center;
@@ -178,6 +240,37 @@ h2 {
 .form {
   display: grid;
   gap: 1rem;
+}
+
+.agreement-block {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.7);
+}
+
+.agreement-hint {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.checkbox-row {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: start;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.checkbox-row input {
+  margin-top: 0.15rem;
+  width: 16px;
+  height: 16px;
 }
 
 .form-actions {
@@ -476,6 +569,15 @@ h2 {
 .inline-link:hover {
   color: var(--brand);
   text-decoration-thickness: 2px;
+}
+
+.markdown {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink);
 }
 
 .journal-actions {
