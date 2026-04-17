@@ -24,7 +24,7 @@ export const ru = {
   'login.title': 'Будь на связи с тренером',
   'login.subtitle': 'Введите email и пароль.',
   'login.registered':
-    'Для завершении регистрации, следуйте инструкции которые мы выслали Вам на почту.',
+    'Для завершении регистрации, следуйте инструкции которую мы выслали Вам на почту.',
   'login.invalid': 'Неверные данные.',
   'login.failed': 'Не удалось войти. Попробуйте еще раз.',
   'login.button': 'Войти',
@@ -45,7 +45,8 @@ export const ru = {
   'login.placeholder.password': 'some123PASSWORD',
 
   'register.title': 'Создать аккаунт',
-  'register.subtitle': 'Регистрация по email, имени пользователя и паролю.',
+  'register.subtitle':
+    'Для регистрации введите email имя пользователя и пароль',
   'register.loading': 'Создаем аккаунт...',
   'register.button': 'Создать аккаунт',
   'register.failed': 'Не удалось зарегистрироваться.',
