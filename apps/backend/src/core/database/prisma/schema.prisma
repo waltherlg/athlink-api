@@ -22,7 +22,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  isConfirmed          Boolean   @default(false)
+  isConfirmed           Boolean   @default(false)
   confirmationCode      String?   @db.Uuid
   confirmCodeExpiryDate DateTime?
 
@@ -56,13 +56,15 @@ model TrainingJournal {
   athleteId String @db.Uuid
   athlete   User   @relation(fields: [athleteId], references: [id], onDelete: Cascade)
 
-  sportType SportType @unique
+  sportType SportType
 
   trainingRecords TrainingRecord[]
 
   accesses JournalAccess[]
 
   createdAt DateTime @default(now())
+
+  @@unique([athleteId, sportType])
 }
 
 model JournalAccess {
