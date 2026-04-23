@@ -11,7 +11,7 @@ import { TrainingRecordAthleteViewDto } from './training-record.dto';
 export class CreateTrainingJournalInputDto implements CreateTrainingJournalInput {
   @ApiProperty({
     enum: SportTypeEnum,
-    example: SportTypeEnum.SHOOTING,
+    example: SportTypeEnum.SHOOTING_RIFLE_PISTOL,
   })
   @IsNotEmpty()
   @IsEnum(SportTypeEnum)
@@ -25,14 +25,12 @@ export class TrainingJournalViewDto implements TrainingJournalView {
   athleteId: string;
   @ApiProperty({
     enum: SportTypeEnum,
-    example: SportTypeEnum.SHOOTING,
+    example: SportTypeEnum.SHOOTING_RIFLE_PISTOL,
   })
   sportType: SportTypeEnum;
 }
 
-export class TrainingJournalWithLatestRecordsViewDto
-  implements TrainingJournalWithLatestRecordsView
-{
+export class TrainingJournalWithLatestRecordsViewDto implements TrainingJournalWithLatestRecordsView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
   id: string;
 
@@ -41,11 +39,10 @@ export class TrainingJournalWithLatestRecordsViewDto
 
   @ApiProperty({
     enum: SportTypeEnum,
-    example: SportTypeEnum.SHOOTING,
+    example: SportTypeEnum.SHOOTING_RIFLE_PISTOL,
   })
   sportType: SportTypeEnum;
 
   @ApiProperty({ type: TrainingRecordAthleteViewDto, isArray: true })
   latestRecords: TrainingRecordAthleteViewDto[];
 }
-

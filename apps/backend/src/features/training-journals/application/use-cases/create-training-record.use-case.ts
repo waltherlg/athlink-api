@@ -20,7 +20,7 @@ export class CreateTrainingRecordCommand {
 @CommandHandler(CreateTrainingRecordCommand)
 export class CreateTrainingRecordUseCase implements ICommandHandler<CreateTrainingRecordCommand> {
   constructor(
-    private entriesRepo: TrainingRecordsRepository,
+    private trainingRecordsRepo: TrainingRecordsRepository,
     private journalsRepo: TrainingJournalsRepository,
   ) {}
 
@@ -37,7 +37,7 @@ export class CreateTrainingRecordUseCase implements ICommandHandler<CreateTraini
     if (trainingJournal.athleteId !== command.userId)
       throw ForbiddenDomainException.create(AUTH_ERRORS.NOT_OWNER);
 
-    const createdRecord = await this.entriesRepo.createTrainingRecord(
+    const createdRecord = await this.trainingRecordsRepo.createTrainingRecord(
       command.dto,
     );
     return createdRecord;

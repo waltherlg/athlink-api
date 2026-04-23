@@ -22,15 +22,15 @@ export function mapAthleteDashboardDataView(
 
   return {
     journals: journals.map((journal) => {
-        const latestRecord = latestRecordByJournalId.get(journal.id);
-        return {
-          id: journal.id,
-          sportType: journal.sportType as SportTypeEnum,
-          latestRecord: latestRecord
-            ? {
-                id: latestRecord.id,
+      const latestRecord = latestRecordByJournalId.get(journal.id);
+      return {
+        id: journal.id,
+        sportType: journal.sportType as SportTypeEnum,
+        latestRecord: latestRecord
+          ? {
+              id: latestRecord.id,
               date: latestRecord.createdAt.toISOString(),
-              result: latestRecord.result ?? '',
+              result: latestRecord.result.toString() ?? '',
             }
           : { id: '', date: '', result: '' },
         hasTodayRecord: todayRecordSet.has(journal.id),

@@ -2,6 +2,7 @@ export type ErrorCode =
   | AccountErrorCodeEnum
   | CommonErrorCodeEnum
   | TrainingJournalErrorCodeEnum
+  | TrainingRecordErrorCodeEnum
   | SessionErrorCodeEnum
   | AuthErrorCodeEnum;
 
@@ -36,4 +37,11 @@ export enum CommonErrorCodeEnum {
 export enum TrainingJournalErrorCodeEnum {
   TRAINING_JOURNAL_ALREADY_EXISTS = 'TRAINING_JOURNAL_ALREADY_EXISTS',
   TRAINING_JOURNAL_NOT_FOUND = 'TRAINING_JOURNAL_NOT_FOUND',
+}
+
+export enum TrainingRecordErrorCodeEnum {
+  EVENT_REQUIRED = 'EVENT_REQUIRED',
+  RESULT_REQUIRED = 'RESULT_REQUIRED',
+  RESULT_INVALID = 'RESULT_INVALID',
+  RESULT_NOT_ALLOWED = 'RESULT_NOT_ALLOWED',
 }

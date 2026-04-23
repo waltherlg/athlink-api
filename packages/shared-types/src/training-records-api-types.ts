@@ -1,7 +1,11 @@
 import { PaginationOutputModel } from './query-models';
 
 export type CreateTrainingRecordInput = {
-  result?: string;
+  type: TrainingRecordTypeEnum;
+
+  eventId?: string;
+  result?: number;
+
   coachNotes?: string;
   privateNotes?: string;
 };
@@ -25,6 +29,11 @@ export type TrainingRecordCoachView = {
   createdAt: string;
   updatedAt: string;
 };
+
+export enum TrainingRecordTypeEnum {
+  STRUCTURED = 'STRUCTURED',
+  FREE = 'FREE',
+}
 
 export type TrainingRecordsPaginationView =
   PaginationOutputModel<TrainingRecordAthleteView>;

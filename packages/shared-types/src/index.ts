@@ -22,6 +22,7 @@ export {
   TrainingRecordAthleteView,
   TrainingRecordCoachView,
   TrainingRecordsPaginationView,
+  TrainingRecordTypeEnum,
 } from './training-records-api-types';
 
 export {
@@ -29,6 +30,7 @@ export {
   ErrorCode,
   CommonErrorCodeEnum,
   TrainingJournalErrorCodeEnum,
+  TrainingRecordErrorCodeEnum,
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
 } from './error-codes';

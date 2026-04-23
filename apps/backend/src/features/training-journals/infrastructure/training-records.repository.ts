@@ -10,7 +10,14 @@ export class TrainingRecordsRepository {
     dto: CreateTrainingRecordDto,
   ): Promise<TrainingRecord> {
     const createdTrainingRecord = await this.prisma.trainingRecord.create({
-      data: { ...dto },
+      data: {
+        trainingJournalId: dto.trainingJournalId,
+        eventId: dto.eventId,
+        type: dto.type,
+        result: dto.result,
+        coachNotes: dto.coachNotes,
+        privateNotes: dto.privateNotes,
+      },
     });
     return createdTrainingRecord;
   }
@@ -100,5 +107,3 @@ export class TrainingRecordsRepository {
     return records.map((record) => record.trainingJournalId);
   }
 }
-
-

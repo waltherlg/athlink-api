@@ -35,6 +35,7 @@ import { GetTrainingJournalsQuery } from '../application/query-handlers/get-trai
 import { GetTrainingJournalByIdQuery } from '../application/query-handlers/get-training-journal-by-id.query-handler';
 import { GetTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-training-records-by-journal-id.query-handler';
 import { GetTrainingRecordByIdQuery } from '../application/query-handlers/get-training-record-by-id.query-handler';
+import { CreateTrainingRecordValidationPipe } from './pipes/training-records.validation-pipe';
 
 @ApiTags(SW_TRAINING_JOURNALS_TITLES.TRAINING_JOURNAL_CONTROLLER)
 @Controller(trainingJournalsPaths.controller)
@@ -120,12 +121,14 @@ export class TrainingJournalsController {
   async createTrainingRecord(
     @Req() request: RequestWithUser,
     @Param('trainingJournalId') trainingJournalId: string,
-    @Body() dto: CreateTrainingRecordInputDto,
+    @Body(CreateTrainingRecordValidationPipe) dto: CreateTrainingRecordInputDto,
   ) {
     const userId = request.user.userId;
     const result = await this.commandBus.execute(
       new CreateTrainingRecordCommand(userId, {
         trainingJournalId,
+        eventId: dto.eventId,
+        type: dto.type,
         result: dto.result,
         coachNotes: dto.coachNotes,
         privateNotes: dto.privateNotes,
