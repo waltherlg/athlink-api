@@ -5,9 +5,10 @@ export default defineConfig({
 
   migrations: {
     path: './src/core/database/prisma/migrations',
+    seed: 'ts-node src/core/database/prisma/seed.ts',
   },
 
   datasource: {
-    url: process.env.DATABASE_URL,
+    url: 'postgresql://placeholder',
   },
 });
