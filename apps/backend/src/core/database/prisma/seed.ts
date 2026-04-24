@@ -4,9 +4,9 @@ import { Pool } from 'pg';
 
 import * as dotenv from 'dotenv';
 
-dotenv.config({
-  path: '.development.local.env',
-});
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: '.development.local.env' });
+}
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -17,9 +17,6 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  console.log('PRISMA PATH:', require.resolve('@prisma/client'));
-  console.log('PRISMA CLIENT:', PrismaClient.toString());
-  console.log('SEED RUNNING');
   await prisma.event.upsert({
     where: {
       sportType_code: {
