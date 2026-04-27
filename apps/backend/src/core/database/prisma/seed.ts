@@ -17,7 +17,7 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  await prisma.event.upsert({
+  await prisma.sportEvent.upsert({
     where: {
       sportType_code: {
         sportType: 'SHOOTING_RIFLE_PISTOL',
@@ -35,7 +35,7 @@ async function main() {
     },
   });
 
-  await prisma.event.upsert({
+  await prisma.sportEvent.upsert({
     where: {
       sportType_code: {
         sportType: 'SHOOTING_RIFLE_PISTOL',
@@ -53,7 +53,7 @@ async function main() {
     },
   });
 
-  await prisma.event.upsert({
+  await prisma.sportEvent.upsert({
     where: {
       sportType_code: {
         sportType: 'SHOOTING_RIFLE_PISTOL',
@@ -71,7 +71,7 @@ async function main() {
     },
   });
 
-  await prisma.event.upsert({
+  await prisma.sportEvent.upsert({
     where: {
       sportType_code: {
         sportType: 'SHOOTING_RIFLE_PISTOL',

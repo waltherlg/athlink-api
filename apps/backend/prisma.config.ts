@@ -9,6 +9,6 @@ export default defineConfig({
   },
 
   datasource: {
-    url: 'postgresql://placeholder',
+    url: process.env.DATABASE_URL,
   },
 });

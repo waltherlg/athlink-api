@@ -1,8 +1,0 @@
--- AlterTable
-ALTER TABLE "Session" ALTER COLUMN "createdAt" SET DEFAULT CURRENT_TIMESTAMP,
-ALTER COLUMN "lastActiveAt" SET DEFAULT CURRENT_TIMESTAMP;
-
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "confirmCodeExpiryDate" TIMESTAMP(3),
-ADD COLUMN     "confirmationCode" UUID,
-ADD COLUMN     "isConfirmed" BOOLEAN NOT NULL DEFAULT false;

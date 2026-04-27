@@ -99,8 +99,8 @@ model TrainingRecord {
 
   type TrainingRecordType
 
-  eventId String? @db.Uuid
-  event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?     @db.Uuid
+  event   SportEvent? @relation(fields: [eventId], references: [id])
 
   result       Float?
   coachNotes   String?
@@ -110,7 +110,7 @@ model TrainingRecord {
   updatedAt DateTime @updatedAt
 }
 
-model Event {
+model SportEvent {
   id String @id @default(uuid()) @db.Uuid
 
   sportType SportType
