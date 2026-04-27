@@ -8,7 +8,7 @@ import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
 const EMPTY_FORM: CreateTrainingJournalInput = {
-  sportType: SportTypeEnum.SHOOTING,
+  sportType: SportTypeEnum.SHOOTING_RIFLE_PISTOL,
 };
 
 export default function CreateTrainingJournalPage() {
@@ -68,7 +68,7 @@ export default function CreateTrainingJournalPage() {
               }))
             }
           >
-            <option value={SportTypeEnum.SHOOTING}>
+            <option value={SportTypeEnum.SHOOTING_RIFLE_PISTOL}>
               {t('journalCreate.option.shooting')}
             </option>
           </select>

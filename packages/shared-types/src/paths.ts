@@ -24,6 +24,10 @@ export const trainingJournalsPaths = {
     `${trainingJournalsPaths.controller}/${journalId}/${trainingJournalsPaths.records}/${recordId}`,
 } as const;
 
+export const sportEventPaths = {
+  controller: 'events',
+} as const;
+
 export const dashboardPaths = {
   controller: 'dashboard',
   athlete: 'athlete',

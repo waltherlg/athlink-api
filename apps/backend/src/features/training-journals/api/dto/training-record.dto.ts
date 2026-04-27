@@ -6,13 +6,40 @@ import {
   TrainingRecordAthleteView,
   TrainingRecordTypeEnum,
 } from '@shared-types';
-import { IsOptional, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateTrainingRecordInputDto implements CreateTrainingRecordInput {
+  @ApiProperty({
+    enum: TrainingRecordTypeEnum,
+    example: TrainingRecordTypeEnum.STRUCTURED,
+  })
+  @IsEnum(TrainingRecordTypeEnum)
   type: TrainingRecordTypeEnum;
+
+  @ApiPropertyOptional({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
+  @IsOptional()
+  @IsUUID()
   eventId?: string;
+
+  @ApiPropertyOptional({ example: 628.9, nullable: true })
+  @IsOptional()
+  @IsNumber()
   result?: number;
+
+  @ApiPropertyOptional({ example: 'Coach notes', nullable: true })
+  @IsOptional()
+  @IsString()
   coachNotes?: string;
+
+  @ApiPropertyOptional({ example: 'Private notes', nullable: true })
+  @IsOptional()
+  @IsString()
   privateNotes?: string;
 }
 
@@ -23,8 +50,8 @@ export class TrainingRecordAthleteViewDto implements TrainingRecordAthleteView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
   trainingJournalId: string;
 
-  @ApiProperty({ example: '628.9', nullable: true })
-  result: string | null;
+  @ApiProperty({ example: 628.9, nullable: true })
+  result: number | null;
 
   @ApiProperty({ example: 'Coach notes', nullable: true })
   coachNotes: string | null;

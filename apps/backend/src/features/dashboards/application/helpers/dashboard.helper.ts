@@ -30,9 +30,9 @@ export function mapAthleteDashboardDataView(
           ? {
               id: latestRecord.id,
               date: latestRecord.createdAt.toISOString(),
-              result: latestRecord.result.toString() ?? '',
+              result: latestRecord.result,
             }
-          : { id: '', date: '', result: '' },
+          : { id: '', date: '', result: null },
         hasTodayRecord: todayRecordSet.has(journal.id),
       };
     }),

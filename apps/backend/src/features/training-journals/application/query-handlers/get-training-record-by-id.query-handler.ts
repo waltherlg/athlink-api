@@ -66,7 +66,7 @@ function mapTrainingRecord(
   return {
     id: record.id,
     trainingJournalId: record.trainingJournalId,
-    result: record.result.toString(),
+    result: record.result,
     coachNotes: record.coachNotes,
     privateNotes: record.privateNotes,
     createdAt: record.createdAt.toISOString(),

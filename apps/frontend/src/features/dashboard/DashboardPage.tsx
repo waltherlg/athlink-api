@@ -104,7 +104,7 @@ export default function DashboardPage() {
                         {t('dashboard.lastResult')}
                       </span>
                       <strong>
-                        {latestRecord?.result?.trim()
+                        {latestRecord?.result != null
                           ? latestRecord.result
                           : t('dashboard.noResult')}
                       </strong>

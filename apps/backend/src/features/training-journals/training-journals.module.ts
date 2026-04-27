@@ -5,9 +5,10 @@ import { TrainingRecordsRepository } from './infrastructure/training-records.rep
 import { TrainingJournalUseCases } from './application/training-journal-use-cases.provider';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TrainingJournalQueries } from './application/training-journal-queries.provider';
+import { SportEventModule } from '../sport-events/sport-events.module';
 
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, SportEventModule],
   controllers: [TrainingJournalsController],
   providers: [
     TrainingRecordsRepository,

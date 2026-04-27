@@ -15,7 +15,7 @@ export class CreateTrainingRecordDto {
 }
 
 export class UpdateTrainingRecordDto {
-  result?: string;
+  result?: number;
   coachNotes?: string;
   privateNotes?: string;
 }

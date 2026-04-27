@@ -326,6 +326,19 @@ h2 {
   font-family: inherit;
 }
 
+.record-input-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.field-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .field input:focus {
   outline: 2px solid var(--brand);
   border-color: var(--brand);
@@ -720,5 +733,9 @@ h2 {
 
   .record-row > .button-link {
     justify-self: start;
+  }
+
+  .record-input-row {
+    grid-template-columns: 1fr;
   }
 }

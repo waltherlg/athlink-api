@@ -13,7 +13,7 @@ export type CreateTrainingRecordInput = {
 export type TrainingRecordAthleteView = {
   id: string;
   trainingJournalId: string;
-  result: string | null;
+  result: number | null;
   coachNotes: string | null;
   privateNotes: string | null;
   createdAt: string;
@@ -24,7 +24,7 @@ export type TrainingRecordCoachView = {
   id: string;
   userName: string;
   trainingJournalId: string;
-  result: string | null;
+  result: number | null;
   coachNotes: string | null;
   createdAt: string;
   updatedAt: string;
