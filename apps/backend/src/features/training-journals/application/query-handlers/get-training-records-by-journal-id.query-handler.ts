@@ -11,6 +11,7 @@ import { TrainingRecord } from '@prisma/client';
 import { DEFAULT_QUERY_PARAMS, RequestQueryParamsModel } from '@shared-types';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
 import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { TrainingRecordTypeEnum } from '@shared-types';
 
 export class GetTrainingRecordsByJournalIdQuery {
   constructor(
@@ -123,6 +124,8 @@ function mapTrainingRecord(
   return {
     id: record.id,
     trainingJournalId: record.trainingJournalId,
+    type: record.type as unknown as TrainingRecordTypeEnum,
+    eventId: record.eventId,
     result: record.result,
     coachNotes: record.coachNotes,
     privateNotes: record.privateNotes,

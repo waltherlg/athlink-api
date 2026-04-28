@@ -8,8 +8,8 @@ export class LatestRecordDto {
   @ApiProperty({ example: '2026-03-13T12:39:48.527Z' })
   date: string;
 
-  @ApiProperty({ example: '628.9' })
-  result: string;
+  @ApiProperty({ example: 628.9, nullable: true })
+  result: number | null;
 }
 
 export class JournalDto {

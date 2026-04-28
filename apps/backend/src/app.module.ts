@@ -6,6 +6,7 @@ import { PrismaModule } from './core/database/prisma/prisma.module';
 import { AccountModule } from './features/accounts/account.module';
 import { TrainingJournalsModule } from './features/training-journals/training-journals.module';
 import { DashboardModule } from './features/dashboards/dashboard.module';
+import { SportEventModule } from './features/sport-events/sport-events.module';
 
 @Module({
   imports: [
@@ -13,10 +14,10 @@ import { DashboardModule } from './features/dashboards/dashboard.module';
     PrismaModule,
     AccountModule,
     TrainingJournalsModule,
+    SportEventModule,
     DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-

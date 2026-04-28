@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider   = "prisma-client-js"
-  engineType = "binary"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -89,7 +88,7 @@ enum AccessRole {
 }
 
 enum SportType {
-  SHOOTING
+  SHOOTING_RIFLE_PISTOL
 }
 
 model TrainingRecord {
@@ -98,10 +97,46 @@ model TrainingRecord {
   trainingJournalId String          @db.Uuid
   trainingJournal   TrainingJournal @relation(fields: [trainingJournalId], references: [id], onDelete: Cascade)
 
-  result       String?
+  type TrainingRecordType
+
+  eventId String?     @db.Uuid
+  event   SportEvent? @relation(fields: [eventId], references: [id])
+
+  result       Float?
   coachNotes   String?
   privateNotes String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SportEvent {
+  id String @id @default(uuid()) @db.Uuid
+
+  sportType SportType
+
+  code String
+  name String
+
+  resultType ResultType
+
+  maxScore Float?
+  decimals Int?
+
+  createdAt DateTime @default(now())
+
+  trainingRecords TrainingRecord[]
+
+  @@unique([sportType, code])
+}
+
+enum ResultType {
+  SCORE
+  TIME
+  DISTANCE
+}
+
+enum TrainingRecordType {
+  STRUCTURED
+  FREE
 }

@@ -4,12 +4,42 @@ import {
   PaginationOutputModel,
   RequestQueryParamsModel,
   TrainingRecordAthleteView,
+  TrainingRecordTypeEnum,
 } from '@shared-types';
-import { IsOptional, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateTrainingRecordInputDto implements CreateTrainingRecordInput {
-  result?: string;
+  @ApiProperty({
+    enum: TrainingRecordTypeEnum,
+    example: TrainingRecordTypeEnum.STRUCTURED,
+  })
+  @IsEnum(TrainingRecordTypeEnum)
+  type: TrainingRecordTypeEnum;
+
+  @ApiPropertyOptional({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
+  @IsOptional()
+  @IsUUID()
+  eventId?: string;
+
+  @ApiPropertyOptional({ example: 628.9, nullable: true })
+  @IsOptional()
+  @IsNumber()
+  result?: number;
+
+  @ApiPropertyOptional({ example: 'Coach notes', nullable: true })
+  @IsOptional()
+  @IsString()
   coachNotes?: string;
+
+  @ApiPropertyOptional({ example: 'Private notes', nullable: true })
+  @IsOptional()
+  @IsString()
   privateNotes?: string;
 }
 
@@ -20,8 +50,20 @@ export class TrainingRecordAthleteViewDto implements TrainingRecordAthleteView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
   trainingJournalId: string;
 
-  @ApiProperty({ example: '628.9', nullable: true })
-  result: string | null;
+  @ApiProperty({
+    enum: TrainingRecordTypeEnum,
+    example: TrainingRecordTypeEnum.STRUCTURED,
+  })
+  type: TrainingRecordTypeEnum;
+
+  @ApiPropertyOptional({
+    example: '3d057bd4-817d-4f0d-b058-55abc187086a',
+    nullable: true,
+  })
+  eventId: string | null;
+
+  @ApiProperty({ example: 628.9, nullable: true })
+  result: number | null;
 
   @ApiProperty({ example: 'Coach notes', nullable: true })
   coachNotes: string | null;
@@ -36,9 +78,7 @@ export class TrainingRecordAthleteViewDto implements TrainingRecordAthleteView {
   updatedAt: string;
 }
 
-export class TrainingRecordsQueryParamsDto
-  implements Partial<RequestQueryParamsModel>
-{
+export class TrainingRecordsQueryParamsDto implements Partial<RequestQueryParamsModel> {
   @ApiPropertyOptional({ example: 'createdAt' })
   @IsOptional()
   @IsString()
@@ -60,9 +100,7 @@ export class TrainingRecordsQueryParamsDto
   pageSize?: string;
 }
 
-export class TrainingRecordsPaginationViewDto
-  implements PaginationOutputModel<TrainingRecordAthleteViewDto>
-{
+export class TrainingRecordsPaginationViewDto implements PaginationOutputModel<TrainingRecordAthleteViewDto> {
   @ApiProperty({ example: 1 })
   pagesCount: number;
 
@@ -78,4 +116,3 @@ export class TrainingRecordsPaginationViewDto
   @ApiProperty({ type: TrainingRecordAthleteViewDto, isArray: true })
   items: TrainingRecordAthleteViewDto[];
 }
-

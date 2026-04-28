@@ -9,7 +9,12 @@ export type {
   UserRegistrationInput,
   UserView,
 } from './accounts-api-types';
-export { authPaths, trainingJournalsPaths, dashboardPaths } from './paths';
+export {
+  authPaths,
+  trainingJournalsPaths,
+  sportEventPaths,
+  dashboardPaths,
+} from './paths';
 export {
   SportTypeEnum,
   CreateTrainingJournalInput,
@@ -17,11 +22,14 @@ export {
   TrainingJournalWithLatestRecordsView,
 } from './training-journals-api-types';
 
+export { ResultTypeEnum, SportEventView } from './sport-events-api-types';
+
 export {
   CreateTrainingRecordInput,
   TrainingRecordAthleteView,
   TrainingRecordCoachView,
   TrainingRecordsPaginationView,
+  TrainingRecordTypeEnum,
 } from './training-records-api-types';
 
 export {
@@ -29,6 +37,7 @@ export {
   ErrorCode,
   CommonErrorCodeEnum,
   TrainingJournalErrorCodeEnum,
+  TrainingRecordErrorCodeEnum,
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
 } from './error-codes';

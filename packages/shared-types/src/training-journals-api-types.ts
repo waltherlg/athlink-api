@@ -1,7 +1,7 @@
 import { TrainingRecordAthleteView } from './training-records-api-types';
 
 export enum SportTypeEnum {
-  SHOOTING = 'SHOOTING',
+  SHOOTING_RIFLE_PISTOL = 'SHOOTING_RIFLE_PISTOL',
 }
 
 export type CreateTrainingJournalInput = {

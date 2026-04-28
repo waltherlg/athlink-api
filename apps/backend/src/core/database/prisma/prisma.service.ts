@@ -13,12 +13,11 @@ export class PrismaService
       connectionString: process.env.DATABASE_URL,
     });
 
-    const adapter = new PrismaPg(pool);
-
     super({
-      adapter,
+      adapter: new PrismaPg(pool),
     });
   }
+
   async onModuleInit() {
     await this.$connect();
   }

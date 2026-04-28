@@ -14,6 +14,7 @@ export const authPaths = {
 export const trainingJournalsPaths = {
   controller: 'training-journal',
   list: '',
+  availableSportTypes: 'available-sport-types',
   byId: ':trainingJournalId',
   records: 'records',
   recordById: 'records/:recordId',
@@ -22,6 +23,10 @@ export const trainingJournalsPaths = {
     `${trainingJournalsPaths.controller}/${id}/${trainingJournalsPaths.records}`,
   buildRecordByIdPath: (journalId: string, recordId: string) =>
     `${trainingJournalsPaths.controller}/${journalId}/${trainingJournalsPaths.records}/${recordId}`,
+} as const;
+
+export const sportEventPaths = {
+  controller: 'events',
 } as const;
 
 export const dashboardPaths = {

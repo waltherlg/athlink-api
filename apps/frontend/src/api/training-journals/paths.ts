@@ -4,6 +4,7 @@ const trainingJournalsBase = `/${trainingJournalsPathsShared.controller}`;
 
 export const trainingJournalsPaths = {
   list: trainingJournalsBase,
+  availableSportTypes: `${trainingJournalsBase}/${trainingJournalsPathsShared.availableSportTypes}`,
   byId: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}`,
   records: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.records}`,
   recordById: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.recordById}`,

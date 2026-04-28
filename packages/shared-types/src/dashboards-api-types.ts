@@ -8,7 +8,7 @@ export type AthleteDashboardDataView = {
         latestRecord: {
           id: string;
           date: string;
-          result: string;
+          result: number | null;
         };
         hasTodayRecord: boolean;
       }[]

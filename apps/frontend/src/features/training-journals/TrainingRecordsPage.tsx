@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { TrainingRecordsPaginationView } from '@shared-types';
+import type { SportEventView, TrainingRecordsPaginationView } from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getTrainingRecords } from '../../api/training-journals/get-training-records';
+import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
+import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
@@ -24,6 +26,7 @@ export default function TrainingRecordsPage() {
   const { trainingJournalId } = useParams();
   const [records, setRecords] =
     useState<TrainingRecordsPaginationView | null>(null);
+  const [sportEvents, setSportEvents] = useState<SportEventView[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -63,6 +66,41 @@ export default function TrainingRecordsPage() {
     void load();
   }, [trainingJournalId, token, pageNumber]);
 
+  useEffect(() => {
+    if (!trainingJournalId || !token) return;
+
+    let isActive = true;
+
+    const load = async () => {
+      try {
+        const journalResponse = await getTrainingJournalById(
+          token,
+          trainingJournalId,
+        );
+        const eventsResponse = await getSportEventsBySportType(
+          token,
+          journalResponse.sportType,
+        );
+        if (!isActive) return;
+        setSportEvents(eventsResponse);
+      } catch {
+        // ignore, fallback to ids only
+      }
+    };
+
+    void load();
+
+    return () => {
+      isActive = false;
+    };
+  }, [trainingJournalId, token]);
+
+  const sportEventById = useMemo(() => {
+    const map = new Map<string, SportEventView>();
+    for (const event of sportEvents) map.set(event.id, event);
+    return map;
+  }, [sportEvents]);
+
   const items = records?.items ?? [];
 
   return (
@@ -91,7 +129,19 @@ export default function TrainingRecordsPage() {
                       {formatDateTime(record.createdAt)}
                     </p>
                     <p className="record-result">
-                      {record.result ?? t('journal.noResult')}
+                      {record.result == null ? (
+                        t('journal.freeTraining')
+                      ) : (
+                        <>
+                          <span className="record-event">
+                            {record.eventId
+                              ? (sportEventById.get(record.eventId)?.name ?? t('journal.dash'))
+                              : t('journal.dash')}
+                            {' - '}
+                          </span>
+                          <strong className="record-score">{record.result}</strong>
+                        </>
+                      )}
                     </p>
                     <p className="record-note record-note-preview">
                       {record.coachNotes ?? t('journal.dash')}

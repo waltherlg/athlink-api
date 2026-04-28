@@ -8,7 +8,7 @@ import {
 import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
 import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
 import { TrainingJournalWithLatestRecordsViewDto } from '../../api/dto/training-journal.dto';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum, TrainingRecordTypeEnum } from '@shared-types';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
 import { TrainingRecord } from '@prisma/client';
 import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
@@ -64,6 +64,8 @@ function mapTrainingRecord(
   return {
     id: record.id,
     trainingJournalId: record.trainingJournalId,
+    type: record.type as unknown as TrainingRecordTypeEnum,
+    eventId: record.eventId,
     result: record.result,
     coachNotes: record.coachNotes,
     privateNotes: record.privateNotes,

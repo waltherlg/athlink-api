@@ -13,6 +13,7 @@ export const journal = {
   'journal.viewAll': 'Просмотреть все записи',
   'journal.noDate': 'Нет даты',
   'journal.noResult': 'Нет результата',
+  'journal.freeTraining': 'Свободная тренировка',
   'journal.coach': 'Тренер',
   'journal.private': 'Личное',
   'journal.dash': '—',
