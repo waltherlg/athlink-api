@@ -11,6 +11,7 @@ export const dashboard = {
   'dashboard.yourJournals': 'Your journals',
   'dashboard.lastResult': 'Latest result',
   'dashboard.noResult': 'No result',
+  'dashboard.freeTraining': 'Free training',
   'dashboard.missingRecord': "Today's record is missing. Add it now!",
   'dashboard.field.result': 'Result',
   'dashboard.field.coachNotes': 'Shared notes',

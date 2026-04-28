@@ -13,6 +13,7 @@ export const journal = {
   'journal.viewAll': 'View all records',
   'journal.noDate': 'No date',
   'journal.noResult': 'No result',
+  'journal.freeTraining': 'Free training',
   'journal.coach': 'Coach',
   'journal.private': 'Private',
   'journal.dash': '—',

@@ -14,6 +14,7 @@ export const authPaths = {
 export const trainingJournalsPaths = {
   controller: 'training-journal',
   list: '',
+  availableSportTypes: 'available-sport-types',
   byId: ':trainingJournalId',
   records: 'records',
   recordById: 'records/:recordId',

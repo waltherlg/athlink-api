@@ -18,6 +18,7 @@ import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
 import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
 import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { SportTypeEnum } from '@shared-types';
 
 export const SW_TRAINING_JOURNALS_TITLES = {
   TRAINING_JOURNAL_CONTROLLER: 'Training journal operations',
@@ -68,6 +69,36 @@ export function GetTrainingJournalsSwagger() {
       description: 'Returns training journals',
       type: TrainingJournalViewDto,
       isArray: true,
+    }),
+    ApiResponse({
+      status: HttpStatus.UNAUTHORIZED,
+      description: 'unauthorized',
+      content: {
+        'application/json': SwaggerHelper.buildErrorResponse([
+          AUTH_ERRORS.UNAUTHORIZED,
+        ]),
+      },
+    }),
+    ApiBearerAuth(),
+  );
+}
+
+export function GetAvailableSportTypesSwagger() {
+  return applyDecorators(
+    ApiExtraModels(ErrorResponse),
+    ApiOperation({
+      summary: 'Get sport types available for new training journals',
+    }),
+    ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Returns available sport types',
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+          enum: Object.values(SportTypeEnum),
+        },
+      },
     }),
     ApiResponse({
       status: HttpStatus.UNAUTHORIZED,

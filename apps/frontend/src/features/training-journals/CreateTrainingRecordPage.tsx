@@ -12,6 +12,10 @@ import { getSportEventsBySportType } from '../../api/sport-events/get-sport-even
 import { getAccessToken } from '../auth/token-storage';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
+import {
+  safeGetLocalStorageItem,
+  safeSetLocalStorageItem,
+} from '../../utils/safe-local-storage';
 
 const FREE_TRAINING_VALUE = '__free_training__';
 
@@ -34,9 +38,15 @@ const normalizeText = (value: string) => {
   return trimmed.length > 0 ? trimmed : undefined;
 };
 
-const buildResultStep = (selectedEvent: SportEventView | null) => {
-  const decimals = selectedEvent?.decimals ?? 0;
-  return 1 / 10 ** decimals;
+const normalizeDecimalInput = (value: string) => value.replace(/,/g, '.');
+
+const buildLastEventStorageKey = (trainingJournalId: string) =>
+  `lastEventId:${trainingJournalId}`;
+
+const buildDecimalsLabel = (decimals: number) => {
+  if (decimals <= 0) return t('record.decimals.none');
+  if (decimals === 1) return t('record.decimals.one');
+  return t('record.decimals.many', { count: decimals });
 };
 
 export default function CreateTrainingRecordPage() {
@@ -49,6 +59,7 @@ export default function CreateTrainingRecordPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resultError, setResultError] = useState<string | null>(null);
   const navigate = useNavigate();
   const token = useMemo(() => getAccessToken(), []);
 
@@ -78,7 +89,20 @@ export default function CreateTrainingRecordPage() {
 
         setJournal(journalResponse);
         setSportEvents(sportEventsResponse);
-        setForm(EMPTY_FORM);
+
+        const storedEventId = safeGetLocalStorageItem(
+          buildLastEventStorageKey(trainingJournalId),
+        );
+        const storedEventExists = storedEventId
+          ? sportEventsResponse.some((event) => event.id === storedEventId)
+          : false;
+
+        setForm(
+          storedEventExists && storedEventId
+            ? { ...EMPTY_FORM, eventId: storedEventId }
+            : EMPTY_FORM,
+        );
+        setResultError(null);
       } catch (err) {
         if (!isActive) return;
 
@@ -106,7 +130,6 @@ export default function CreateTrainingRecordPage() {
       ? null
       : sportEvents.find((event) => event.id === form.eventId) ?? null;
   const isFreeTraining = form.eventId === FREE_TRAINING_VALUE;
-  const resultStep = buildResultStep(selectedEvent);
 
   const handleSubmit = async () => {
     if (!trainingJournalId || !token || isLoading || isSubmitting) return;
@@ -128,15 +151,27 @@ export default function CreateTrainingRecordPage() {
         return;
       }
 
-      const trimmedResult = form.resultText.trim();
+      const trimmedResult = normalizeDecimalInput(form.resultText.trim());
       if (!trimmedResult) {
-        setError(t('record.validation.resultRequired'));
+        setResultError(t('record.validation.resultRequired'));
         return;
       }
 
       const result = Number(trimmedResult);
       if (!Number.isFinite(result)) {
-        setError(t('record.validation.resultInvalid'));
+        setResultError(t('record.validation.resultInvalid'));
+        return;
+      }
+      if (result < 0) {
+        setResultError(t('record.validation.resultInvalid'));
+        return;
+      }
+      if (
+        typeof selectedEvent.maxScore === 'number' &&
+        Number.isFinite(selectedEvent.maxScore) &&
+        result > selectedEvent.maxScore
+      ) {
+        setResultError(t('record.validation.resultInvalid'));
         return;
       }
 
@@ -151,6 +186,7 @@ export default function CreateTrainingRecordPage() {
 
     setIsSubmitting(true);
     setError(null);
+    setResultError(null);
 
     try {
       await createTrainingRecord(token, trainingJournalId, payload);
@@ -165,6 +201,17 @@ export default function CreateTrainingRecordPage() {
       setIsSubmitting(false);
     }
   };
+
+  const showFreeTrainingResultMessage = isFreeTraining;
+  const resultFieldError = showFreeTrainingResultMessage ? t('record.freeTrainingHint') : resultError;
+  const resultHint = isFreeTraining
+    ? null
+    : selectedEvent
+      ? t('record.exerciseHint', {
+          maxScore: selectedEvent.maxScore ?? '-',
+          decimalsLabel: buildDecimalsLabel(selectedEvent.decimals ?? 0),
+        })
+      : t('record.loadingExercises');
 
   return (
     <section className="page">
@@ -192,16 +239,29 @@ export default function CreateTrainingRecordPage() {
           <div className="record-input-row">
             <select
               value={form.eventId}
-              onChange={(event) =>
+              onChange={(event) => {
+                const nextEventId = event.target.value;
+                if (
+                  trainingJournalId &&
+                  nextEventId &&
+                  (nextEventId === FREE_TRAINING_VALUE ||
+                    sportEvents.some((sportEvent) => sportEvent.id === nextEventId))
+                ) {
+                  safeSetLocalStorageItem(
+                    buildLastEventStorageKey(trainingJournalId),
+                    nextEventId,
+                  );
+                }
+
                 setForm((prev) => ({
                   ...prev,
-                  eventId: event.target.value,
+                  eventId: nextEventId,
                   resultText:
-                    event.target.value === FREE_TRAINING_VALUE
+                    nextEventId === FREE_TRAINING_VALUE
                       ? ''
                       : prev.resultText,
-                }))
-              }
+                }));
+              }}
               disabled={isLoading || isSubmitting}
             >
               <option value={FREE_TRAINING_VALUE}>
@@ -214,30 +274,26 @@ export default function CreateTrainingRecordPage() {
               ))}
             </select>
 
-            <input
-              type="number"
-              inputMode="decimal"
-              step={resultStep}
-              min={0}
-              value={form.resultText}
-              onChange={(event) =>
-                setForm((prev) => ({ ...prev, resultText: event.target.value }))
-              }
-              placeholder={t('record.placeholder.result')}
-              disabled={isFreeTraining || isLoading || isSubmitting}
-              max={selectedEvent?.maxScore ?? undefined}
-            />
+            <div className={resultFieldError ? 'field has-error' : 'field'}>
+              <input
+                type="text"
+                inputMode="decimal"
+                value={form.resultText}
+                onChange={(event) => {
+                  const nextValue = event.target.value;
+                  setForm((prev) => ({ ...prev, resultText: nextValue }));
+                  if (resultError) setResultError(null);
+                }}
+                placeholder={t('record.placeholder.result')}
+                disabled={isFreeTraining || isLoading || isSubmitting}
+                aria-invalid={Boolean(resultFieldError)}
+              />
+              {resultFieldError ? (
+                <div className="field-error">{resultFieldError}</div>
+              ) : null}
+            </div>
           </div>
-          <span className="field-hint">
-            {isFreeTraining
-              ? t('record.freeTrainingHint')
-              : selectedEvent
-                ? t('record.exerciseHint', {
-                    maxScore: selectedEvent.maxScore ?? '-',
-                    decimals: selectedEvent.decimals ?? 0,
-                  })
-                : t('record.loadingExercises')}
-          </span>
+          {resultHint ? <span className="field-hint">{resultHint}</span> : null}
         </label>
 
         <label className="field">

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { TrainingJournalWithLatestRecordsView } from '@shared-types';
+import type { SportEventView, TrainingJournalWithLatestRecordsView } from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
+import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
@@ -23,6 +24,7 @@ export default function TrainingJournalPage() {
   const { trainingJournalId } = useParams();
   const [journal, setJournal] =
     useState<TrainingJournalWithLatestRecordsView | null>(null);
+  const [sportEvents, setSportEvents] = useState<SportEventView[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const token = useMemo(() => getAccessToken(), []);
@@ -50,6 +52,12 @@ export default function TrainingJournalPage() {
           trainingJournalId,
         );
         setJournal(journalResponse);
+
+        const eventsResponse = await getSportEventsBySportType(
+          token,
+          journalResponse.sportType,
+        );
+        setSportEvents(eventsResponse);
       } catch (err) {
         if (err && typeof err === 'object' && 'message' in err) {
           setError(String((err as { message?: string }).message));
@@ -63,6 +71,12 @@ export default function TrainingJournalPage() {
 
     void load();
   }, [trainingJournalId, token]);
+
+  const sportEventById = useMemo(() => {
+    const map = new Map<string, SportEventView>();
+    for (const event of sportEvents) map.set(event.id, event);
+    return map;
+  }, [sportEvents]);
 
   return (
     <section className="page journal-page">
@@ -106,7 +120,19 @@ export default function TrainingJournalPage() {
                       {formatDateTime(record.createdAt)}
                     </p>
                     <p className="record-result">
-                      {record.result ?? t('journal.noResult')}
+                      {record.result == null ? (
+                        t('journal.freeTraining')
+                      ) : (
+                        <>
+                          <span className="record-event">
+                            {record.eventId
+                              ? (sportEventById.get(record.eventId)?.name ?? t('journal.dash'))
+                              : t('journal.dash')}
+                            {' - '}
+                          </span>
+                          <strong className="record-score">{record.result}</strong>
+                        </>
+                      )}
                     </p>
                     <p className="record-note record-note-preview">
                       {record.coachNotes ?? t('journal.dash')}

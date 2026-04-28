@@ -22,6 +22,7 @@ import {
 } from './dto/training-record.dto';
 import {
   CreateTrainingJournalSwagger,
+  GetAvailableSportTypesSwagger,
   GetTrainingJournalByIdSwagger,
   GetTrainingJournalsSwagger,
   SW_TRAINING_JOURNALS_TITLES,
@@ -32,6 +33,7 @@ import {
   GetTrainingRecordsSwagger,
 } from './swagger/training-records.swagger';
 import { GetTrainingJournalsQuery } from '../application/query-handlers/get-training-journals.query-handler';
+import { GetAvailableSportTypesQuery } from '../application/query-handlers/get-available-sport-types.query-handler';
 import { GetTrainingJournalByIdQuery } from '../application/query-handlers/get-training-journal-by-id.query-handler';
 import { GetTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-training-records-by-journal-id.query-handler';
 import { GetTrainingRecordByIdQuery } from '../application/query-handlers/get-training-record-by-id.query-handler';
@@ -44,6 +46,14 @@ export class TrainingJournalsController {
     private commandBus: CommandBus,
     private queryBus: QueryBus,
   ) {}
+
+  @GetAvailableSportTypesSwagger()
+  @UseGuards(JwtAuthGuard)
+  @Get(trainingJournalsPaths.availableSportTypes)
+  async getAvailableSportTypes(@Req() request: RequestWithUser) {
+    const athleteId = request.user.userId;
+    return this.queryBus.execute(new GetAvailableSportTypesQuery(athleteId));
+  }
 
   @GetTrainingJournalsSwagger()
   @UseGuards(JwtAuthGuard)

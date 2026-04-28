@@ -339,6 +339,16 @@ h2 {
   font-weight: 500;
 }
 
+.record-event {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.record-score {
+  color: var(--text);
+  font-weight: 800;
+}
+
 .field input:focus {
   outline: 2px solid var(--brand);
   border-color: var(--brand);

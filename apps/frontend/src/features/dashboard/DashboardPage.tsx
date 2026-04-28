@@ -92,7 +92,9 @@ export default function DashboardPage() {
                   <article key={journal.id} className="journal-card">
                     <div className="journal-card-header">
                       <Link className="journal-link" to={`/journal/${journal.id}`}>
-                        <p className="journal-title">{journal.sportType}</p>
+                        <p className="journal-title">
+                          {t(`sportType.${journal.sportType}`)}
+                        </p>
                         <p className="journal-date">
                           {formatDate(latestRecord?.date ?? '')}
                         </p>
@@ -106,7 +108,7 @@ export default function DashboardPage() {
                       <strong>
                         {latestRecord?.result != null
                           ? latestRecord.result
-                          : t('dashboard.noResult')}
+                          : t('dashboard.freeTraining')}
                       </strong>
                     </div>
 

@@ -13,6 +13,8 @@ export type CreateTrainingRecordInput = {
 export type TrainingRecordAthleteView = {
   id: string;
   trainingJournalId: string;
+  type: TrainingRecordTypeEnum;
+  eventId: string | null;
   result: number | null;
   coachNotes: string | null;
   privateNotes: string | null;
