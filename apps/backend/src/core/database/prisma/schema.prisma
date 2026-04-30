@@ -64,6 +64,8 @@ model TrainingJournal {
 
   createdAt DateTime @default(now())
 
+  accessRequests CoachAccessRequest[]
+
   @@unique([athleteId, sportType])
 }
 
@@ -78,8 +80,7 @@ model JournalAccess {
 
   role AccessRole
 
-  createdAt      DateTime @default(now())
-  coachAthleteId String?
+  createdAt DateTime @default(now())
 
   @@unique([userId, journalId])
 }
@@ -140,7 +141,30 @@ model CoachProfile {
 
   user User @relation(fields: [userId], references: [id])
 
+  accessRequests CoachAccessRequest[]
+
   @@unique([userId, sportType])
+}
+
+model CoachAccessRequest {
+  id String @id @default(uuid()) @db.Uuid
+
+  journalId      String @db.Uuid
+  coachProfileId String @db.Uuid
+
+  status RequestStatus @default(PENDING)
+
+  createdAt   DateTime  @default(now())
+  respondedAt DateTime?
+
+  trainingJournal TrainingJournal @relation(fields: [journalId], references: [id])
+  coachProfile    CoachProfile    @relation(fields: [coachProfileId], references: [id])
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 enum ResultType {
