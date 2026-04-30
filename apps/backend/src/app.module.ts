@@ -7,6 +7,7 @@ import { AccountModule } from './features/accounts/account.module';
 import { TrainingJournalsModule } from './features/training-journals/training-journals.module';
 import { DashboardModule } from './features/dashboards/dashboard.module';
 import { SportEventModule } from './features/sport-events/sport-events.module';
+import { CoachesModule } from './features/coaches/coaches.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SportEventModule } from './features/sport-events/sport-events.module';
     TrainingJournalsModule,
     SportEventModule,
     DashboardModule,
+    CoachesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

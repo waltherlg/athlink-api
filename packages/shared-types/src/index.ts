@@ -14,6 +14,7 @@ export {
   trainingJournalsPaths,
   sportEventPaths,
   dashboardPaths,
+  coachesPaths,
 } from './paths';
 export {
   SportTypeEnum,
@@ -32,6 +33,8 @@ export {
   TrainingRecordTypeEnum,
 } from './training-records-api-types';
 
+export { CreateCoachProfileInput } from './coaches-api-types';
+
 export {
   AccountErrorCodeEnum,
   ErrorCode,
@@ -40,6 +43,7 @@ export {
   TrainingRecordErrorCodeEnum,
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
+  CoachErrorCodeEnum,
 } from './error-codes';
 
 export {

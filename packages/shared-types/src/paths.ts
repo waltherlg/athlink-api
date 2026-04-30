@@ -34,3 +34,7 @@ export const dashboardPaths = {
   athlete: 'athlete',
   coach: 'coach',
 };
+
+export const coachesPaths = {
+  controller: 'coaches',
+};
