@@ -39,15 +39,13 @@ export class GetTrainingRecordByIdQueryHandler implements IQueryHandler<GetTrain
         TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
       );
 
-    if (record.trainingJournalId !== query.trainingJournalId)
+    if (record.journalId !== query.trainingJournalId)
       throw NotFoundDomainException.create(
         TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
       );
 
     const trainingJournal =
-      await this.trainingJournalsRepo.getTrainingJournalById(
-        record.trainingJournalId,
-      );
+      await this.trainingJournalsRepo.getTrainingJournalById(record.journalId);
 
     if (!trainingJournal)
       throw NotFoundDomainException.create(
@@ -66,7 +64,7 @@ function mapTrainingRecord(
 ): TrainingRecordAthleteViewDto {
   return {
     id: record.id,
-    trainingJournalId: record.trainingJournalId,
+    journalId: record.journalId,
     type: record.type as unknown as TrainingRecordTypeEnum,
     eventId: record.eventId,
     result: record.result,

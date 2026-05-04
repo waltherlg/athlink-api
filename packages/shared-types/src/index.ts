@@ -18,6 +18,7 @@ export {
 } from './paths';
 export {
   SportTypeEnum,
+  JournalAccessRoleEnum,
   CreateTrainingJournalInput,
   TrainingJournalView,
   TrainingJournalWithLatestRecordsView,
@@ -44,6 +45,7 @@ export {
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
   CoachErrorCodeEnum,
+  JournalAccessErrorCodeEnum,
 } from './error-codes';
 
 export {

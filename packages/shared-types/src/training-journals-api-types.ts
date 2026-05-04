@@ -8,6 +8,10 @@ export type CreateTrainingJournalInput = {
   sportType: SportTypeEnum;
 };
 
+export enum JournalAccessRoleEnum {
+  COACH = 'COACH',
+}
+
 export type TrainingJournalView = {
   id: string;
   athleteId: string;

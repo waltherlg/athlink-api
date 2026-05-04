@@ -8,6 +8,7 @@ import { TrainingJournalsModule } from './features/training-journals/training-jo
 import { DashboardModule } from './features/dashboards/dashboard.module';
 import { SportEventModule } from './features/sport-events/sport-events.module';
 import { CoachesModule } from './features/coaches/coaches.module';
+import { JournalAccessModule } from './features/journal-access/journal-access.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CoachesModule } from './features/coaches/coaches.module';
     SportEventModule,
     DashboardModule,
     CoachesModule,
+    JournalAccessModule,
   ],
   controllers: [AppController],
   providers: [AppService],

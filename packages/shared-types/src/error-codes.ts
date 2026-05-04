@@ -5,7 +5,8 @@ export type ErrorCode =
   | TrainingRecordErrorCodeEnum
   | SessionErrorCodeEnum
   | AuthErrorCodeEnum
-  | CoachErrorCodeEnum;
+  | CoachErrorCodeEnum
+  | JournalAccessErrorCodeEnum;
 
 export enum AccountErrorCodeEnum {
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
@@ -52,4 +53,11 @@ export enum TrainingRecordErrorCodeEnum {
 export enum CoachErrorCodeEnum {
   COACH_PROFILE_ALREADY_EXISTS = 'COACH_PROFILE_ALREADY_EXISTS',
   COACH_PROFILE_NOT_FOUND = 'COACH_PROFILE_NOT_FOUND',
+}
+
+export enum JournalAccessErrorCodeEnum {
+  REQUEST_NOT_FOUND = 'REQUEST_NOT_FOUND',
+  REQUEST_ALREADY_PROCESSED = 'REQUEST_ALREADY_PROCESSED',
+  NOT_OWNER = 'NOT_OWNER',
+  ACCESS_ALREADY_EXISTS = 'ACCESS_ALREADY_EXISTS',
 }

@@ -63,7 +63,7 @@ function mapTrainingRecord(
 ): TrainingRecordAthleteViewDto {
   return {
     id: record.id,
-    trainingJournalId: record.trainingJournalId,
+    journalId: record.journalId,
     type: record.type as unknown as TrainingRecordTypeEnum,
     eventId: record.eventId,
     result: record.result,

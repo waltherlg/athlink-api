@@ -13,8 +13,8 @@ export function mapAthleteDashboardDataView(
 
   const latestRecordByJournalId = new Map<string, TrainingRecord>();
   for (const record of latestRecords) {
-    if (!latestRecordByJournalId.has(record.trainingJournalId)) {
-      latestRecordByJournalId.set(record.trainingJournalId, record);
+    if (!latestRecordByJournalId.has(record.journalId)) {
+      latestRecordByJournalId.set(record.journalId, record);
     }
   }
 

@@ -30,7 +30,6 @@ model User {
 
   // logs
   trainingJournals TrainingJournal[]
-  journalAccesses  JournalAccess[]
   sessions         Session[]
   coachProfiles    CoachProfile[]
 }
@@ -58,13 +57,13 @@ model TrainingJournal {
 
   sportType SportType
 
-  trainingRecords TrainingRecord[]
+  records TrainingRecord[]
 
   accesses JournalAccess[]
 
   createdAt DateTime @default(now())
 
-  accessRequests CoachAccessRequest[]
+  accessRequests AccessRequest[]
 
   @@unique([athleteId, sportType])
 }
@@ -72,17 +71,17 @@ model TrainingJournal {
 model JournalAccess {
   id String @id @default(uuid()) @db.Uuid
 
-  userId    String @db.Uuid
-  journalId String @db.Uuid
+  coachProfileId String @db.Uuid
+  journalId      String @db.Uuid
 
-  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  journal TrainingJournal @relation(fields: [journalId], references: [id], onDelete: Cascade)
+  coachProfile CoachProfile    @relation(fields: [coachProfileId], references: [id], onDelete: Cascade)
+  journal      TrainingJournal @relation(fields: [journalId], references: [id], onDelete: Cascade)
 
   role AccessRole
 
   createdAt DateTime @default(now())
 
-  @@unique([userId, journalId])
+  @@unique([coachProfileId, journalId])
 }
 
 enum AccessRole {
@@ -96,8 +95,8 @@ enum SportType {
 model TrainingRecord {
   id String @id @default(uuid()) @db.Uuid
 
-  trainingJournalId String          @db.Uuid
-  trainingJournal   TrainingJournal @relation(fields: [trainingJournalId], references: [id], onDelete: Cascade)
+  journalId String          @db.Uuid
+  journal   TrainingJournal @relation(fields: [journalId], references: [id], onDelete: Cascade)
 
   type TrainingRecordType
 
@@ -127,7 +126,7 @@ model SportEvent {
 
   createdAt DateTime @default(now())
 
-  trainingRecords TrainingRecord[]
+  records TrainingRecord[]
 
   @@unique([sportType, code])
 }
@@ -139,14 +138,15 @@ model CoachProfile {
 
   createdAt DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  accessRequests CoachAccessRequest[]
+  accessRequests  AccessRequest[]
+  journalAccesses JournalAccess[]
 
   @@unique([userId, sportType])
 }
 
-model CoachAccessRequest {
+model AccessRequest {
   id String @id @default(uuid()) @db.Uuid
 
   journalId      String @db.Uuid
@@ -157,8 +157,8 @@ model CoachAccessRequest {
   createdAt   DateTime  @default(now())
   respondedAt DateTime?
 
-  trainingJournal TrainingJournal @relation(fields: [journalId], references: [id])
-  coachProfile    CoachProfile    @relation(fields: [coachProfileId], references: [id])
+  journal      TrainingJournal @relation(fields: [journalId], references: [id], onDelete: Cascade)
+  coachProfile CoachProfile    @relation(fields: [coachProfileId], references: [id], onDelete: Cascade)
 }
 
 enum RequestStatus {

@@ -12,7 +12,7 @@ export type CreateTrainingRecordInput = {
 
 export type TrainingRecordAthleteView = {
   id: string;
-  trainingJournalId: string;
+  journalId: string;
   type: TrainingRecordTypeEnum;
   eventId: string | null;
   result: number | null;

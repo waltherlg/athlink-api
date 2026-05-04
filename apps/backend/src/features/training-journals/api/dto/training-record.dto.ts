@@ -48,7 +48,7 @@ export class TrainingRecordAthleteViewDto implements TrainingRecordAthleteView {
   id: string;
 
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })
-  trainingJournalId: string;
+  journalId: string;
 
   @ApiProperty({
     enum: TrainingRecordTypeEnum,

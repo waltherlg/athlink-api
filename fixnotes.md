@@ -1,17 +1,9 @@
-задача 1: safe-helper для localStorage успешно сохраняет последний выбранный event, но не сохраняет если была выбрана свободная тренировка.
+Я изменил типизацию в C:\Users\user\Desktop\prod\athlink-api\packages\shared-types. Во всех типах где было trainingJournalId: string я поменял на journalId: string. В backend я везде исправил что с этим звязано, но тебе надо будет исправить это на frontend.
 
-задача 2: в дешборде я вижу свой дневник с названием SHOOTING_RIFLE_PISTOL, то есть вижу кодовое название дневника. Нужно добавить локализации (по русски это "Стрельба пулевая" на английском можно оставить "Shooting rifle/pistol")
+создал фичу с тренерами
+C:\Users\user\Desktop\prod\athlink-api\apps\backend\src\features\coaches
 
-Так же в заголовке http://localhost:4173/journal/ec91ec47-9f14-42c0-8d88-e2c0cddfcbb1 Дневник "Стрельба". Короче везде где кодом SHOOTING_RIFLE_PISTOL нужно уставить локализации, "Стрельба" заменить на "стрельба пулевая"
+начиная с контроллера
+C:\Users\user\Desktop\prod\athlink-api\apps\backend\src\features\coaches\api\coaches.controller.ts
 
-задача 3: когда я смотрю свои записи в http://localhost:4173/journal/ec91ec47-9f14-42c0-8d88-e2c0cddfcbb1/records или в http://localhost:4173/journal/ec91ec47-9f14-42c0-8d88-e2c0cddfcbb1 
-
-привью журнала выглядит так:
-
-28 апр. 2026 г., 08:58
-Нет результата
-Запись
-
-Слово "нет результата" нужно заменить на "Свободная тренировка" (на английском - free training)
-А если результат в записи есть, значит у записи есть eventId и название упражнения должно показываться тоже. Например "Air Pistol 60 - 560"
-Название упражнения можно сделать чуть бледнее, а сам результат оставить черным жирным.
+пользователь может создать свой профайл как тренера.
