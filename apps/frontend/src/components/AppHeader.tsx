@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { CoachProfileView } from '@shared-types';
 import { useAuth } from '../features/auth/auth-context';
 import { t } from '../i18n';
@@ -23,6 +23,7 @@ export default function AppHeader() {
   const [coachProfiles, setCoachProfiles] = useState<CoachProfileView[]>([]);
   const [requestsCount, setRequestsCount] = useState(0);
   const mode = useDashboardMode();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token || !userName) {
@@ -43,7 +44,9 @@ export default function AppHeader() {
         setCoachProfiles(profilesResponse.value);
         if (
           mode.type === 'coach' &&
-          !profilesResponse.value.some((profile) => profile.id === mode.profile.id)
+          !profilesResponse.value.some(
+            (profile) => profile.id === mode.profile.id,
+          )
         ) {
           setDashboardMode(athleteMode);
         }
@@ -63,10 +66,6 @@ export default function AppHeader() {
 
   const modeValue =
     mode.type === 'coach' ? `coach:${mode.profile.id}` : 'athlete';
-  const roleLabel =
-    mode.type === 'coach'
-      ? `Тренер ${t(`sportType.${mode.profile.sportType}`)}`
-      : 'Спортсмен';
 
   return (
     <header className="app-header">
@@ -80,37 +79,36 @@ export default function AppHeader() {
             <span className="muted">{t('header.checking')}</span>
           ) : userName ? (
             <>
-              {coachProfiles.length > 0 ? (
-                <select
-                  className="mode-select"
-                  value={modeValue}
-                  onChange={(event) => {
-                    if (event.target.value === 'athlete') {
-                      setDashboardMode(athleteMode);
-                      return;
-                    }
-                    const profileId = event.target.value.replace('coach:', '');
-                    const profile = coachProfiles.find(
-                      (item) => item.id === profileId,
-                    );
-                    if (profile) setDashboardMode({ type: 'coach', profile });
-                  }}
-                >
-                  <option value="athlete">Спортсмен</option>
-                  {coachProfiles.map((profile) => (
-                    <option key={profile.id} value={`coach:${profile.id}`}>
-                      {`Тренер ${t(`sportType.${profile.sportType}`)}`}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <Link className="button-link ghost" to="/coach/new">
-                  Стать тренером
-                </Link>
-              )}
-              <span className="user-badge">
-                {userName} {roleLabel}
-              </span>
+              <span className="user-badge">{userName}</span>
+              <select
+                className="mode-select"
+                value={modeValue}
+                onChange={(event) => {
+                  if (event.target.value === 'athlete') {
+                    setDashboardMode(athleteMode);
+                    return;
+                  }
+                  if (event.target.value === 'add-coach-profile') {
+                    navigate('/coach/new');
+                    return;
+                  }
+                  const profileId = event.target.value.replace('coach:', '');
+                  const profile = coachProfiles.find(
+                    (item) => item.id === profileId,
+                  );
+                  if (profile) setDashboardMode({ type: 'coach', profile });
+                }}
+              >
+                <option value="athlete">Спортсмен</option>
+                {coachProfiles.map((profile) => (
+                  <option key={profile.id} value={`coach:${profile.id}`}>
+                    {`Тренер ${t(`sportType.${profile.sportType}`)}`}
+                  </option>
+                ))}
+                <option value="add-coach-profile">
+                  Добавить профиль тренера
+                </option>
+              </select>
               <Link className="button-link" to="/">
                 {t('header.dashboard')}
               </Link>
