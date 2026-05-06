@@ -31,7 +31,7 @@ export class CreateTrainingRecordUseCase implements ICommandHandler<CreateTraini
 
   async execute(command: CreateTrainingRecordCommand): Promise<any> {
     const trainingJournal = await this.journalsRepo.getTrainingJournalById(
-      command.dto.trainingJournalId,
+      command.dto.journalId,
     );
 
     if (!trainingJournal)

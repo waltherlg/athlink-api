@@ -1,187 +1,226 @@
-﻿# AI Snapshot (light)
-Timestamp: 2026-04-07 08:58:45
-Repo: C:\Users\user\Desktop\projects\athlink-api
+# Athlink API / Frontend Handoff Context
 
-## git status -sb
-usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--config-env=<name>=<envvar>] <command> [<args>]
+Updated: 2026-05-05
+Workspace: `C:\Users\user\Desktop\prod\athlink-api`
 
-These are common Git commands used in various situations:
+## Project Shape
 
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
+- Monorepo with `apps/backend`, `apps/frontend`, `packages/shared-types`.
+- Backend: NestJS + CQRS + Prisma.
+- Frontend: React + Vite, strict TypeScript.
+- Shared API paths/types are exported from `packages/shared-types/src/index.ts`.
+- Prisma schema is at `apps/backend/src/core/database/prisma/schema.prisma`.
 
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
+## Recent User Request
 
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
+Implemented the coach / journal access / coach dashboard flow:
 
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
+1. Rename frontend usage from `trainingJournalId` to `journalId`.
+2. Add coach profile UI and mode switch.
+3. Add journal access request creation from a journal page.
+4. Add incoming request list + count badge + accept/reject.
+5. Add coach dashboard and coach-safe journal records without `privateNotes`.
 
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
+## Important Shared Types / Paths
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
+Files changed in `packages/shared-types/src`:
 
-## git diff --stat
-usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--config-env=<name>=<envvar>] <command> [<args>]
+- `paths.ts`
+  - `trainingJournalsPaths.byId` is now `:journalId`.
+  - Added `trainingJournalsPaths.coachRecords`.
+  - Added `coachesPaths.profiles`, `availableSportTypes`, `search`.
+  - Added `journalAccessPaths`.
+- `coaches-api-types.ts`
+  - Added `CoachProfileView`, `CoachProfileSearchView`.
+- `journal-access-api-types.ts`
+  - Added access request input/view/status/count types.
+- `dashboards-api-types.ts`
+  - Added `CoachDashboardDataView`, `CoachDashboardJournalView`.
+- `training-records-api-types.ts`
+  - `TrainingRecordCoachView` uses `journalId` and intentionally has no `privateNotes`.
+- `error-codes.ts`
+  - Added journal access errors: request exists, journal not found, coach profile not found, sport type mismatch.
 
-These are common Git commands used in various situations:
+## Backend Flow Added
 
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
+### Coaches
 
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
+Main files:
 
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
+- `apps/backend/src/features/coaches/api/coaches.controller.ts`
+- `apps/backend/src/features/coaches/infrastructure/coaches.repository.ts`
 
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
+Endpoints:
 
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
+- `GET /coaches/profiles` returns current user's coach profiles.
+- `GET /coaches/available-sport-types` returns sport types not yet used for coach profile.
+- `GET /coaches/search?sportType=...&userName=...` searches coach profiles by userName and sport type, excluding current user.
+- `POST /coaches` existed already, still creates coach profile.
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
+### Journal Access
 
-## git diff --name-only
-usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--config-env=<name>=<envvar>] <command> [<args>]
+Main files:
 
-These are common Git commands used in various situations:
+- `apps/backend/src/features/journal-access/api/journal-access.controller.ts`
+- `apps/backend/src/features/journal-access/application/use-cases/create-access-request.use-case.ts`
+- `apps/backend/src/features/journal-access/application/use-cases/accept-access-request.use-case.ts`
+- `apps/backend/src/features/journal-access/application/use-cases/reject-access-request.use-case.ts`
+- `apps/backend/src/features/journal-access/application/query-handlers/get-incoming-access-requests.query-handler.ts`
+- `apps/backend/src/features/journal-access/application/query-handlers/count-incoming-access-requests.query-handler.ts`
+- `apps/backend/src/features/journal-access/infrastructure/training-journal-access.repository.ts`
 
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
+Endpoints:
 
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
+- `POST /journal-access/requests`
+  - body: `{ journalId, coachProfileId }`
+  - validates journal owner, matching sport type, no existing access, no pending duplicate.
+- `GET /journal-access/requests/incoming`
+  - current coach user sees pending requests for their coach profiles.
+  - returns athlete userName and sport type.
+- `GET /journal-access/requests/incoming/count`
+  - returns `{ count }`.
+- `POST /journal-access/requests/:requestId/accept`
+  - creates `JournalAccess` and marks request accepted.
+- `POST /journal-access/requests/:requestId/reject`
+  - marks request rejected.
 
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
+### Coach Dashboard
 
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
+Main files:
 
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
+- `apps/backend/src/features/dashboards/api/dashboard.controller.ts`
+- `apps/backend/src/features/dashboards/application/query-handlers/get-coach-dashboard.query-handler.ts`
+- `apps/backend/src/features/dashboards/dashboard.module.ts`
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
+Endpoint:
 
-## git log -5 --oneline
-usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-           [--config-env=<name>=<envvar>] <command> [<args>]
+- `GET /dashboard/coach?coachProfileId=...&pageNumber=...&pageSize=...`
+  - returns paginated journals connected to that coach profile.
+  - each item includes athlete userName, sport type, latest record date/event/result.
 
-These are common Git commands used in various situations:
+### Coach-Safe Training Records
 
-start a working area (see also: git help tutorial)
-   clone     Clone a repository into a new directory
-   init      Create an empty Git repository or reinitialize an existing one
+Main file:
 
-work on the current change (see also: git help everyday)
-   add       Add file contents to the index
-   mv        Move or rename a file, a directory, or a symlink
-   restore   Restore working tree files
-   rm        Remove files from the working tree and from the index
+- `apps/backend/src/features/training-journals/application/query-handlers/get-coach-training-records-by-journal-id.query-handler.ts`
+- Registered in `training-journal-queries.provider.ts`.
+- Controller method added in `training-journals.controller.ts`.
 
-examine the history and state (see also: git help revisions)
-   bisect    Use binary search to find the commit that introduced a bug
-   diff      Show changes between commits, commit and working tree, etc
-   grep      Print lines matching a pattern
-   log       Show commit logs
-   show      Show various types of objects
-   status    Show the working tree status
+Endpoint:
 
-grow, mark and tweak your common history
-   branch    List, create, or delete branches
-   commit    Record changes to the repository
-   merge     Join two or more development histories together
-   rebase    Reapply commits on top of another base tip
-   reset     Reset current HEAD to the specified state
-   switch    Switch branches
-   tag       Create, list, delete or verify a tag object signed with GPG
+- `GET /training-journal/:journalId/coach-records`
+  - checks current coach user has access through a coach profile.
+  - returns paginated `TrainingRecordCoachView`.
+  - Does not return `privateNotes`.
 
-collaborate (see also: git help workflows)
-   fetch     Download objects and refs from another repository
-   pull      Fetch from and integrate with another repository or a local branch
-   push      Update remote refs along with associated objects
+## Frontend Flow Added
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
+### API Clients
+
+New folders/files:
+
+- `apps/frontend/src/api/coaches/*`
+- `apps/frontend/src/api/journal-access/*`
+- `apps/frontend/src/api/dashboard/get-coach-dashboard.ts`
+- `apps/frontend/src/api/training-journals/get-coach-training-records.ts`
+
+Updated:
+
+- `apps/frontend/src/api/training-journals/*` now uses `journalId`.
+- `apps/frontend/src/api/dashboard/paths.ts`.
+
+### Routes
+
+Updated in `apps/frontend/src/App.tsx`:
+
+- `/journal/:journalId`
+- `/journal/:journalId/new-record`
+- `/journal/:journalId/records`
+- `/journal/:journalId/records/:recordId`
+- `/coach/new`
+- `/requests`
+- `/coach/journal/:journalId/records`
+
+### Header / Mode
+
+Main files:
+
+- `apps/frontend/src/components/AppHeader.tsx`
+- `apps/frontend/src/features/dashboard/dashboard-mode.ts`
+- `apps/frontend/src/features/dashboard/use-dashboard-mode.ts`
+
+Behavior:
+
+- Header shows `userName Спортсмен` by default.
+- If coach profiles exist, a select appears before the role badge:
+  - `Спортсмен`
+  - `Тренер <SportType>` for each profile.
+- If no profiles exist, button `Стать тренером` links to `/coach/new`.
+- `Запросы` link appears between `Главная` and `Выйти`.
+- Requests count badge polls `/journal-access/requests/incoming/count` every 30 seconds.
+
+### Pages
+
+New pages:
+
+- `apps/frontend/src/features/coaches/CreateCoachProfilePage.tsx`
+  - Same idea as journal creation: choose available sport type.
+  - If no sport types are available, says profiles already exist for all sports.
+- `apps/frontend/src/features/journal-access/AccessRequestsPage.tsx`
+  - Shows incoming pending requests with athlete userName + sport type.
+  - Buttons: accept/reject.
+- `apps/frontend/src/features/training-journals/CoachTrainingRecordsPage.tsx`
+  - Shows coach-safe records with no private notes.
+
+Updated pages:
+
+- `DashboardPage.tsx`
+  - Uses athlete dashboard in athlete mode.
+  - Uses `/dashboard/coach` in coach mode with selected `coachProfileId`.
+- `TrainingJournalPage.tsx`
+  - Added `Добавить тренера`.
+  - Searches only coach profiles with the same journal sport type.
+  - User chooses username, confirms, sends access request.
+- `CreateTrainingRecordPage.tsx`, `TrainingRecordsPage.tsx`, `TrainingRecordPage.tsx`
+  - Switched URL param/code from `trainingJournalId` to `journalId`.
+
+## Validation Already Run
+
+These commands passed:
+
+```bash
+pnpm --filter @shared-types build
+pnpm -C apps/backend build
+pnpm -C apps/frontend build
+```
+
+Note: frontend build may need approval/outside sandbox because Vite/esbuild can fail with `spawn EPERM` inside the sandbox.
+
+## Known Git / Workspace Notes
+
+- Git may complain about dubious ownership. Use:
+
+```bash
+git -c safe.directory=C:/Users/user/Desktop/prod/athlink-api status --short
+```
+
+- `apps/frontend/tsconfig.tsbuildinfo` changed because frontend build was run.
+- `fixnotes.md` was already changed by the user's IDE/context and should not be treated as code.
+- Do not revert unrelated dirty files unless the user explicitly asks.
+
+## Next Useful Checks
+
+- Run the app manually and test:
+  - create coach profile;
+  - athlete sends access request from a journal;
+  - coach sees count badge and incoming request;
+  - coach accepts;
+  - coach switches dashboard mode and opens athlete journal records;
+  - confirm `privateNotes` is absent in coach record responses.
+
+## Style / Architecture Reminders
+
+- Keep backend logic in use-cases/query-handlers; repositories only query/persist.
+- Use `@shared-types` in controllers/API clients.
+- For new paginated endpoints use `PaginationOutputModel<T>` and `RequestQueryParamsModel`.
+- Do not add `privateNotes` to any coach-facing view.

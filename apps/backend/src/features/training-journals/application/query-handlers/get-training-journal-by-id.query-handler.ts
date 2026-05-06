@@ -16,7 +16,7 @@ import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
 export class GetTrainingJournalByIdQuery {
   constructor(
     public athleteId: string,
-    public trainingJournalId: string,
+    public journalId: string,
   ) {}
 }
 
@@ -32,7 +32,7 @@ export class GetTrainingJournalByIdQueryHandler implements IQueryHandler<GetTrai
   ): Promise<TrainingJournalWithLatestRecordsViewDto> {
     const trainingJournal =
       await this.trainingJournalsRepo.getTrainingJournalById(
-        query.trainingJournalId,
+        query.journalId,
       );
 
     if (!trainingJournal)

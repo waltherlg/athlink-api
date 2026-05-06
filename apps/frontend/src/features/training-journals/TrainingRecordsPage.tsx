@@ -23,7 +23,7 @@ const formatDateTime = (value: string) => {
 
 export default function TrainingRecordsPage() {
   usePageTitle(t('journal.allTitle'));
-  const { trainingJournalId } = useParams();
+  const { journalId } = useParams();
   const [records, setRecords] =
     useState<TrainingRecordsPaginationView | null>(null);
   const [sportEvents, setSportEvents] = useState<SportEventView[]>([]);
@@ -34,7 +34,7 @@ export default function TrainingRecordsPage() {
   const token = useMemo(() => getAccessToken(), []);
 
   useEffect(() => {
-    if (!trainingJournalId || !token) {
+    if (!journalId || !token) {
       setIsLoading(false);
       return;
     }
@@ -45,7 +45,7 @@ export default function TrainingRecordsPage() {
       try {
         const recordsResponse = await getTrainingRecords(
           token,
-          trainingJournalId,
+          journalId,
           {
             pageNumber: String(pageNumber),
             pageSize: String(pageSize),
@@ -64,10 +64,10 @@ export default function TrainingRecordsPage() {
     };
 
     void load();
-  }, [trainingJournalId, token, pageNumber]);
+  }, [journalId, token, pageNumber]);
 
   useEffect(() => {
-    if (!trainingJournalId || !token) return;
+    if (!journalId || !token) return;
 
     let isActive = true;
 
@@ -75,7 +75,7 @@ export default function TrainingRecordsPage() {
       try {
         const journalResponse = await getTrainingJournalById(
           token,
-          trainingJournalId,
+          journalId,
         );
         const eventsResponse = await getSportEventsBySportType(
           token,
@@ -93,7 +93,7 @@ export default function TrainingRecordsPage() {
     return () => {
       isActive = false;
     };
-  }, [trainingJournalId, token]);
+  }, [journalId, token]);
 
   const sportEventById = useMemo(() => {
     const map = new Map<string, SportEventView>();
@@ -106,8 +106,8 @@ export default function TrainingRecordsPage() {
   return (
     <section className="page journal-page">
       <div className="journal-actions">
-        {trainingJournalId ? (
-          <Link className="button-link ghost" to={`/journal/${trainingJournalId}`}>
+        {journalId ? (
+          <Link className="button-link ghost" to={`/journal/${journalId}`}>
             {t('record.backJournal')}
           </Link>
         ) : null}
@@ -147,10 +147,10 @@ export default function TrainingRecordsPage() {
                       {record.coachNotes ?? t('journal.dash')}
                     </p>
                   </div>
-                  {trainingJournalId ? (
+                  {journalId ? (
                     <Link
                       className="button-link ghost small"
-                      to={`/journal/${trainingJournalId}/records/${record.id}`}
+                      to={`/journal/${journalId}/records/${record.id}`}
                     >
                       {t('record.open')}
                     </Link>

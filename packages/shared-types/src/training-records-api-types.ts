@@ -24,8 +24,9 @@ export type TrainingRecordAthleteView = {
 
 export type TrainingRecordCoachView = {
   id: string;
-  userName: string;
-  trainingJournalId: string;
+  journalId: string;
+  type: TrainingRecordTypeEnum;
+  eventId: string | null;
   result: number | null;
   coachNotes: string | null;
   createdAt: string;

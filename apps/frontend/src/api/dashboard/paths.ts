@@ -4,4 +4,5 @@ const dashboardBase = `/${dashboardPathsShared.controller}`;
 
 export const dashboardPaths = {
   athlete: `${dashboardBase}/${dashboardPathsShared.athlete}`,
+  coach: `${dashboardBase}/${dashboardPathsShared.coach}`,
 };

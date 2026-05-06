@@ -17,6 +17,9 @@ import CreateTrainingJournalPage from './features/training-journals/CreateTraini
 import CreateTrainingRecordPage from './features/training-journals/CreateTrainingRecordPage';
 import TrainingRecordsPage from './features/training-journals/TrainingRecordsPage';
 import TrainingRecordPage from './features/training-journals/TrainingRecordPage';
+import CreateCoachProfilePage from './features/coaches/CreateCoachProfilePage';
+import AccessRequestsPage from './features/journal-access/AccessRequestsPage';
+import CoachTrainingRecordsPage from './features/training-journals/CoachTrainingRecordsPage';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { userName, isChecking } = useAuth();
@@ -108,7 +111,7 @@ export default function App() {
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route
-                  path="/journal/:trainingJournalId"
+                  path="/journal/:journalId"
                   element={
                     <RequireAuth>
                       <TrainingJournalPage />
@@ -124,7 +127,7 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/journal/:trainingJournalId/new-record"
+                  path="/journal/:journalId/new-record"
                   element={
                     <RequireAuth>
                       <CreateTrainingRecordPage />
@@ -132,7 +135,7 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/journal/:trainingJournalId/records"
+                  path="/journal/:journalId/records"
                   element={
                     <RequireAuth>
                       <TrainingRecordsPage />
@@ -140,10 +143,34 @@ export default function App() {
                   }
                 />
                 <Route
-                  path="/journal/:trainingJournalId/records/:recordId"
+                  path="/journal/:journalId/records/:recordId"
                   element={
                     <RequireAuth>
                       <TrainingRecordPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/coach/new"
+                  element={
+                    <RequireAuth>
+                      <CreateCoachProfilePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/requests"
+                  element={
+                    <RequireAuth>
+                      <AccessRequestsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/coach/journal/:journalId/records"
+                  element={
+                    <RequireAuth>
+                      <CoachTrainingRecordsPage />
                     </RequireAuth>
                   }
                 />

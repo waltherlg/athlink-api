@@ -19,12 +19,12 @@ const buildQueryString = (params: QueryParams) => {
 
 export function getTrainingRecords(
   accessToken: string,
-  trainingJournalId: string,
+  journalId: string,
   params: QueryParams = {},
 ) {
   const basePath = trainingJournalsPaths.records.replace(
-    ':trainingJournalId',
-    trainingJournalId,
+    ':journalId',
+    journalId,
   );
   const path = `${basePath}${buildQueryString(params)}`;
   return apiFetch<TrainingRecordsPaginationView>(path, {

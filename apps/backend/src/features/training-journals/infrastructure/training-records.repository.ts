@@ -11,7 +11,7 @@ export class TrainingRecordsRepository {
   ): Promise<TrainingRecord> {
     const createdTrainingRecord = await this.prisma.trainingRecord.create({
       data: {
-        journalId: dto.trainingJournalId,
+        journalId: dto.journalId,
         eventId: dto.eventId,
         type: dto.type,
         result: dto.result,

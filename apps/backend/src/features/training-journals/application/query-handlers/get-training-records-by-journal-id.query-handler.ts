@@ -16,7 +16,7 @@ import { TrainingRecordTypeEnum } from '@shared-types';
 export class GetTrainingRecordsByJournalIdQuery {
   constructor(
     public athleteId: string,
-    public trainingJournalId: string,
+    public journalId: string,
     public query: Partial<RequestQueryParamsModel>,
   ) {}
 }
@@ -37,7 +37,7 @@ export class GetTrainingRecordsByJournalIdQueryHandler implements IQueryHandler<
   }> {
     const trainingJournal =
       await this.trainingJournalsRepo.getTrainingJournalById(
-        query.trainingJournalId,
+        query.journalId,
       );
 
     if (!trainingJournal)

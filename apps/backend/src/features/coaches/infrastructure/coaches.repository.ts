@@ -29,4 +29,40 @@ export class CoachesRepository {
     });
     return profile;
   }
+
+  async getCoachProfilesByUserId(userId: string): Promise<CoachProfile[]> {
+    return this.prisma.coachProfile.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async searchCoachProfilesByUserName(
+    sportType: SportTypeEnum,
+    userName: string,
+    currentUserId: string,
+  ) {
+    const search = userName.trim();
+    if (search.length === 0) return [];
+
+    return this.prisma.coachProfile.findMany({
+      where: {
+        sportType,
+        userId: { not: currentUserId },
+        user: {
+          userName: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      },
+      include: {
+        user: {
+          select: { userName: true },
+        },
+      },
+      orderBy: { user: { userName: 'asc' } },
+      take: 8,
+    });
+  }
 }

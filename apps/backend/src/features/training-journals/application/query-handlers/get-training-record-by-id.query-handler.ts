@@ -15,7 +15,7 @@ import { TrainingRecordTypeEnum } from '@shared-types';
 export class GetTrainingRecordByIdQuery {
   constructor(
     public athleteId: string,
-    public trainingJournalId: string,
+    public journalId: string,
     public recordId: string,
   ) {}
 }
@@ -39,7 +39,7 @@ export class GetTrainingRecordByIdQueryHandler implements IQueryHandler<GetTrain
         TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
       );
 
-    if (record.journalId !== query.trainingJournalId)
+    if (record.journalId !== query.journalId)
       throw NotFoundDomainException.create(
         TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_NOT_FOUND,
       );

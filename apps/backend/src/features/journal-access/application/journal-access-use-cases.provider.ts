@@ -1,3 +1,9 @@
 import { AcceptAccessRequestUseCase } from './use-cases/accept-access-request.use-case';
+import { CreateAccessRequestUseCase } from './use-cases/create-access-request.use-case';
+import { RejectAccessRequestUseCase } from './use-cases/reject-access-request.use-case';
 
-export const JournalAccessUseCases = [AcceptAccessRequestUseCase];
+export const JournalAccessUseCases = [
+  AcceptAccessRequestUseCase,
+  CreateAccessRequestUseCase,
+  RejectAccessRequestUseCase,
+];

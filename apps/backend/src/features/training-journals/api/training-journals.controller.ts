@@ -38,6 +38,7 @@ import { GetTrainingJournalByIdQuery } from '../application/query-handlers/get-t
 import { GetTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-training-records-by-journal-id.query-handler';
 import { GetTrainingRecordByIdQuery } from '../application/query-handlers/get-training-record-by-id.query-handler';
 import { CreateTrainingRecordValidationPipe } from './pipes/training-records.validation-pipe';
+import { GetCoachTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-coach-training-records-by-journal-id.query-handler';
 
 @ApiTags(SW_TRAINING_JOURNALS_TITLES.TRAINING_JOURNAL_CONTROLLER)
 @Controller(trainingJournalsPaths.controller)
@@ -68,11 +69,11 @@ export class TrainingJournalsController {
   @Get(trainingJournalsPaths.byId)
   async getTrainingJournalById(
     @Req() request: RequestWithUser,
-    @Param('trainingJournalId') trainingJournalId: string,
+    @Param('journalId') journalId: string,
   ) {
     const athleteId = request.user.userId;
     return this.queryBus.execute(
-      new GetTrainingJournalByIdQuery(athleteId, trainingJournalId),
+      new GetTrainingJournalByIdQuery(athleteId, journalId),
     );
   }
 
@@ -81,14 +82,31 @@ export class TrainingJournalsController {
   @Get(`${trainingJournalsPaths.byId}/${trainingJournalsPaths.records}`)
   async getTrainingRecords(
     @Req() request: RequestWithUser,
-    @Param('trainingJournalId') trainingJournalId: string,
+    @Param('journalId') journalId: string,
     @Query() query: TrainingRecordsQueryParamsDto,
   ) {
     const athleteId = request.user.userId;
     return this.queryBus.execute(
       new GetTrainingRecordsByJournalIdQuery(
         athleteId,
-        trainingJournalId,
+        journalId,
+        query,
+      ),
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(`${trainingJournalsPaths.byId}/${trainingJournalsPaths.coachRecords}`)
+  async getCoachTrainingRecords(
+    @Req() request: RequestWithUser,
+    @Param('journalId') journalId: string,
+    @Query() query: TrainingRecordsQueryParamsDto,
+  ) {
+    const coachUserId = request.user.userId;
+    return this.queryBus.execute(
+      new GetCoachTrainingRecordsByJournalIdQuery(
+        coachUserId,
+        journalId,
         query,
       ),
     );
@@ -101,12 +119,12 @@ export class TrainingJournalsController {
   )
   async getTrainingRecordById(
     @Req() request: RequestWithUser,
-    @Param('trainingJournalId') trainingJournalId: string,
+    @Param('journalId') journalId: string,
     @Param('recordId') recordId: string,
   ) {
     const athleteId = request.user.userId;
     return this.queryBus.execute(
-      new GetTrainingRecordByIdQuery(athleteId, trainingJournalId, recordId),
+      new GetTrainingRecordByIdQuery(athleteId, journalId, recordId),
     );
   }
 
@@ -130,13 +148,13 @@ export class TrainingJournalsController {
   @Post(`${trainingJournalsPaths.byId}/${trainingJournalsPaths.records}`)
   async createTrainingRecord(
     @Req() request: RequestWithUser,
-    @Param('trainingJournalId') trainingJournalId: string,
+    @Param('journalId') journalId: string,
     @Body(CreateTrainingRecordValidationPipe) dto: CreateTrainingRecordInputDto,
   ) {
     const userId = request.user.userId;
     const result = await this.commandBus.execute(
       new CreateTrainingRecordCommand(userId, {
-        trainingJournalId,
+        journalId,
         eventId: dto.eventId,
         type: dto.type,
         result: dto.result,

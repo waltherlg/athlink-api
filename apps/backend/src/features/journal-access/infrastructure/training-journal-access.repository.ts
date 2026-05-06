@@ -29,14 +29,46 @@ export class JournalAccessRepository {
   async acceptAccessRequest(id: string) {
     await this.prisma.accessRequest.update({
       where: { id },
-      data: { status: RequestStatus.ACCEPTED },
+      data: { status: RequestStatus.ACCEPTED, respondedAt: new Date() },
     });
   }
 
   async rejectAccessRequest(id: string) {
     await this.prisma.accessRequest.update({
       where: { id },
-      data: { status: RequestStatus.REJECTED },
+      data: { status: RequestStatus.REJECTED, respondedAt: new Date() },
+    });
+  }
+
+  async getPendingIncomingRequests(coachUserId: string) {
+    return this.prisma.accessRequest.findMany({
+      where: {
+        status: RequestStatus.PENDING,
+        coachProfile: {
+          userId: coachUserId,
+        },
+      },
+      include: {
+        journal: {
+          include: {
+            athlete: {
+              select: { userName: true },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async countPendingIncomingRequests(coachUserId: string): Promise<number> {
+    return this.prisma.accessRequest.count({
+      where: {
+        status: RequestStatus.PENDING,
+        coachProfile: {
+          userId: coachUserId,
+        },
+      },
     });
   }
 }

@@ -8,6 +8,7 @@ export const trainingJournalsPaths = {
   byId: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}`,
   records: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.records}`,
   recordById: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.recordById}`,
+  coachRecords: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.coachRecords}`,
   buildPostRecordsPath: (id: string) =>
     `/${trainingJournalsPathsShared.buildPostRecordsPath(id)}`,
 };

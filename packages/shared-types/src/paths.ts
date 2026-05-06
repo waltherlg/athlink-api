@@ -15,9 +15,10 @@ export const trainingJournalsPaths = {
   controller: 'training-journal',
   list: '',
   availableSportTypes: 'available-sport-types',
-  byId: ':trainingJournalId',
+  byId: ':journalId',
   records: 'records',
   recordById: 'records/:recordId',
+  coachRecords: 'coach-records',
 
   buildPostRecordsPath: (id: string) =>
     `${trainingJournalsPaths.controller}/${id}/${trainingJournalsPaths.records}`,
@@ -37,4 +38,21 @@ export const dashboardPaths = {
 
 export const coachesPaths = {
   controller: 'coaches',
+  profiles: 'profiles',
+  availableSportTypes: 'available-sport-types',
+  search: 'search',
 };
+
+export const journalAccessPaths = {
+  controller: 'journal-access',
+  requests: 'requests',
+  incomingRequests: 'requests/incoming',
+  incomingRequestsCount: 'requests/incoming/count',
+  acceptRequest: 'requests/:requestId/accept',
+  rejectRequest: 'requests/:requestId/reject',
+
+  buildAcceptRequestPath: (requestId: string) =>
+    `${journalAccessPaths.controller}/requests/${requestId}/accept`,
+  buildRejectRequestPath: (requestId: string) =>
+    `${journalAccessPaths.controller}/requests/${requestId}/reject`,
+} as const;

@@ -6,7 +6,7 @@ export class CreateTrainingJournalDto {
 }
 
 export class CreateTrainingRecordDto {
-  trainingJournalId: string;
+  journalId: string;
   type: TrainingRecordTypeEnum;
   eventId?: string;
   result?: number;
