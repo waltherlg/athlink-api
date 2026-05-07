@@ -1,7 +1,6 @@
 import type {
-  PaginationOutputModel,
+  CoachTrainingRecordsPaginationView,
   RequestQueryParamsModel,
-  TrainingRecordCoachView,
 } from '@shared-types';
 import { apiFetch } from '../http';
 import { trainingJournalsPaths } from './paths';
@@ -20,7 +19,7 @@ export function getCoachTrainingRecords(
     journalId,
   );
   const queryString = params.toString();
-  return apiFetch<PaginationOutputModel<TrainingRecordCoachView>>(
+  return apiFetch<CoachTrainingRecordsPaginationView>(
     `${path}${queryString ? `?${queryString}` : ''}`,
     {
       method: 'GET',

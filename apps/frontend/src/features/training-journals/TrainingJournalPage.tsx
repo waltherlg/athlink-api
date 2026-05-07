@@ -37,7 +37,9 @@ export default function TrainingJournalPage() {
   const [selectedCoach, setSelectedCoach] =
     useState<CoachProfileSearchView | null>(null);
   const [isSearchingCoaches, setIsSearchingCoaches] = useState(false);
-  const [coachRequestStatus, setCoachRequestStatus] = useState<string | null>(null);
+  const [coachRequestStatus, setCoachRequestStatus] = useState<string | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const token = useMemo(() => getAccessToken(), []);
@@ -60,10 +62,7 @@ export default function TrainingJournalPage() {
       setIsLoading(true);
       setError(null);
       try {
-        const journalResponse = await getTrainingJournalById(
-          token,
-          journalId,
-        );
+        const journalResponse = await getTrainingJournalById(token, journalId);
         setJournal(journalResponse);
 
         const eventsResponse = await getSportEventsBySportType(
@@ -74,9 +73,9 @@ export default function TrainingJournalPage() {
       } catch (err) {
         if (err && typeof err === 'object' && 'message' in err) {
           setError(String((err as { message?: string }).message));
-      } else {
-        setError(t('journal.errorLoad'));
-      }
+        } else {
+          setError(t('journal.errorLoad'));
+        }
       } finally {
         setIsLoading(false);
       }
@@ -86,7 +85,12 @@ export default function TrainingJournalPage() {
   }, [journalId, token]);
 
   useEffect(() => {
-    if (!token || !journal || !isCoachSearchOpen || coachQuery.trim().length === 0) {
+    if (
+      !token ||
+      !journal ||
+      !isCoachSearchOpen ||
+      coachQuery.trim().length === 0
+    ) {
       setCoachResults([]);
       setSelectedCoach(null);
       return;
@@ -130,10 +134,7 @@ export default function TrainingJournalPage() {
           {t('journal.backDashboard')}
         </Link>
         {journalId ? (
-          <Link
-            className="primary"
-            to={`/journal/${journalId}/new-record`}
-          >
+          <Link className="primary" to={`/journal/${journalId}/new-record`}>
             {t('journal.addRecord')}
           </Link>
         ) : null}
@@ -153,6 +154,14 @@ export default function TrainingJournalPage() {
           >
             Добавить тренера
           </button>
+        ) : null}
+        {journalId ? (
+          <Link
+            className="button-link ghost"
+            to={`/journal/${journalId}/coaches`}
+          >
+            Просмотр тренеров
+          </Link>
         ) : null}
       </div>
 
@@ -253,7 +262,8 @@ export default function TrainingJournalPage() {
                         <>
                           <span className="record-event">
                             {record.eventId
-                              ? (sportEventById.get(record.eventId)?.name ?? t('journal.dash'))
+                              ? (sportEventById.get(record.eventId)?.name ??
+                                t('journal.dash'))
                               : t('journal.dash')}
                             {' - '}
                           </span>
@@ -277,7 +287,6 @@ export default function TrainingJournalPage() {
               </div>
             )}
           </section>
-
         </div>
       ) : null}
     </section>

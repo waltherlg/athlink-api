@@ -30,6 +30,7 @@ export { ResultTypeEnum, SportEventView } from './sport-events-api-types';
 export {
   CreateTrainingRecordInput,
   TrainingRecordAthleteView,
+  CoachTrainingRecordsPaginationView,
   TrainingRecordCoachView,
   TrainingRecordsPaginationView,
   TrainingRecordTypeEnum,
@@ -68,6 +69,7 @@ export {
 export {
   CreateJournalAccessRequestInput,
   IncomingJournalAccessRequestsCountView,
+  JournalCoachAccessView,
   JournalAccessRequestStatusEnum,
   JournalAccessRequestView,
 } from './journal-access-api-types';

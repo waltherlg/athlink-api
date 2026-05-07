@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   CreateJournalAccessRequestInput,
@@ -11,6 +11,8 @@ import { CreateAccessRequestCommand } from '../application/use-cases/create-acce
 import { RejectAccessRequestCommand } from '../application/use-cases/reject-access-request.use-case';
 import { CountIncomingAccessRequestsQuery } from '../application/query-handlers/count-incoming-access-requests.query-handler';
 import { GetIncomingAccessRequestsQuery } from '../application/query-handlers/get-incoming-access-requests.query-handler';
+import { GetJournalCoachAccessesQuery } from '../application/query-handlers/get-journal-coach-accesses.query-handler';
+import { DeleteJournalAccessCommand } from '../application/use-cases/delete-journal-access.use-case';
 
 @Controller(journalAccessPaths.controller)
 export class JournalAccessController {
@@ -50,6 +52,30 @@ export class JournalAccessController {
     const coachUserId = request.user.userId;
     return this.queryBus.execute(
       new CountIncomingAccessRequestsQuery(coachUserId),
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(journalAccessPaths.journalCoaches)
+  async getJournalCoaches(
+    @Req() request: RequestWithUser,
+    @Param('journalId') journalId: string,
+  ) {
+    const athleteId = request.user.userId;
+    return this.queryBus.execute(
+      new GetJournalCoachAccessesQuery(athleteId, journalId),
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(journalAccessPaths.accessById)
+  async deleteAccess(
+    @Req() request: RequestWithUser,
+    @Param('accessId') accessId: string,
+  ) {
+    const athleteId = request.user.userId;
+    return this.commandBus.execute(
+      new DeleteJournalAccessCommand(athleteId, accessId),
     );
   }
 

@@ -24,3 +24,11 @@ export type JournalAccessRequestView = {
 export type IncomingJournalAccessRequestsCountView = {
   count: number;
 };
+
+export type JournalCoachAccessView = {
+  accessId: string;
+  coachProfileId: string;
+  userName: string;
+  sportType: SportTypeEnum;
+  createdAt: string;
+};

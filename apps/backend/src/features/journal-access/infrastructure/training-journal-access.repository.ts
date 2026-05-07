@@ -71,4 +71,35 @@ export class JournalAccessRepository {
       },
     });
   }
+
+  async getJournalCoachAccesses(journalId: string) {
+    return this.prisma.journalAccess.findMany({
+      where: { journalId },
+      include: {
+        coachProfile: {
+          include: {
+            user: {
+              select: { userName: true },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async getAccessById(accessId: string) {
+    return this.prisma.journalAccess.findUnique({
+      where: { id: accessId },
+      include: {
+        journal: true,
+      },
+    });
+  }
+
+  async deleteAccess(accessId: string): Promise<void> {
+    await this.prisma.journalAccess.delete({
+      where: { id: accessId },
+    });
+  }
 }

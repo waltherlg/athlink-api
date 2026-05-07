@@ -8,4 +8,6 @@ export const journalAccessPaths = {
   incomingRequestsCount: `${journalAccessBase}/${journalAccessPathsShared.incomingRequestsCount}`,
   acceptRequest: `${journalAccessBase}/${journalAccessPathsShared.acceptRequest}`,
   rejectRequest: `${journalAccessBase}/${journalAccessPathsShared.rejectRequest}`,
+  journalCoaches: `${journalAccessBase}/${journalAccessPathsShared.journalCoaches}`,
+  accessById: `${journalAccessBase}/${journalAccessPathsShared.accessById}`,
 };

@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { AthleteDashboardDataView } from '@shared-types';
-import type { CoachDashboardDataView } from '@shared-types';
+import type {
+  AthleteDashboardDataView,
+  CoachDashboardDataView,
+} from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getAthleteDashboard } from '../../api/dashboard/get-athlete-dashboard';
 import { getCoachDashboard } from '../../api/dashboard/get-coach-dashboard';
@@ -23,7 +25,9 @@ const formatDate = (value: string) => {
 export default function DashboardPage() {
   usePageTitle(t('dashboard.title'));
   const [data, setData] = useState<AthleteDashboardDataView | null>(null);
-  const [coachData, setCoachData] = useState<CoachDashboardDataView | null>(null);
+  const [coachData, setCoachData] = useState<CoachDashboardDataView | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -91,20 +95,13 @@ export default function DashboardPage() {
         ) : null}
 
         {!isLoading && coachJournals.length > 0 ? (
-          <section className="journal-stack">
+          <section className="journal-stack compact-stack">
             {coachJournals.map((journal) => (
-              <article key={journal.id} className="journal-card">
-                <div className="journal-card-header">
-                  <div>
-                    <p className="journal-title">{journal.athleteUserName}</p>
-                    <p className="journal-date">
-                      {t(`sportType.${journal.sportType}`)}
-                    </p>
-                  </div>
-                </div>
-                <div className="record-preview">
-                  <span className="record-label">Последняя запись</span>
-                  <strong>
+              <article key={journal.id} className="journal-card compact-card">
+                <div className="compact-line">
+                  <strong>{journal.athleteUserName}</strong>
+                  <span>Последняя запись</span>
+                  <span>
                     {journal.latestRecord
                       ? `${formatDate(journal.latestRecord.date)} · ${
                           journal.latestRecord.event ?? 'Без упражнения'
@@ -112,8 +109,13 @@ export default function DashboardPage() {
                           journal.latestRecord.result ?? t('dashboard.noResult')
                         }`
                       : 'Записей пока нет'}
-                  </strong>
+                  </span>
                 </div>
+
+                <div className="single-line-preview">
+                  {journal.latestRecord?.coachNotes ?? 'Заметки нет'}
+                </div>
+
                 <div className="journal-actions">
                   <Link
                     className="button-link ghost"
@@ -121,6 +123,14 @@ export default function DashboardPage() {
                   >
                     {t('dashboard.openJournal')}
                   </Link>
+                  {journal.latestRecord ? (
+                    <Link
+                      className="button-link"
+                      to={`/coach/journal/${journal.id}/records/${journal.latestRecord.id}`}
+                    >
+                      Открыть последнюю запись
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             ))}

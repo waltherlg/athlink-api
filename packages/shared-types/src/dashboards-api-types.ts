@@ -25,6 +25,7 @@ export type CoachDashboardJournalView = {
     date: string;
     event: string | null;
     result: number | null;
+    coachNotes: string | null;
   } | null;
 };
 

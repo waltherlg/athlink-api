@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TrainingRecord } from '@prisma/client';
 import {
+  CoachTrainingRecordsPaginationView,
   DEFAULT_QUERY_PARAMS,
-  PaginationOutputModel,
   RequestQueryParamsModel,
   TrainingRecordCoachView,
   TrainingRecordTypeEnum,
@@ -29,9 +29,14 @@ export class GetCoachTrainingRecordsByJournalIdQueryHandler implements IQueryHan
 
   async execute(
     query: GetCoachTrainingRecordsByJournalIdQuery,
-  ): Promise<PaginationOutputModel<TrainingRecordCoachView>> {
+  ): Promise<CoachTrainingRecordsPaginationView> {
     const journal = await this.prisma.trainingJournal.findUnique({
       where: { id: query.journalId },
+      include: {
+        athlete: {
+          select: { userName: true },
+        },
+      },
     });
 
     if (!journal) {
@@ -57,6 +62,11 @@ export class GetCoachTrainingRecordsByJournalIdQueryHandler implements IQueryHan
     const [items, totalCount] = await this.prisma.$transaction([
       this.prisma.trainingRecord.findMany({
         where: { journalId: query.journalId },
+        include: {
+          event: {
+            select: { name: true },
+          },
+        },
         orderBy: { [parsed.sortBy]: parsed.sortDirection },
         skip: parsed.skip,
         take: parsed.take,
@@ -71,6 +81,7 @@ export class GetCoachTrainingRecordsByJournalIdQueryHandler implements IQueryHan
       page: parsed.pageNumber,
       pageSize: parsed.take,
       totalCount,
+      athleteUserName: journal.athlete.userName,
       items: items.map(mapTrainingRecord),
     };
   }
@@ -119,12 +130,15 @@ function parseQueryParams(query: Partial<RequestQueryParamsModel>): {
   };
 }
 
-function mapTrainingRecord(record: TrainingRecord): TrainingRecordCoachView {
+function mapTrainingRecord(
+  record: TrainingRecord & { event?: { name: string } | null },
+): TrainingRecordCoachView {
   return {
     id: record.id,
     journalId: record.journalId,
     type: record.type as unknown as TrainingRecordTypeEnum,
     eventId: record.eventId,
+    event: record.event?.name ?? null,
     result: record.result,
     coachNotes: record.coachNotes,
     createdAt: record.createdAt.toISOString(),

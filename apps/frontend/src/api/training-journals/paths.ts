@@ -9,6 +9,7 @@ export const trainingJournalsPaths = {
   records: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.records}`,
   recordById: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.recordById}`,
   coachRecords: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.coachRecords}`,
+  coachRecordById: `${trainingJournalsBase}/${trainingJournalsPathsShared.byId}/${trainingJournalsPathsShared.coachRecordById}`,
   buildPostRecordsPath: (id: string) =>
     `/${trainingJournalsPathsShared.buildPostRecordsPath(id)}`,
 };

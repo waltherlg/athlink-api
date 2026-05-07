@@ -6,6 +6,11 @@ export const JOURNAL_ACCESS_ERRORS = {
     field: 'accessRequest',
     message: 'access already exists',
   },
+  ACCESS_NOT_FOUND: {
+    code: JournalAccessErrorCodeEnum.ACCESS_NOT_FOUND,
+    field: 'access',
+    message: 'access not found',
+  },
   NOT_OWNER: {
     code: JournalAccessErrorCodeEnum.NOT_OWNER,
     field: 'accessRequest',

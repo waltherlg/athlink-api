@@ -39,6 +39,7 @@ import { GetTrainingRecordsByJournalIdQuery } from '../application/query-handler
 import { GetTrainingRecordByIdQuery } from '../application/query-handlers/get-training-record-by-id.query-handler';
 import { CreateTrainingRecordValidationPipe } from './pipes/training-records.validation-pipe';
 import { GetCoachTrainingRecordsByJournalIdQuery } from '../application/query-handlers/get-coach-training-records-by-journal-id.query-handler';
+import { GetCoachTrainingRecordByIdQuery } from '../application/query-handlers/get-coach-training-record-by-id.query-handler';
 
 @ApiTags(SW_TRAINING_JOURNALS_TITLES.TRAINING_JOURNAL_CONTROLLER)
 @Controller(trainingJournalsPaths.controller)
@@ -109,6 +110,19 @@ export class TrainingJournalsController {
         journalId,
         query,
       ),
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(`${trainingJournalsPaths.byId}/${trainingJournalsPaths.coachRecordById}`)
+  async getCoachTrainingRecordById(
+    @Req() request: RequestWithUser,
+    @Param('journalId') journalId: string,
+    @Param('recordId') recordId: string,
+  ) {
+    const coachUserId = request.user.userId;
+    return this.queryBus.execute(
+      new GetCoachTrainingRecordByIdQuery(coachUserId, journalId, recordId),
     );
   }
 

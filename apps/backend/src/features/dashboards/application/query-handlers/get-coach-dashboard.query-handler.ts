@@ -79,6 +79,7 @@ export class GetCoachDashboardQueryHandler implements IQueryHandler<GetCoachDash
                 date: latestRecord.createdAt.toISOString(),
                 event: latestRecord.event?.name ?? null,
                 result: latestRecord.result,
+                coachNotes: latestRecord.coachNotes,
               }
             : null,
         };

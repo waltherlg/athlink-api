@@ -1,6 +1,6 @@
 # Athlink API / Frontend Handoff Context
 
-Updated: 2026-05-05
+Updated: 2026-05-07
 Workspace: `C:\Users\user\Desktop\prod\athlink-api`
 
 ## Project Shape
@@ -224,3 +224,64 @@ git -c safe.directory=C:/Users/user/Desktop/prod/athlink-api status --short
 - Use `@shared-types` in controllers/API clients.
 - For new paginated endpoints use `PaginationOutputModel<T>` and `RequestQueryParamsModel`.
 - Do not add `privateNotes` to any coach-facing view.
+
+## 2026-05-07 Follow-Up Fixes
+
+Implemented additional coach dashboard / coach journal / access revocation changes.
+
+Shared types and paths:
+
+- `CoachDashboardJournalView.latestRecord` now includes `coachNotes`.
+- `TrainingRecordCoachView` now includes `event` and still does not include `privateNotes`.
+- Added `CoachTrainingRecordsPaginationView`, which includes `athleteUserName`.
+- Added `JournalCoachAccessView`.
+- Added `trainingJournalsPaths.coachRecordById`.
+- Added `journalAccessPaths.journalCoaches` and `journalAccessPaths.accessById`.
+
+Backend:
+
+- `GET /training-journal/:journalId/coach-records`
+  - now returns `athleteUserName` and record event names.
+- `GET /training-journal/:journalId/coach-records/:recordId`
+  - added coach-safe single record endpoint.
+  - checks coach access and never returns `privateNotes`.
+- `GET /dashboard/coach`
+  - latest record now includes `coachNotes`.
+- `GET /journal-access/journals/:journalId/coaches`
+  - athlete owner sees coaches with access to this journal.
+  - implemented through `GetJournalCoachAccessesQueryHandler`.
+- `DELETE /journal-access/accesses/:accessId`
+  - athlete owner revokes a coach access.
+  - implemented through `DeleteJournalAccessUseCase`.
+  - verifies ownership of the journal behind the access before deletion.
+
+Frontend:
+
+- Coach dashboard rows are compact:
+  - one line: `athleteUserName Последняя запись date · event · result`;
+  - next line: `coachNotes` preview with ellipsis;
+  - actions: `Открыть дневник`, `Открыть последнюю запись`.
+- Coach journal records page title is now `Дневник <athleteUserName>`.
+- Coach journal records rows are compact:
+  - one line: date, event, result;
+  - next line: `coachNotes` preview with ellipsis;
+  - action: `Открыть запись`.
+- Added `/coach/journal/:journalId/records/:recordId`.
+- Added `CoachTrainingRecordPage` with `Назад к дневнику`.
+- Added `Просмотр тренеров` button on athlete journal page.
+- Added `/journal/:journalId/coaches`.
+- Added `JournalCoachesPage`:
+  - lists coaches with access;
+  - `Отменить доступ` asks browser confirmation:
+    `Вы уверены что хотите отменить доступ тренера userName к вашему дневнику SportType?`;
+  - on confirmation calls `DELETE /journal-access/accesses/:accessId`.
+
+Validation run after these changes:
+
+```bash
+pnpm --filter @shared-types build
+pnpm -C apps/backend build
+pnpm -C apps/frontend build
+```
+
+Frontend build still may require approval/outside sandbox because Vite/esbuild can fail with `spawn EPERM` inside the sandbox.

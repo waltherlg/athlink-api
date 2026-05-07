@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { PaginationOutputModel, TrainingRecordCoachView } from '@shared-types';
+import type { CoachTrainingRecordsPaginationView } from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getCoachTrainingRecords } from '../../api/training-journals/get-coach-training-records';
 import { usePageTitle } from '../../components/page-title-context';
@@ -19,15 +19,19 @@ const formatDateTime = (value: string) => {
 };
 
 export default function CoachTrainingRecordsPage() {
-  usePageTitle('Дневник спортсмена');
   const { journalId } = useParams();
   const [records, setRecords] =
-    useState<PaginationOutputModel<TrainingRecordCoachView> | null>(null);
+    useState<CoachTrainingRecordsPaginationView | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 8;
   const token = useMemo(() => getAccessToken(), []);
+  const title = records?.athleteUserName
+    ? `Дневник ${records.athleteUserName}`
+    : 'Дневник спортсмена';
+
+  usePageTitle(title);
 
   useEffect(() => {
     if (!journalId || !token) {
@@ -73,15 +77,22 @@ export default function CoachTrainingRecordsPage() {
           ) : (
             <div className="record-list">
               {items.map((record) => (
-                <article key={record.id} className="record-row">
-                  <div>
-                    <p className="record-date">{formatDateTime(record.createdAt)}</p>
-                    <p className="record-result">
-                      {record.result ?? t('journal.noResult')}
-                    </p>
-                    <p className="record-note record-note-preview">
-                      {record.coachNotes ?? t('journal.dash')}
-                    </p>
+                <article key={record.id} className="record-row compact-record-row">
+                  <div className="compact-line">
+                    <span>{formatDateTime(record.createdAt)}</span>
+                    <span>{record.event ?? 'Без упражнения'}</span>
+                    <strong>{record.result ?? t('journal.noResult')}</strong>
+                  </div>
+                  <p className="single-line-preview">
+                    {record.coachNotes ?? t('journal.dash')}
+                  </p>
+                  <div className="journal-actions">
+                    <Link
+                      className="button-link ghost small"
+                      to={`/coach/journal/${record.journalId}/records/${record.id}`}
+                    >
+                      Открыть запись
+                    </Link>
                   </div>
                 </article>
               ))}

@@ -19,7 +19,9 @@ import TrainingRecordsPage from './features/training-journals/TrainingRecordsPag
 import TrainingRecordPage from './features/training-journals/TrainingRecordPage';
 import CreateCoachProfilePage from './features/coaches/CreateCoachProfilePage';
 import AccessRequestsPage from './features/journal-access/AccessRequestsPage';
+import JournalCoachesPage from './features/journal-access/JournalCoachesPage';
 import CoachTrainingRecordsPage from './features/training-journals/CoachTrainingRecordsPage';
+import CoachTrainingRecordPage from './features/training-journals/CoachTrainingRecordPage';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { userName, isChecking } = useAuth();
@@ -151,6 +153,14 @@ export default function App() {
                   }
                 />
                 <Route
+                  path="/journal/:journalId/coaches"
+                  element={
+                    <RequireAuth>
+                      <JournalCoachesPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
                   path="/coach/new"
                   element={
                     <RequireAuth>
@@ -171,6 +181,14 @@ export default function App() {
                   element={
                     <RequireAuth>
                       <CoachTrainingRecordsPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/coach/journal/:journalId/records/:recordId"
+                  element={
+                    <RequireAuth>
+                      <CoachTrainingRecordPage />
                     </RequireAuth>
                   }
                 />
