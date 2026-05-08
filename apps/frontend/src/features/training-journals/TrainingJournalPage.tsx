@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { SportEventView, TrainingJournalWithLatestRecordsView } from '@shared-types';
+import type {
+  CoachProfileSearchView,
+  SportEventView,
+  TrainingJournalWithLatestRecordsView,
+} from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
+import { searchCoachProfiles } from '../../api/coaches/search-coach-profiles';
+import { createJournalAccessRequest } from '../../api/journal-access/create-journal-access-request';
 
 const formatDateTime = (value: string) => {
   if (!value) return t('journal.noDate');
@@ -21,10 +27,19 @@ const formatDateTime = (value: string) => {
 };
 
 export default function TrainingJournalPage() {
-  const { trainingJournalId } = useParams();
+  const { journalId } = useParams();
   const [journal, setJournal] =
     useState<TrainingJournalWithLatestRecordsView | null>(null);
   const [sportEvents, setSportEvents] = useState<SportEventView[]>([]);
+  const [isCoachSearchOpen, setIsCoachSearchOpen] = useState(false);
+  const [coachQuery, setCoachQuery] = useState('');
+  const [coachResults, setCoachResults] = useState<CoachProfileSearchView[]>([]);
+  const [selectedCoach, setSelectedCoach] =
+    useState<CoachProfileSearchView | null>(null);
+  const [isSearchingCoaches, setIsSearchingCoaches] = useState(false);
+  const [coachRequestStatus, setCoachRequestStatus] = useState<string | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const token = useMemo(() => getAccessToken(), []);
@@ -38,7 +53,7 @@ export default function TrainingJournalPage() {
   );
 
   useEffect(() => {
-    if (!trainingJournalId || !token) {
+    if (!journalId || !token) {
       setIsLoading(false);
       return;
     }
@@ -47,10 +62,7 @@ export default function TrainingJournalPage() {
       setIsLoading(true);
       setError(null);
       try {
-        const journalResponse = await getTrainingJournalById(
-          token,
-          trainingJournalId,
-        );
+        const journalResponse = await getTrainingJournalById(token, journalId);
         setJournal(journalResponse);
 
         const eventsResponse = await getSportEventsBySportType(
@@ -61,16 +73,53 @@ export default function TrainingJournalPage() {
       } catch (err) {
         if (err && typeof err === 'object' && 'message' in err) {
           setError(String((err as { message?: string }).message));
-      } else {
-        setError(t('journal.errorLoad'));
-      }
+        } else {
+          setError(t('journal.errorLoad'));
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     void load();
-  }, [trainingJournalId, token]);
+  }, [journalId, token]);
+
+  useEffect(() => {
+    if (
+      !token ||
+      !journal ||
+      !isCoachSearchOpen ||
+      coachQuery.trim().length === 0
+    ) {
+      setCoachResults([]);
+      setSelectedCoach(null);
+      return;
+    }
+
+    let isActive = true;
+    const load = async () => {
+      setIsSearchingCoaches(true);
+      try {
+        const results = await searchCoachProfiles(
+          token,
+          journal.sportType,
+          coachQuery,
+        );
+        if (!isActive) return;
+        setCoachResults(results);
+      } catch {
+        if (isActive) setCoachResults([]);
+      } finally {
+        if (isActive) setIsSearchingCoaches(false);
+      }
+    };
+
+    const timeoutId = window.setTimeout(load, 250);
+    return () => {
+      isActive = false;
+      window.clearTimeout(timeoutId);
+    };
+  }, [coachQuery, isCoachSearchOpen, journal, token]);
 
   const sportEventById = useMemo(() => {
     const map = new Map<string, SportEventView>();
@@ -84,23 +133,110 @@ export default function TrainingJournalPage() {
         <Link className="button-link ghost" to="/">
           {t('journal.backDashboard')}
         </Link>
-        {trainingJournalId ? (
-          <Link
-            className="primary"
-            to={`/journal/${trainingJournalId}/new-record`}
-          >
+        {journalId ? (
+          <Link className="primary" to={`/journal/${journalId}/new-record`}>
             {t('journal.addRecord')}
           </Link>
         ) : null}
-        {trainingJournalId ? (
+        {journalId ? (
           <Link
             className="button-link ghost"
-            to={`/journal/${trainingJournalId}/records`}
+            to={`/journal/${journalId}/records`}
           >
             {t('journal.viewAll')}
           </Link>
         ) : null}
+        {journalId ? (
+          <button
+            className="button-link ghost"
+            type="button"
+            onClick={() => setIsCoachSearchOpen((prev) => !prev)}
+          >
+            Добавить тренера
+          </button>
+        ) : null}
+        {journalId ? (
+          <Link
+            className="button-link ghost"
+            to={`/journal/${journalId}/coaches`}
+          >
+            Просмотр тренеров
+          </Link>
+        ) : null}
       </div>
+
+      {isCoachSearchOpen && journal ? (
+        <section className="card form">
+          <label className="field">
+            <span>Username тренера</span>
+            <input
+              value={coachQuery}
+              onChange={(event) => {
+                setCoachQuery(event.target.value);
+                setSelectedCoach(null);
+                setCoachRequestStatus(null);
+              }}
+              placeholder="Начните вводить username"
+            />
+          </label>
+
+          {isSearchingCoaches ? <p className="subtitle">Ищем тренера...</p> : null}
+
+          {coachResults.length > 0 ? (
+            <div className="search-results">
+              {coachResults.map((coach) => (
+                <button
+                  key={coach.id}
+                  className={`search-result ${
+                    selectedCoach?.id === coach.id ? 'is-selected' : ''
+                  }`}
+                  type="button"
+                  onClick={() => setSelectedCoach(coach)}
+                >
+                  {coach.userName}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          {selectedCoach ? (
+            <div className="confirm-box">
+              <p>
+                Вы действительно хотите дать доступ тренеру{' '}
+                <strong>{selectedCoach.userName}</strong> к дневнику{' '}
+                <strong>{t(`sportType.${journal.sportType}`)}</strong>?
+              </p>
+              <button
+                className="primary"
+                type="button"
+                onClick={async () => {
+                  if (!token || !journalId || !selectedCoach) return;
+                  setCoachRequestStatus(null);
+                  try {
+                    await createJournalAccessRequest(token, {
+                      journalId,
+                      coachProfileId: selectedCoach.id,
+                    });
+                    setCoachRequestStatus('Запрос отправлен.');
+                  } catch (err) {
+                    setCoachRequestStatus(
+                      err instanceof Error
+                        ? err.message
+                        : 'Не удалось отправить запрос.',
+                    );
+                  }
+                }}
+              >
+                Добавить тренера
+              </button>
+            </div>
+          ) : null}
+
+          {coachRequestStatus ? (
+            <div className="alert success">{coachRequestStatus}</div>
+          ) : null}
+        </section>
+      ) : null}
 
       {error ? <div className="alert error">{error}</div> : null}
 
@@ -126,7 +262,8 @@ export default function TrainingJournalPage() {
                         <>
                           <span className="record-event">
                             {record.eventId
-                              ? (sportEventById.get(record.eventId)?.name ?? t('journal.dash'))
+                              ? (sportEventById.get(record.eventId)?.name ??
+                                t('journal.dash'))
                               : t('journal.dash')}
                             {' - '}
                           </span>
@@ -137,10 +274,10 @@ export default function TrainingJournalPage() {
                     <p className="record-note record-note-preview">
                       {record.coachNotes ?? t('journal.dash')}
                     </p>
-                    {trainingJournalId ? (
+                    {journalId ? (
                       <Link
                         className="button-link ghost small"
-                        to={`/journal/${trainingJournalId}/records/${record.id}`}
+                        to={`/journal/${journalId}/records/${record.id}`}
                       >
                         {t('record.open')}
                       </Link>
@@ -150,7 +287,6 @@ export default function TrainingJournalPage() {
               </div>
             )}
           </section>
-
         </div>
       ) : null}
     </section>

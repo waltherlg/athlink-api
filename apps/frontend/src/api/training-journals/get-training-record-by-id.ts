@@ -4,11 +4,11 @@ import { trainingJournalsPaths } from './paths';
 
 export function getTrainingRecordById(
   accessToken: string,
-  trainingJournalId: string,
+  journalId: string,
   recordId: string,
 ) {
   const path = trainingJournalsPaths.recordById
-    .replace(':trainingJournalId', trainingJournalId)
+    .replace(':journalId', journalId)
     .replace(':recordId', recordId);
 
   return apiFetch<TrainingRecordAthleteView>(path, {

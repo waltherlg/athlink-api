@@ -5,11 +5,12 @@ import { AccountModule } from '../accounts/account.module';
 import { TrainingJournalsModule } from '../training-journals/training-journals.module';
 import { DashboardController } from './api/dashboard.controller';
 import { GetAthleteDesboardQueryHandler } from './application/query-handlers/get-athlete-dashboard.query-handler';
+import { GetCoachDashboardQueryHandler } from './application/query-handlers/get-coach-dashboard.query-handler';
 
 @Module({
   imports: [CoreModule, AccountModule, TrainingJournalsModule, CqrsModule],
   controllers: [DashboardController],
-  providers: [GetAthleteDesboardQueryHandler],
+  providers: [GetAthleteDesboardQueryHandler, GetCoachDashboardQueryHandler],
 })
 export class DashboardModule {}
 

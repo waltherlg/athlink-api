@@ -21,14 +21,14 @@ const formatDateTime = (value: string) => {
 
 export default function TrainingRecordPage() {
   usePageTitle(t('record.viewTitle'));
-  const { trainingJournalId, recordId } = useParams();
+  const { journalId, recordId } = useParams();
   const [record, setRecord] = useState<TrainingRecordAthleteView | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const token = useMemo(() => getAccessToken(), []);
 
   useEffect(() => {
-    if (!trainingJournalId || !recordId || !token) {
+    if (!journalId || !recordId || !token) {
       setIsLoading(false);
       return;
     }
@@ -39,7 +39,7 @@ export default function TrainingRecordPage() {
       try {
         const response = await getTrainingRecordById(
           token,
-          trainingJournalId,
+          journalId,
           recordId,
         );
         setRecord(response);
@@ -55,13 +55,13 @@ export default function TrainingRecordPage() {
     };
 
     void load();
-  }, [trainingJournalId, recordId, token]);
+  }, [journalId, recordId, token]);
 
   return (
     <section className="page journal-page">
       <div className="journal-actions">
-        {trainingJournalId ? (
-          <Link className="button-link ghost" to={`/journal/${trainingJournalId}`}>
+        {journalId ? (
+          <Link className="button-link ghost" to={`/journal/${journalId}`}>
             {t('record.backJournal')}
           </Link>
         ) : null}

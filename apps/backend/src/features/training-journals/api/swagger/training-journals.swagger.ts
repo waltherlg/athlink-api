@@ -118,7 +118,7 @@ export function GetTrainingJournalByIdSwagger() {
     ApiExtraModels(ErrorResponse),
     ApiOperation({ summary: 'Get training journal by id with last 3 records' }),
     ApiParam({
-      name: 'trainingJournalId',
+      name: 'journalId',
       description: 'Training journal id',
       required: true,
     }),

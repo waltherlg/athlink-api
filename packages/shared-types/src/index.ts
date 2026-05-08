@@ -14,9 +14,12 @@ export {
   trainingJournalsPaths,
   sportEventPaths,
   dashboardPaths,
+  coachesPaths,
+  journalAccessPaths,
 } from './paths';
 export {
   SportTypeEnum,
+  JournalAccessRoleEnum,
   CreateTrainingJournalInput,
   TrainingJournalView,
   TrainingJournalWithLatestRecordsView,
@@ -27,10 +30,17 @@ export { ResultTypeEnum, SportEventView } from './sport-events-api-types';
 export {
   CreateTrainingRecordInput,
   TrainingRecordAthleteView,
+  CoachTrainingRecordsPaginationView,
   TrainingRecordCoachView,
   TrainingRecordsPaginationView,
   TrainingRecordTypeEnum,
 } from './training-records-api-types';
+
+export {
+  CreateCoachProfileInput,
+  CoachProfileSearchView,
+  CoachProfileView,
+} from './coaches-api-types';
 
 export {
   AccountErrorCodeEnum,
@@ -40,6 +50,8 @@ export {
   TrainingRecordErrorCodeEnum,
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
+  CoachErrorCodeEnum,
+  JournalAccessErrorCodeEnum,
 } from './error-codes';
 
 export {
@@ -48,4 +60,16 @@ export {
   DEFAULT_QUERY_PARAMS,
 } from './query-models';
 
-export { AthleteDashboardDataView } from './dashboards-api-types';
+export {
+  AthleteDashboardDataView,
+  CoachDashboardDataView,
+  CoachDashboardJournalView,
+} from './dashboards-api-types';
+
+export {
+  CreateJournalAccessRequestInput,
+  IncomingJournalAccessRequestsCountView,
+  JournalCoachAccessView,
+  JournalAccessRequestStatusEnum,
+  JournalAccessRequestView,
+} from './journal-access-api-types';

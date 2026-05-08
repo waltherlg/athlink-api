@@ -32,7 +32,7 @@ export function CreateTrainingRecordSwagger() {
       summary: `Create training record (POST /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records})`,
     }),
     ApiParam({
-      name: 'trainingJournalId',
+      name: 'journalId',
       description: 'Training journal id',
       required: true,
     }),
@@ -92,7 +92,7 @@ export function GetTrainingRecordsSwagger() {
       summary: `Get training records (GET /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records})`,
     }),
     ApiParam({
-      name: 'trainingJournalId',
+      name: 'journalId',
       description: 'Training journal id',
       required: true,
     }),
@@ -159,7 +159,7 @@ export function GetTrainingRecordByIdSwagger() {
       summary: `Get training record (GET /${trainingJournalsPaths.controller}/${trainingJournalsPaths.byId}/${trainingJournalsPaths.records}/:recordId)`,
     }),
     ApiParam({
-      name: 'trainingJournalId',
+      name: 'journalId',
       description: 'Training journal id',
       required: true,
     }),

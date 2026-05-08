@@ -11,7 +11,7 @@ export class TrainingRecordsRepository {
   ): Promise<TrainingRecord> {
     const createdTrainingRecord = await this.prisma.trainingRecord.create({
       data: {
-        trainingJournalId: dto.trainingJournalId,
+        journalId: dto.journalId,
         eventId: dto.eventId,
         type: dto.type,
         result: dto.result,
@@ -48,18 +48,18 @@ export class TrainingRecordsRepository {
   ): Promise<TrainingRecord[]> {
     if (journalIds.length === 0) return [];
     const records = await this.prisma.trainingRecord.findMany({
-      where: { trainingJournalId: { in: journalIds } },
+      where: { journalId: { in: journalIds } },
       orderBy: { createdAt: 'desc' },
     });
     return records;
   }
 
   async getLatestRecordsByTrainingJournalId(
-    trainingJournalId: string,
+    journalId: string,
     take: number,
   ): Promise<TrainingRecord[]> {
     const records = await this.prisma.trainingRecord.findMany({
-      where: { trainingJournalId },
+      where: { journalId },
       orderBy: { createdAt: 'desc' },
       take,
     });
@@ -67,7 +67,7 @@ export class TrainingRecordsRepository {
   }
 
   async getTrainingRecordsByTrainingJournalId(
-    trainingJournalId: string,
+    journalId: string,
     params: {
       sortBy: keyof TrainingRecord;
       sortDirection: Prisma.SortOrder;
@@ -78,13 +78,13 @@ export class TrainingRecordsRepository {
     const { sortBy, sortDirection, skip, take } = params;
     const [items, totalCount] = await this.prisma.$transaction([
       this.prisma.trainingRecord.findMany({
-        where: { trainingJournalId },
+        where: { journalId },
         orderBy: { [sortBy]: sortDirection },
         skip,
         take,
       }),
       this.prisma.trainingRecord.count({
-        where: { trainingJournalId },
+        where: { journalId },
       }),
     ]);
     return { items, totalCount };
@@ -98,12 +98,12 @@ export class TrainingRecordsRepository {
     if (journalIds.length === 0) return [];
     const records = await this.prisma.trainingRecord.findMany({
       where: {
-        trainingJournalId: { in: journalIds },
+        journalId: { in: journalIds },
         createdAt: { gte: startDate, lt: endDate },
       },
-      select: { trainingJournalId: true },
-      distinct: ['trainingJournalId'],
+      select: { journalId: true },
+      distinct: ['journalId'],
     });
-    return records.map((record) => record.trainingJournalId);
+    return records.map((record) => record.journalId);
   }
 }

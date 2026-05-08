@@ -7,10 +7,10 @@ import { trainingJournalsPaths } from './paths';
 
 export function createTrainingRecord(
   accessToken: string,
-  trainingJournalId: string,
+  journalId: string,
   input: CreateTrainingRecordInput,
 ) {
-  const path = trainingJournalsPaths.buildPostRecordsPath(trainingJournalId);
+  const path = trainingJournalsPaths.buildPostRecordsPath(journalId);
   return apiFetch<TrainingRecordAthleteView>(path, {
     method: 'POST',
     body: JSON.stringify(input),

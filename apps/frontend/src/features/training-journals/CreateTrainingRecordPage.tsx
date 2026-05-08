@@ -40,8 +40,8 @@ const normalizeText = (value: string) => {
 
 const normalizeDecimalInput = (value: string) => value.replace(/,/g, '.');
 
-const buildLastEventStorageKey = (trainingJournalId: string) =>
-  `lastEventId:${trainingJournalId}`;
+const buildLastEventStorageKey = (journalId: string) =>
+  `lastEventId:${journalId}`;
 
 const buildDecimalsLabel = (decimals: number) => {
   if (decimals <= 0) return t('record.decimals.none');
@@ -51,7 +51,7 @@ const buildDecimalsLabel = (decimals: number) => {
 
 export default function CreateTrainingRecordPage() {
   usePageTitle(t('record.title'));
-  const { trainingJournalId } = useParams();
+  const { journalId } = useParams();
   const [journal, setJournal] =
     useState<TrainingJournalWithLatestRecordsView | null>(null);
   const [sportEvents, setSportEvents] = useState<SportEventView[]>([]);
@@ -64,7 +64,7 @@ export default function CreateTrainingRecordPage() {
   const token = useMemo(() => getAccessToken(), []);
 
   useEffect(() => {
-    if (!trainingJournalId || !token) {
+    if (!journalId || !token) {
       setIsLoading(false);
       return;
     }
@@ -78,7 +78,7 @@ export default function CreateTrainingRecordPage() {
       try {
         const journalResponse = await getTrainingJournalById(
           token,
-          trainingJournalId,
+          journalId,
         );
         const sportEventsResponse = await getSportEventsBySportType(
           token,
@@ -91,7 +91,7 @@ export default function CreateTrainingRecordPage() {
         setSportEvents(sportEventsResponse);
 
         const storedEventId = safeGetLocalStorageItem(
-          buildLastEventStorageKey(trainingJournalId),
+          buildLastEventStorageKey(journalId),
         );
         const storedEventExists = storedEventId
           ? sportEventsResponse.some((event) => event.id === storedEventId)
@@ -123,7 +123,7 @@ export default function CreateTrainingRecordPage() {
     return () => {
       isActive = false;
     };
-  }, [trainingJournalId, token]);
+  }, [journalId, token]);
 
   const selectedEvent =
     form.eventId === FREE_TRAINING_VALUE
@@ -132,7 +132,7 @@ export default function CreateTrainingRecordPage() {
   const isFreeTraining = form.eventId === FREE_TRAINING_VALUE;
 
   const handleSubmit = async () => {
-    if (!trainingJournalId || !token || isLoading || isSubmitting) return;
+    if (!journalId || !token || isLoading || isSubmitting) return;
 
     const coachNotes = normalizeText(form.coachNotes);
     const privateNotes = normalizeText(form.privateNotes);
@@ -189,8 +189,8 @@ export default function CreateTrainingRecordPage() {
     setResultError(null);
 
     try {
-      await createTrainingRecord(token, trainingJournalId, payload);
-      navigate(`/journal/${trainingJournalId}`);
+      await createTrainingRecord(token, journalId, payload);
+      navigate(`/journal/${journalId}`);
     } catch (err) {
       if (err && typeof err === 'object' && 'message' in err) {
         setError(String((err as { message?: string }).message));
@@ -216,8 +216,8 @@ export default function CreateTrainingRecordPage() {
   return (
     <section className="page">
       <div className="journal-actions">
-        {trainingJournalId ? (
-          <Link className="button-link ghost" to={`/journal/${trainingJournalId}`}>
+        {journalId ? (
+          <Link className="button-link ghost" to={`/journal/${journalId}`}>
             {t('record.backJournal')}
           </Link>
         ) : (
@@ -242,13 +242,13 @@ export default function CreateTrainingRecordPage() {
               onChange={(event) => {
                 const nextEventId = event.target.value;
                 if (
-                  trainingJournalId &&
+                  journalId &&
                   nextEventId &&
                   (nextEventId === FREE_TRAINING_VALUE ||
                     sportEvents.some((sportEvent) => sportEvent.id === nextEventId))
                 ) {
                   safeSetLocalStorageItem(
-                    buildLastEventStorageKey(trainingJournalId),
+                    buildLastEventStorageKey(journalId),
                     nextEventId,
                   );
                 }

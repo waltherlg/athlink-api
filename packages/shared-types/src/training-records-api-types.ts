@@ -12,7 +12,7 @@ export type CreateTrainingRecordInput = {
 
 export type TrainingRecordAthleteView = {
   id: string;
-  trainingJournalId: string;
+  journalId: string;
   type: TrainingRecordTypeEnum;
   eventId: string | null;
   result: number | null;
@@ -24,13 +24,20 @@ export type TrainingRecordAthleteView = {
 
 export type TrainingRecordCoachView = {
   id: string;
-  userName: string;
-  trainingJournalId: string;
+  journalId: string;
+  type: TrainingRecordTypeEnum;
+  eventId: string | null;
+  event: string | null;
   result: number | null;
   coachNotes: string | null;
   createdAt: string;
   updatedAt: string;
 };
+
+export type CoachTrainingRecordsPaginationView =
+  PaginationOutputModel<TrainingRecordCoachView> & {
+    athleteUserName: string;
+  };
 
 export enum TrainingRecordTypeEnum {
   STRUCTURED = 'STRUCTURED',
