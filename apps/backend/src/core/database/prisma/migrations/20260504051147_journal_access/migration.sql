@@ -12,13 +12,13 @@
 -- CreateEnum
 CREATE TYPE "RequestStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
 
--- DropForeignKey
+-- -- DropForeignKey
 ALTER TABLE "JournalAccess" DROP CONSTRAINT "JournalAccess_userId_fkey";
 
--- DropForeignKey
+-- -- DropForeignKey
 ALTER TABLE "TrainingRecord" DROP CONSTRAINT "TrainingRecord_trainingJournalId_fkey";
 
--- DropIndex
+-- -- DropIndex
 DROP INDEX "JournalAccess_userId_journalId_key";
 
 -- AlterTable
@@ -27,8 +27,8 @@ DROP COLUMN "userId",
 ADD COLUMN     "coachProfileId" UUID NOT NULL;
 
 -- AlterTable
-ALTER TABLE "TrainingRecord" DROP COLUMN "trainingJournalId",
-ADD COLUMN     "journalId" UUID NOT NULL;
+ALTER TABLE "TrainingRecord"
+RENAME COLUMN "trainingJournalId" TO "journalId";
 
 -- CreateTable
 CREATE TABLE "CoachProfile" (
