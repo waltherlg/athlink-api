@@ -1,4 +1,4 @@
-import { PaginationOutputModel } from './query-models';
+import { PaginationOutputModel } from '../common/query-models';
 
 export type CreateTrainingRecordInput = {
   type: TrainingRecordTypeEnum;

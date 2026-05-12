@@ -285,3 +285,58 @@ pnpm -C apps/frontend build
 ```
 
 Frontend build still may require approval/outside sandbox because Vite/esbuild can fail with `spawn EPERM` inside the sandbox.
+
+## 2026-05-13 Shared Types / Errors Refactor
+
+User asked to move backend error descriptor objects into `packages/shared-types`, because frontend only had error codes and Swagger did not work well as the frontend source of truth.
+
+What changed:
+
+- `packages/shared-types/src` was reorganized into feature folders:
+  - `accounts/api-types.ts`, `accounts/errors.ts`
+  - `common/errors.ts`, `common/query-models.ts`
+  - `training-journals/api-types.ts`, `training-journals/errors.ts`
+  - `training-records/api-types.ts`, `training-records/errors.ts`
+  - `coaches/api-types.ts`, `coaches/errors.ts`
+  - `journal-access/api-types.ts`, `journal-access/errors.ts`
+  - `dashboards/api-types.ts`
+  - `sport-events/api-types.ts`
+- Old flat shared files were deleted:
+  - `accounts-api-types.ts`
+  - `coaches-api-types.ts`
+  - `dashboards-api-types.ts`
+  - `error-codes.ts`
+  - `journal-access-api-types.ts`
+  - `query-models.ts`
+  - `sport-events-api-types.ts`
+  - `training-journals-api-types.ts`
+  - `training-records-api-types.ts`
+- `packages/shared-types/src/errors.ts` now defines the combined `ErrorCode` union from feature-level error code enums.
+- `packages/shared-types/src/index.ts` is still the main public barrel and exports all API types, paths, error code enums, and error descriptor objects.
+- Backend error const files were kept as compatibility re-exports from `@shared-types`, for example:
+  - `apps/backend/src/features/accounts/consts/account-errors.consts.ts`
+  - `apps/backend/src/features/accounts/consts/auth.errors.ts`
+  - `apps/backend/src/features/accounts/consts/session-errors.consts.ts`
+  - `apps/backend/src/core/consts/validation.errors.ts`
+  - `apps/backend/src/features/training-journals/consts/*errors*.ts`
+  - `apps/backend/src/features/coaches/consts/coaches-errors.consts.ts`
+  - `apps/backend/src/features/journal-access/consts/coaches-errors.consts.ts`
+- Removed backend imports from `@shared-types/dist`; use `@shared-types`.
+- Fixed `AccountErrorCodeEnum.CODE_INCORRECT`: value no longer has a leading space.
+- Fixed common validation error `field`: it was `feild`, now `field`.
+
+Naming notes / technical debt:
+
+- `COACH_ERROS` still has the existing typo because backend code already uses this name. Consider renaming to `COACH_ERRORS` later with a compatibility alias.
+- `ACCOUNT_ERRORS.USER_NAME_ALREADY_EXITS` and `EMAIL_ALREADY_EXITS` still keep the existing `EXITS` typo for compatibility. Consider adding correctly named aliases or doing a deliberate rename later.
+- Some coach error object keys are still named `TRAINING_JOURNAL_ALREADY_EXISTS` / `TRAINING_JOURNAL_NOT_FOUND` even though their codes are coach profile codes. This was preserved to avoid changing behavior/import sites.
+
+Validation after refactor:
+
+```bash
+pnpm --filter @shared-types build
+pnpm -C apps/backend build
+pnpm -C apps/frontend build
+```
+
+All passed. Frontend build initially hit Vite/esbuild `spawn EPERM` inside sandbox, then passed outside sandbox with approval.

@@ -8,7 +8,7 @@ import {
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
 import { JOURNAL_ACCESS_ERRORS } from '../../consts/coaches-errors.consts';
-import { JournalAccessRoleEnum } from '@shared-types/dist';
+import { JournalAccessRoleEnum } from '@shared-types';
 
 export class AcceptAccessRequestCommand {
   constructor(

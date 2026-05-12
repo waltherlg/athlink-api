@@ -8,7 +8,7 @@ export type {
   UserNameResponse,
   UserRegistrationInput,
   UserView,
-} from './accounts-api-types';
+} from './accounts/api-types';
 export {
   authPaths,
   trainingJournalsPaths,
@@ -23,9 +23,9 @@ export {
   CreateTrainingJournalInput,
   TrainingJournalView,
   TrainingJournalWithLatestRecordsView,
-} from './training-journals-api-types';
+} from './training-journals/api-types';
 
-export { ResultTypeEnum, SportEventView } from './sport-events-api-types';
+export { ResultTypeEnum, SportEventView } from './sport-events/api-types';
 
 export {
   CreateTrainingRecordInput,
@@ -34,37 +34,49 @@ export {
   TrainingRecordCoachView,
   TrainingRecordsPaginationView,
   TrainingRecordTypeEnum,
-} from './training-records-api-types';
+} from './training-records/api-types';
 
 export {
   CreateCoachProfileInput,
   CoachProfileSearchView,
   CoachProfileView,
-} from './coaches-api-types';
+} from './coaches/api-types';
 
 export {
   AccountErrorCodeEnum,
-  ErrorCode,
-  CommonErrorCodeEnum,
-  TrainingJournalErrorCodeEnum,
-  TrainingRecordErrorCodeEnum,
   SessionErrorCodeEnum,
   AuthErrorCodeEnum,
-  CoachErrorCodeEnum,
+  ACCOUNT_ERRORS,
+  AUTH_ERRORS,
+  SESSION_ERRORS,
+} from './accounts/errors';
+export { CommonErrorCodeEnum, COMMON_ERRORS } from './common/errors';
+export {
+  TrainingJournalErrorCodeEnum,
+  TRAINING_JOURNAL_ERRORS,
+} from './training-journals/errors';
+export {
+  TrainingRecordErrorCodeEnum,
+  TRAINING_RECORD_ERRORS,
+} from './training-records/errors';
+export { CoachErrorCodeEnum, COACH_ERROS } from './coaches/errors';
+export {
   JournalAccessErrorCodeEnum,
-} from './error-codes';
+  JOURNAL_ACCESS_ERRORS,
+} from './journal-access/errors';
+export type { ErrorCode } from './errors';
 
 export {
   PaginationOutputModel,
   RequestQueryParamsModel,
   DEFAULT_QUERY_PARAMS,
-} from './query-models';
+} from './common/query-models';
 
 export {
   AthleteDashboardDataView,
   CoachDashboardDataView,
   CoachDashboardJournalView,
-} from './dashboards-api-types';
+} from './dashboards/api-types';
 
 export {
   CreateJournalAccessRequestInput,
@@ -72,4 +84,4 @@ export {
   JournalCoachAccessView,
   JournalAccessRequestStatusEnum,
   JournalAccessRequestView,
-} from './journal-access-api-types';
+} from './journal-access/api-types';
