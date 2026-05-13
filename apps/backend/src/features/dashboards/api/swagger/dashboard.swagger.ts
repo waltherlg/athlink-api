@@ -8,7 +8,7 @@ import {
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
 import { AthleteDashboardDataViewDto } from '../dto/dashboard-api.dto';
-import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { AUTH_ERRORS } from '@shared-types';
 
 export const SW_DASHBOARD_TITLES = {
   DASHBOARD_CONTROLLER: 'Dashboard operations',

@@ -5,8 +5,8 @@ import {
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
-import { TRAINING_JOURNAL_ERRORS } from '../../../training-journals/consts/training-journal-errors.consts';
-import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
+import { AUTH_ERRORS } from '@shared-types';
 import { JournalAccessRepository } from '../../infrastructure/training-journal-access.repository';
 
 export class GetJournalCoachAccessesQuery {

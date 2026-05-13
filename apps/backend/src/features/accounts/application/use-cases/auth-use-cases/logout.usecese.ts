@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { NotFoundDomainException } from '../../../../../core/exceptions/domain-exceptions';
 import { SessionsRepository } from '../../../infrastructure/sessions.repository';
-import { SESSION_ERRORS } from '../../../consts/session-errors.consts';
+import { SESSION_ERRORS } from '@shared-types';
 
 export class LogoutCommand {
   constructor(

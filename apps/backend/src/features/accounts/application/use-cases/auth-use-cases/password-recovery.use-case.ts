@@ -2,7 +2,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'node:crypto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import { PasswordResetRequestedEvent } from '../../events/password-reset-requested.event';
 
 export class PasswordRecoveryRequestCommand {

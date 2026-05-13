@@ -313,7 +313,7 @@ What changed:
   - `training-records-api-types.ts`
 - `packages/shared-types/src/errors.ts` now defines the combined `ErrorCode` union from feature-level error code enums.
 - `packages/shared-types/src/index.ts` is still the main public barrel and exports all API types, paths, error code enums, and error descriptor objects.
-- Backend error const files were kept as compatibility re-exports from `@shared-types`, for example:
+- Backend error const files were first kept as compatibility re-exports, then removed after all backend imports were switched directly to `@shared-types`:
   - `apps/backend/src/features/accounts/consts/account-errors.consts.ts`
   - `apps/backend/src/features/accounts/consts/auth.errors.ts`
   - `apps/backend/src/features/accounts/consts/session-errors.consts.ts`
@@ -324,6 +324,7 @@ What changed:
 - Removed backend imports from `@shared-types/dist`; use `@shared-types`.
 - Fixed `AccountErrorCodeEnum.CODE_INCORRECT`: value no longer has a leading space.
 - Fixed common validation error `field`: it was `feild`, now `field`.
+- Important: backend use-cases, guards, query-handlers, and swagger files should import error descriptor objects directly from `@shared-types`, not from feature-local `consts/*errors*` files.
 
 Naming notes / technical debt:
 

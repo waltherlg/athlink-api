@@ -5,7 +5,7 @@ import { UserCreateDto } from '../../dto/domain-user.dto';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
 import { UserMapper } from '../../../mappers/user.mapper';
 import { UserViewDto } from '../../../api/dto/user-view.dto';
-import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import { CryptoService } from '../../services/crypto.service';
 import { randomUUID } from 'node:crypto';
 import { UserRegisteredEvent } from '../../events/user-registered.event';

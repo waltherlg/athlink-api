@@ -7,7 +7,7 @@ import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { JOURNAL_ACCESS_ERRORS } from '../../consts/coaches-errors.consts';
+import { JOURNAL_ACCESS_ERRORS } from '@shared-types';
 import { JournalAccessRoleEnum } from '@shared-types';
 
 export class AcceptAccessRequestCommand {

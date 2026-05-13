@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateTrainingJournalDto } from '../dto/domain-training-journal.dto';
 import { TrainingJournalsRepository } from '../../infrastructure/training-journals.repository';
 import { BadRequestDomainException } from '../../../../core/exceptions/domain-exceptions';
-import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
+import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
 
 export class CreateTrainingJournalCommand {
   constructor(public dto: CreateTrainingJournalDto) {}
