@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import type { TrainingRecordAthleteView } from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getTrainingRecordById } from '../../api/training-journals/get-training-record-by-id';
+import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
@@ -44,11 +45,7 @@ export default function TrainingRecordPage() {
         );
         setRecord(response);
       } catch (err) {
-        if (err && typeof err === 'object' && 'message' in err) {
-          setError(String((err as { message?: string }).message));
-        } else {
-          setError(t('record.errorLoad'));
-        }
+        setError(getApiErrorMessage(err, t('record.errorLoad')));
       } finally {
         setIsLoading(false);
       }

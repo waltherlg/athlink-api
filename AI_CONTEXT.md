@@ -341,3 +341,33 @@ pnpm -C apps/frontend build
 ```
 
 All passed. Frontend build initially hit Vite/esbuild `spawn EPERM` inside sandbox, then passed outside sandbox with approval.
+
+## 2026-05-14 Frontend API Error Mapping
+
+User asked to remove generic `Request failed` UI messages and show concrete backend errors from shared error descriptor objects.
+
+What changed:
+
+- Added `apps/frontend/src/api/errors.ts`:
+  - imports shared error descriptor objects from `@shared-types`;
+  - maps every current shared `ErrorCode` to localized frontend messages;
+  - exposes `getApiErrorMessage`, `getApiErrorMessages`, `normalizeApiFormErrors`, `parseApiErrorMessages`;
+  - returns `Сервер недоступен.` / `Server unavailable.` for network/backend-unavailable failures.
+- Updated `apps/frontend/src/api/http.ts`:
+  - no longer creates `Request failed`;
+  - catches failed `fetch` calls and throws `ApiError` with `isNetworkError: true`;
+  - derives API error message from backend `errorMessages` when response body is JSON.
+- Updated registration:
+  - `EMAIL_ALREADY_EXISTS` maps to the `email` field;
+  - `USERNAME_ALREADY_EXISTS` maps to the `userName` field;
+  - these now render as red field errors in `RegistrationForm`, not as a big generic alert.
+- Replaced direct frontend display of `err.message` across auth, dashboard, training journals/records, coach, and journal-access pages with the shared API error helpers.
+- In `TrainingJournalPage`, failed coach access request now renders as red error alert instead of success status.
+
+Validation:
+
+```bash
+pnpm -C apps/frontend build
+```
+
+Passed outside sandbox. Initial sandboxed build failed because Vite/esbuild could not read the config (`Access is denied`), same class of issue as previous frontend builds.

@@ -1,5 +1,10 @@
 import { authPaths as authPathsShared } from '@shared-types';
 import { setAccessToken } from '../features/auth/token-storage';
+import {
+  getApiErrorMessage,
+  getDefaultApiErrorMessage,
+  getServerUnavailableMessage,
+} from './errors';
 
 export const API_BASE_URL =
   (import.meta.env.VITE_API_URL as string | undefined) ??
@@ -11,6 +16,7 @@ export type ApiError = {
   message: string;
   status?: number;
   details?: unknown;
+  isNetworkError?: boolean;
 };
 
 type ApiFetchOptions = RequestInit & {
@@ -66,11 +72,19 @@ export async function apiFetch<TResponse>(
     requestHeaders.set('Content-Type', 'application/json');
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...rest,
-    headers: requestHeaders,
-    credentials: rest.credentials ?? 'include',
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...rest,
+      headers: requestHeaders,
+      credentials: rest.credentials ?? 'include',
+    });
+  } catch {
+    throw {
+      message: getServerUnavailableMessage(),
+      isNetworkError: true,
+    } satisfies ApiError;
+  }
 
   const contentType = response.headers.get('content-type');
   const isJson = contentType?.includes('application/json');
@@ -91,11 +105,19 @@ export async function apiFetch<TResponse>(
     const newAccessToken = await refreshPromise;
     if (newAccessToken) {
       requestHeaders.set('Authorization', `Bearer ${newAccessToken}`);
-      const retryResponse = await fetch(`${API_BASE_URL}${path}`, {
-        ...rest,
-        headers: requestHeaders,
-        credentials: rest.credentials ?? 'include',
-      });
+      let retryResponse: Response;
+      try {
+        retryResponse = await fetch(`${API_BASE_URL}${path}`, {
+          ...rest,
+          headers: requestHeaders,
+          credentials: rest.credentials ?? 'include',
+        });
+      } catch {
+        throw {
+          message: getServerUnavailableMessage(),
+          isNetworkError: true,
+        } satisfies ApiError;
+      }
 
       const retryContentType = retryResponse.headers.get('content-type');
       const retryIsJson = retryContentType?.includes('application/json');
@@ -105,7 +127,10 @@ export async function apiFetch<TResponse>(
 
       if (!retryResponse.ok) {
         const error: ApiError = {
-          message: typeof retryData === 'string' ? retryData : 'Request failed',
+          message:
+            typeof retryData === 'string'
+              ? retryData || getDefaultApiErrorMessage()
+              : getApiErrorMessage({ message: '', details: retryData }),
           status: retryResponse.status,
           details: typeof retryData === 'string' ? undefined : retryData,
         };
@@ -128,7 +153,10 @@ export async function apiFetch<TResponse>(
 
   if (!response.ok) {
     const error: ApiError = {
-      message: typeof data === 'string' ? data : 'Request failed',
+      message:
+        typeof data === 'string'
+          ? data || getDefaultApiErrorMessage()
+          : getApiErrorMessage({ message: '', details: data }),
       status: response.status,
       details: typeof data === 'string' ? undefined : data,
     };

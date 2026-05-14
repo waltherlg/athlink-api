@@ -6,6 +6,7 @@ import { AccountErrorCodeEnum } from '@shared-types';
 import { useAuth } from '../auth-context';
 import { resendConfirmation } from '../../../api/auth/resend-confirmation';
 import type { ApiError } from '../../../api/http';
+import { getApiErrorMessage, parseApiErrorMessages } from '../../../api/errors';
 import { t } from '../../../i18n';
 import { usePageTitle } from '../../../components/page-title-context';
 
@@ -49,13 +50,7 @@ export default function LoginPage() {
         const status = Number((err as { status?: number }).status);
         if (status === 401 || status === 400) {
           const details = (err as ApiError).details;
-          const errorMessages =
-            details &&
-            typeof details === 'object' &&
-            'errorMessages' in details
-              ? (details as { errorMessages?: Array<{ code?: string }> })
-                  .errorMessages
-              : null;
+          const errorMessages = parseApiErrorMessages(details);
           const code = errorMessages?.[0]?.code;
           if (code === AccountErrorCodeEnum.EMAIL_NOT_CONFIRMED) {
             setNeedsConfirmation(true);
@@ -64,12 +59,10 @@ export default function LoginPage() {
             setError(t('login.invalid'));
           }
         } else {
-          setError(t('login.failed'));
+          setError(getApiErrorMessage(err, t('login.failed')));
         }
-      } else if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as { message?: string }).message));
       } else {
-        setError(t('login.failed'));
+        setError(getApiErrorMessage(err, t('login.failed')));
       }
     } finally {
       setIsLoading(false);

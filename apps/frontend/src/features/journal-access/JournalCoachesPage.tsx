@@ -10,6 +10,7 @@ import { t } from '../../i18n';
 import { getJournalCoachAccesses } from '../../api/journal-access/get-journal-coach-accesses';
 import { deleteJournalAccess } from '../../api/journal-access/delete-journal-access';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
+import { getApiErrorMessage } from '../../api/errors';
 
 export default function JournalCoachesPage() {
   usePageTitle('Тренеры дневника');
@@ -37,7 +38,7 @@ export default function JournalCoachesPage() {
       setCoaches(coachesResponse);
       setJournal(journalResponse);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось загрузить тренеров.');
+      setError(getApiErrorMessage(err, 'Не удалось загрузить тренеров.'));
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +65,7 @@ export default function JournalCoachesPage() {
         prev.filter((item) => item.accessId !== coach.accessId),
       );
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось отменить доступ.');
+      setError(getApiErrorMessage(err, 'Не удалось отменить доступ.'));
     } finally {
       setProcessingId(null);
     }

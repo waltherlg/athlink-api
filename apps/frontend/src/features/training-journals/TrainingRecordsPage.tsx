@@ -5,6 +5,7 @@ import { getAccessToken } from '../auth/token-storage';
 import { getTrainingRecords } from '../../api/training-journals/get-training-records';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';
+import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
@@ -53,11 +54,7 @@ export default function TrainingRecordsPage() {
         );
         setRecords(recordsResponse);
       } catch (err) {
-        if (err && typeof err === 'object' && 'message' in err) {
-          setError(String((err as { message?: string }).message));
-        } else {
-          setError(t('journal.errorLoad'));
-        }
+        setError(getApiErrorMessage(err, t('journal.errorLoad')));
       } finally {
         setIsLoading(false);
       }

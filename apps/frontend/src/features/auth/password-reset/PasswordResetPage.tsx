@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../../../api/auth/password-reset';
-import type { ApiError } from '../../../api/http';
+import { getApiErrorMessage } from '../../../api/errors';
 import { t } from '../../../i18n';
 import { usePageTitle } from '../../../components/page-title-context';
 
@@ -31,11 +31,7 @@ export default function PasswordResetPage() {
       });
       setSuccess(true);
     } catch (err) {
-      if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as ApiError).message));
-      } else {
-        setError(t('passwordReset.error'));
-      }
+      setError(getApiErrorMessage(err, t('passwordReset.error')));
     } finally {
       setIsLoading(false);
     }

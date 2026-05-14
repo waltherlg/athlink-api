@@ -12,6 +12,7 @@ import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import { searchCoachProfiles } from '../../api/coaches/search-coach-profiles';
 import { createJournalAccessRequest } from '../../api/journal-access/create-journal-access-request';
+import { getApiErrorMessage } from '../../api/errors';
 
 const formatDateTime = (value: string) => {
   if (!value) return t('journal.noDate');
@@ -38,6 +39,9 @@ export default function TrainingJournalPage() {
     useState<CoachProfileSearchView | null>(null);
   const [isSearchingCoaches, setIsSearchingCoaches] = useState(false);
   const [coachRequestStatus, setCoachRequestStatus] = useState<string | null>(
+    null,
+  );
+  const [coachRequestError, setCoachRequestError] = useState<string | null>(
     null,
   );
   const [isLoading, setIsLoading] = useState(true);
@@ -71,11 +75,7 @@ export default function TrainingJournalPage() {
         );
         setSportEvents(eventsResponse);
       } catch (err) {
-        if (err && typeof err === 'object' && 'message' in err) {
-          setError(String((err as { message?: string }).message));
-        } else {
-          setError(t('journal.errorLoad'));
-        }
+        setError(getApiErrorMessage(err, t('journal.errorLoad')));
       } finally {
         setIsLoading(false);
       }
@@ -175,6 +175,7 @@ export default function TrainingJournalPage() {
                 setCoachQuery(event.target.value);
                 setSelectedCoach(null);
                 setCoachRequestStatus(null);
+                setCoachRequestError(null);
               }}
               placeholder="Начните вводить username"
             />
@@ -212,6 +213,7 @@ export default function TrainingJournalPage() {
                 onClick={async () => {
                   if (!token || !journalId || !selectedCoach) return;
                   setCoachRequestStatus(null);
+                  setCoachRequestError(null);
                   try {
                     await createJournalAccessRequest(token, {
                       journalId,
@@ -219,10 +221,8 @@ export default function TrainingJournalPage() {
                     });
                     setCoachRequestStatus('Запрос отправлен.');
                   } catch (err) {
-                    setCoachRequestStatus(
-                      err instanceof Error
-                        ? err.message
-                        : 'Не удалось отправить запрос.',
+                    setCoachRequestError(
+                      getApiErrorMessage(err, 'Не удалось отправить запрос.'),
                     );
                   }
                 }}
@@ -234,6 +234,9 @@ export default function TrainingJournalPage() {
 
           {coachRequestStatus ? (
             <div className="alert success">{coachRequestStatus}</div>
+          ) : null}
+          {coachRequestError ? (
+            <div className="alert error">{coachRequestError}</div>
           ) : null}
         </section>
       ) : null}
