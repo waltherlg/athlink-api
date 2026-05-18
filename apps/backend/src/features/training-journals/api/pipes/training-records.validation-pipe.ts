@@ -1,7 +1,7 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
 import { CreateTrainingRecordInputDto } from '../dto/training-record.dto';
 import { BadRequestDomainException } from '../../../../core/exceptions/domain-exceptions';
-import { TRAINING_RECORD_ERRORS } from '../../consts/training-record-errors.consts';
+import { TRAINING_RECORD_ERRORS } from '@shared-types';
 import {
   TrainingRecordTypeEnum,
 } from '@shared-types';

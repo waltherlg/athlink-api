@@ -5,6 +5,7 @@ import { SportTypeEnum } from '@shared-types';
 import { createTrainingJournal } from '../../api/training-journals/create-training-journal';
 import { getAvailableSportTypes } from '../../api/training-journals/get-available-sport-types';
 import { getAccessToken } from '../auth/token-storage';
+import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 
@@ -44,11 +45,7 @@ export default function CreateTrainingJournalPage() {
         }
       } catch (err) {
         if (!isActive) return;
-        if (err && typeof err === 'object' && 'message' in err) {
-          setError(String((err as { message?: string }).message));
-        } else {
-          setError(t('journalCreate.error'));
-        }
+        setError(getApiErrorMessage(err, t('journalCreate.error')));
       } finally {
         if (isActive) setIsLoadingSportTypes(false);
       }
@@ -75,11 +72,7 @@ export default function CreateTrainingJournalPage() {
       }
       navigate(`/journal/${createdId}`);
     } catch (err) {
-      if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as { message?: string }).message));
-      } else {
-        setError(t('journalCreate.error'));
-      }
+      setError(getApiErrorMessage(err, t('journalCreate.error')));
     } finally {
       setIsLoading(false);
     }

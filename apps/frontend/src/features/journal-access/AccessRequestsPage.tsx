@@ -8,6 +8,7 @@ import {
   acceptJournalAccessRequest,
   rejectJournalAccessRequest,
 } from '../../api/journal-access/respond-journal-access-request';
+import { getApiErrorMessage } from '../../api/errors';
 
 export default function AccessRequestsPage() {
   usePageTitle('Запросы');
@@ -27,7 +28,7 @@ export default function AccessRequestsPage() {
     try {
       setRequests(await getIncomingJournalAccessRequests(token));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось загрузить запросы.');
+      setError(getApiErrorMessage(err, 'Не удалось загрузить запросы.'));
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +50,7 @@ export default function AccessRequestsPage() {
       }
       setRequests((prev) => prev.filter((request) => request.id !== requestId));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось обработать запрос.');
+      setError(getApiErrorMessage(err, 'Не удалось обработать запрос.'));
     } finally {
       setProcessingId(null);
     }

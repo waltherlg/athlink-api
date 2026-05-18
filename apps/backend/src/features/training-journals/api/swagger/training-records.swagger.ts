@@ -10,16 +10,16 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
-import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
-import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
+import { COMMON_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import {
   CreateTrainingRecordInputDto,
   TrainingRecordAthleteViewDto,
   TrainingRecordsPaginationViewDto,
 } from '../dto/training-record.dto';
 import { trainingJournalsPaths } from '@shared-types';
-import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { AUTH_ERRORS } from '@shared-types';
 
 export const SW_TRAINING_RECORDS_TITLES = {
   TRAINING_RECORDS_CONTROLLER: 'Training record operations',

@@ -2,7 +2,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'node:crypto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import { ConfirmationEmailResentEvent } from '../../events/confirmation-email-resent.event';
 
 export class ResendConfirmationCommand {

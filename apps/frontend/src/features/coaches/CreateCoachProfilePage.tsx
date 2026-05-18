@@ -7,6 +7,7 @@ import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import { getAvailableCoachSportTypes } from '../../api/coaches/get-available-coach-sport-types';
 import { createCoachProfile } from '../../api/coaches/create-coach-profile';
+import { getApiErrorMessage } from '../../api/errors';
 
 const EMPTY_FORM: CreateCoachProfileInput = {
   sportType: SportTypeEnum.SHOOTING_RIFLE_PISTOL,
@@ -38,7 +39,7 @@ export default function CreateCoachProfilePage() {
         if (sportTypes.length > 0) setForm({ sportType: sportTypes[0] });
       } catch (err) {
         if (!isActive) return;
-        setError(err instanceof Error ? err.message : 'Не удалось загрузить виды спорта.');
+        setError(getApiErrorMessage(err, 'Не удалось загрузить виды спорта.'));
       } finally {
         if (isActive) setIsLoadingSportTypes(false);
       }
@@ -58,7 +59,7 @@ export default function CreateCoachProfilePage() {
       navigate('/');
       window.location.reload();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось создать профиль тренера.');
+      setError(getApiErrorMessage(err, 'Не удалось создать профиль тренера.'));
     } finally {
       setIsSubmitting(false);
     }

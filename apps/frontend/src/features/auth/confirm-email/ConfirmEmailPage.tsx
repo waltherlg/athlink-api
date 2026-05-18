@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { confirmEmail } from '../../../api/auth/confirm-email';
 import type { ApiError } from '../../../api/http';
+import { getApiErrorMessage, parseApiErrorMessages } from '../../../api/errors';
 import { t } from '../../../i18n';
 import { usePageTitle } from '../../../components/page-title-context';
 import { AccountErrorCodeEnum } from '@shared-types';
@@ -11,10 +12,13 @@ type ConfirmState = 'idle' | 'loading' | 'success' | 'error';
 const REDIRECT_DELAY_MS = 2500;
 
 const mapConfirmError = (error: ApiError | undefined): string => {
+  if (error?.isNetworkError) {
+    return getApiErrorMessage(error, t('confirmEmail.error.failed'));
+  }
+
   const details = error?.details;
-  if (details && typeof details === 'object' && 'errorMessages' in details) {
-    const errorMessages = (details as { errorMessages?: Array<{ code?: string }> })
-      .errorMessages;
+  const errorMessages = parseApiErrorMessages(details);
+  if (errorMessages.length) {
     const code = errorMessages?.[0]?.code;
     switch (code) {
       case AccountErrorCodeEnum.CODE_ALREADY_CONFIRMED:

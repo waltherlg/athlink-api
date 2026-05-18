@@ -10,6 +10,7 @@ import { createTrainingRecord } from '../../api/training-journals/create-trainin
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';
 import { getAccessToken } from '../auth/token-storage';
+import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import {
@@ -105,12 +106,7 @@ export default function CreateTrainingRecordPage() {
         setResultError(null);
       } catch (err) {
         if (!isActive) return;
-
-        if (err && typeof err === 'object' && 'message' in err) {
-          setError(String((err as { message?: string }).message));
-        } else {
-          setError(t('record.errorLoad'));
-        }
+        setError(getApiErrorMessage(err, t('record.errorLoad')));
       } finally {
         if (isActive) {
           setIsLoading(false);
@@ -192,11 +188,7 @@ export default function CreateTrainingRecordPage() {
       await createTrainingRecord(token, journalId, payload);
       navigate(`/journal/${journalId}`);
     } catch (err) {
-      if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as { message?: string }).message));
-      } else {
-        setError(t('record.errorCreate'));
-      }
+      setError(getApiErrorMessage(err, t('record.errorCreate')));
     } finally {
       setIsSubmitting(false);
     }

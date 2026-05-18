@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '../../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import { CryptoService } from '../../services/crypto.service';
 
 export class PasswordResetCommand {

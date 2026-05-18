@@ -3,7 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SportTypeEnum } from '@shared-types';
 import { CoachesRepository } from '../../infrastructure/coaches.repository';
 import { BadRequestDomainException } from '../../../../core/exceptions/domain-exceptions';
-import { COACH_ERROS } from '../../consts/coaches-errors.consts';
+import { COACH_ERROS } from '@shared-types';
 import { createCoachProfileDto } from '../dto/domain-coach.dto';
 
 @Injectable()

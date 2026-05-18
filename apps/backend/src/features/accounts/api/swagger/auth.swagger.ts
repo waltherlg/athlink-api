@@ -14,11 +14,11 @@ import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
 import { ResendConfirmationInputDto } from '../dto/confirmation.dto';
 import { PasswordRecoveryRequestInputDto } from '../dto/password-recovery.dto';
 import { PasswordResetInputDto } from '../dto/password-reset.dto';
-import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
-import { AUTH_ERRORS } from '../../consts/auth.errors';
-import { SESSION_ERRORS } from '../../consts/session-errors.consts';
+import { COMMON_ERRORS } from '@shared-types';
+import { AUTH_ERRORS } from '@shared-types';
+import { SESSION_ERRORS } from '@shared-types';
 
 export const SW_AUTH_TITLES = {
   AUTH_CONTROLLER: 'Auth flow',

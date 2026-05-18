@@ -7,10 +7,10 @@ import {
   BadRequestDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
-import { ACCOUNT_ERRORS } from '../../../accounts/consts/account-errors.consts';
-import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
-import { TRAINING_RECORD_ERRORS } from '../../consts/training-record-errors.consts';
+import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@shared-types';
+import { AUTH_ERRORS } from '@shared-types';
+import { TRAINING_RECORD_ERRORS } from '@shared-types';
 import { SportEventQueryRepository } from '../../../sport-events/infrastructure/sport-events.query.repository';
 import { SportTypeEnum, TrainingRecordTypeEnum } from '@shared-types';
 

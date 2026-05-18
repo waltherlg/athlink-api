@@ -7,6 +7,7 @@ import type {
 import { getAccessToken } from '../auth/token-storage';
 import { getAthleteDashboard } from '../../api/dashboard/get-athlete-dashboard';
 import { getCoachDashboard } from '../../api/dashboard/get-coach-dashboard';
+import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import { useDashboardMode } from './use-dashboard-mode';
@@ -58,11 +59,7 @@ export default function DashboardPage() {
         setCoachData(null);
       }
     } catch (err) {
-      if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as { message?: string }).message));
-      } else {
-        setError(t('dashboard.errorLoad'));
-      }
+      setError(getApiErrorMessage(err, t('dashboard.errorLoad')));
     } finally {
       setIsLoading(false);
     }

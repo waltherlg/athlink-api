@@ -1,5 +1,3 @@
-import { SportTypeEnum } from './training-journals-api-types';
-
 export type UserRegistrationInput = {
   email: string;
   userName: string;

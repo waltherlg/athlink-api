@@ -15,9 +15,9 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { COMMON_ERRORS } from '../../../../core/consts/validation.errors';
-import { TRAINING_JOURNAL_ERRORS } from '../../consts/training-journal-errors.consts';
-import { AUTH_ERRORS } from '../../../accounts/consts/auth.errors';
+import { COMMON_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
+import { AUTH_ERRORS } from '@shared-types';
 import { SportTypeEnum } from '@shared-types';
 
 export const SW_TRAINING_JOURNALS_TITLES = {

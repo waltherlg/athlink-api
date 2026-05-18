@@ -1,4 +1,14 @@
-import { JournalAccessErrorCodeEnum } from '@shared-types';
+export enum JournalAccessErrorCodeEnum {
+  REQUEST_NOT_FOUND = 'REQUEST_NOT_FOUND',
+  REQUEST_ALREADY_EXISTS = 'REQUEST_ALREADY_EXISTS',
+  REQUEST_ALREADY_PROCESSED = 'REQUEST_ALREADY_PROCESSED',
+  NOT_OWNER = 'NOT_OWNER',
+  ACCESS_ALREADY_EXISTS = 'ACCESS_ALREADY_EXISTS',
+  ACCESS_NOT_FOUND = 'ACCESS_NOT_FOUND',
+  JOURNAL_NOT_FOUND = 'JOURNAL_NOT_FOUND',
+  COACH_PROFILE_NOT_FOUND = 'COACH_PROFILE_NOT_FOUND',
+  SPORT_TYPE_MISMATCH = 'SPORT_TYPE_MISMATCH',
+}
 
 export const JOURNAL_ACCESS_ERRORS = {
   ACCESS_ALREADY_EXISTS: {
@@ -46,4 +56,4 @@ export const JOURNAL_ACCESS_ERRORS = {
     field: 'coachProfile',
     message: 'coach profile sport type does not match journal',
   },
-};
+} as const;

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import type { CoachTrainingRecordsPaginationView } from '@shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getCoachTrainingRecords } from '../../api/training-journals/get-coach-training-records';
+import { getApiErrorMessage } from '../../api/errors';
 import { usePageTitle } from '../../components/page-title-context';
 import { t } from '../../i18n';
 
@@ -49,7 +50,7 @@ export default function CoachTrainingRecordsPage() {
           }),
         );
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Не удалось загрузить записи.');
+        setError(getApiErrorMessage(err, 'Не удалось загрузить записи.'));
       } finally {
         setIsLoading(false);
       }

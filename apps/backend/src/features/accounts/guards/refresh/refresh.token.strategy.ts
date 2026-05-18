@@ -7,7 +7,7 @@ import { UserEnvironmentConfig } from '../../config/user-env.config';
 import { SessionsRepository } from '../../infrastructure/sessions.repository';
 import { SESSION_CONSTS } from '../../consts/session.consts';
 import { JwtPayloadDto } from '../../application/dto/domain-auth.dto';
-import { AUTH_ERRORS } from '../../consts/auth.errors';
+import { AUTH_ERRORS } from '@shared-types';
 import { CryptoService } from '../../application/services/crypto.service';
 
 @Injectable()

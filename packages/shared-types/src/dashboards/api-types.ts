@@ -1,5 +1,5 @@
-import { SportTypeEnum } from './training-journals-api-types';
-import { PaginationOutputModel } from './query-models';
+import { SportTypeEnum } from '../training-journals/api-types';
+import { PaginationOutputModel } from '../common/query-models';
 
 export type AthleteDashboardDataView = {
   journals:

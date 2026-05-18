@@ -3,9 +3,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { UnauthorizedDomainException } from '../../../../core/exceptions/domain-exceptions';
 import { AuthService } from '../../application/services/auth.service';
-import { AUTH_ERRORS } from '../../consts/auth.errors';
+import { AUTH_ERRORS } from '@shared-types';
 import { User } from '@prisma/client';
-import { ACCOUNT_ERRORS } from '../../consts/account-errors.consts';
+import { ACCOUNT_ERRORS } from '@shared-types';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

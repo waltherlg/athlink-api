@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { requestPasswordRecovery } from '../../../api/auth/password-recovery';
-import type { ApiError } from '../../../api/http';
+import { getApiErrorMessage } from '../../../api/errors';
 import { t } from '../../../i18n';
 import { usePageTitle } from '../../../components/page-title-context';
 
@@ -23,11 +23,7 @@ export default function PasswordRecoveryPage() {
       await requestPasswordRecovery({ email: email.trim() });
       setSuccess(true);
     } catch (err) {
-      if (err && typeof err === 'object' && 'message' in err) {
-        setError(String((err as ApiError).message));
-      } else {
-        setError(t('passwordRecovery.error'));
-      }
+      setError(getApiErrorMessage(err, t('passwordRecovery.error')));
     } finally {
       setIsLoading(false);
     }
