@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type {
   AthleteDashboardDataView,
@@ -11,6 +11,7 @@ import { getApiErrorMessage } from '../../api/errors';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import { useDashboardMode } from './use-dashboard-mode';
+import { usePushNotifications } from '../../notifications/use-push-notifications';
 
 const formatDate = (value: string) => {
   if (!value) return 'No records yet';
@@ -33,6 +34,8 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 8;
+  const previousCoachRecordIdsRef = useRef<Record<string, string>>({});
+  const { notify } = usePushNotifications();
 
   const token = useMemo(() => getAccessToken(), []);
   const mode = useDashboardMode();
@@ -51,6 +54,43 @@ export default function DashboardPage() {
           pageNumber: String(pageNumber),
           pageSize: String(pageSize),
         });
+
+        const previousRecordIds = previousCoachRecordIdsRef.current;
+        const hasPreviousState = Object.keys(previousRecordIds).length > 0;
+        const newRecordIds = new Map<string, string>();
+
+        if (hasPreviousState) {
+          for (const journal of response.items) {
+            const latestRecordId = journal.latestRecord?.id;
+            if (!latestRecordId) continue;
+            if (previousRecordIds[journal.id] !== latestRecordId) {
+              newRecordIds.set(journal.id, latestRecordId);
+            }
+          }
+        }
+
+        if (hasPreviousState && newRecordIds.size > 0) {
+          for (const [journalId, recordId] of newRecordIds.entries()) {
+            const journal = response.items.find((item) => item.id === journalId);
+            const latestRecord = journal?.latestRecord;
+            if (!latestRecord) continue;
+
+            const athleteName = journal?.athleteUserName ?? 'Спортсмен';
+            await notify({
+              title: 'Новая запись в журнале',
+              body: `${athleteName} добавил новую запись: ${latestRecord.event ?? 'без упражнения'}.`,
+              tag: `coach-journal-record-${journalId}`,
+              data: { url: `/coach/journal/${journalId}/records/${recordId}` },
+            });
+          }
+        }
+
+        previousCoachRecordIdsRef.current = Object.fromEntries(
+          response.items
+            .map((journal) => [journal.id, journal.latestRecord?.id ?? ''])
+            .filter(([, recordId]) => recordId),
+        );
+
         setCoachData(response);
         setData(null);
       } else {

@@ -9,6 +9,7 @@ import {
   rejectJournalAccessRequest,
 } from '../../api/journal-access/respond-journal-access-request';
 import { getApiErrorMessage } from '../../api/errors';
+import { usePushNotifications } from '../../notifications/use-push-notifications';
 
 export default function AccessRequestsPage() {
   usePageTitle('Запросы');
@@ -16,6 +17,7 @@ export default function AccessRequestsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { notify } = usePushNotifications();
   const token = useMemo(() => getAccessToken(), []);
 
   const load = async () => {
@@ -45,6 +47,15 @@ export default function AccessRequestsPage() {
     try {
       if (action === 'accept') {
         await acceptJournalAccessRequest(token, requestId);
+
+        const requestDetails = requests.find((item) => item.id === requestId);
+        const athleteName = requestDetails?.athleteUserName ?? 'спортсмен';
+        await notify({
+          title: 'Запрос принят',
+          body: `Вы приняли приглашение от ${athleteName}.`,
+          tag: 'journal-access-accepted',
+          data: { url: '/requests' },
+        });
       } else {
         await rejectJournalAccessRequest(token, requestId);
       }

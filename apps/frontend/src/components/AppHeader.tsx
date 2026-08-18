@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { CoachProfileView } from '@shared-types';
 import { useAuth } from '../features/auth/auth-context';
@@ -14,6 +14,7 @@ import {
 } from '../features/dashboard/dashboard-mode';
 import { getIncomingJournalAccessRequestsCount } from '../api/journal-access/get-incoming-journal-access-requests-count';
 import { useDashboardMode } from '../features/dashboard/use-dashboard-mode';
+import { usePushNotifications } from '../notifications/use-push-notifications';
 
 export default function AppHeader() {
   const { userName, isChecking, logout } = useAuth();
@@ -22,8 +23,11 @@ export default function AppHeader() {
   const token = useMemo(() => getAccessToken(), [userName]);
   const [coachProfiles, setCoachProfiles] = useState<CoachProfileView[]>([]);
   const [requestsCount, setRequestsCount] = useState(0);
+  const previousRequestsCountRef = useRef(0);
   const mode = useDashboardMode();
   const navigate = useNavigate();
+  const { permission: notificationPermission, requestPermission, notify } =
+    usePushNotifications();
 
   useEffect(() => {
     if (!token || !userName) {
@@ -52,7 +56,23 @@ export default function AppHeader() {
         }
       }
       if (countResponse.status === 'fulfilled') {
-        setRequestsCount(countResponse.value.count);
+        const nextCount = countResponse.value.count;
+        setRequestsCount(nextCount);
+
+        if (
+          mode.type === 'coach' &&
+          nextCount > previousRequestsCountRef.current &&
+          nextCount > 0
+        ) {
+          void notify({
+            title: 'Новый запрос на доступ',
+            body: `У вас ${nextCount} ${nextCount === 1 ? 'новый запрос' : 'новых запроса'} в очереди.`,
+            tag: 'journal-access-request',
+            data: { url: '/requests' },
+          });
+        }
+
+        previousRequestsCountRef.current = nextCount;
       }
     };
 
@@ -80,6 +100,17 @@ export default function AppHeader() {
           ) : userName ? (
             <>
               <span className="user-badge">{userName}</span>
+              {notificationPermission === 'default' ? (
+                <button
+                  className="button-link ghost small"
+                  type="button"
+                  onClick={async () => {
+                    await requestPermission();
+                  }}
+                >
+                  Разрешить уведомления
+                </button>
+              ) : null}
               <select
                 className="mode-select"
                 value={modeValue}
