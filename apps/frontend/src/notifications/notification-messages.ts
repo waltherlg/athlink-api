@@ -6,7 +6,8 @@ export const notificationTags = {
 
 export const notificationMessages = {
   requestSentTitle: 'Запрос отправлен',
-  requestSentBody: (coachUserName: string) => `Запрос к тренеру ${coachUserName} успешно создан.`,
+  requestSentBody: (coachUserName: string) =>
+    `Запрос к тренеру ${coachUserName} успешно создан.`,
 
   newRequestCountTitle: 'Новый запрос на доступ',
   newRequestCountBody: (count: number) =>
