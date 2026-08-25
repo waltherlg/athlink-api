@@ -12,6 +12,7 @@ import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';
 import { useDashboardMode } from './use-dashboard-mode';
 import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 const formatDate = (value: string) => {
   if (!value) return 'No records yet';
@@ -77,9 +78,12 @@ export default function DashboardPage() {
 
             const athleteName = journal?.athleteUserName ?? 'Спортсмен';
             await notify({
-              title: 'Новая запись в журнале',
-              body: `${athleteName} добавил новую запись: ${latestRecord.event ?? 'без упражнения'}.`,
-              tag: `coach-journal-record-${journalId}`,
+              title: notificationMessages.newRecordTitle,
+              body: notificationMessages.newRecordBody(
+                athleteName,
+                latestRecord.event ?? undefined,
+              ),
+              tag: notificationTags.journalRecord(journalId),
               data: { url: `/coach/journal/${journalId}/records/${recordId}` },
             });
           }

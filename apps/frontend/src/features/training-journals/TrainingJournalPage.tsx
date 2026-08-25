@@ -14,6 +14,7 @@ import { searchCoachProfiles } from '../../api/coaches/search-coach-profiles';
 import { createJournalAccessRequest } from '../../api/journal-access/create-journal-access-request';
 import { getApiErrorMessage } from '../../api/errors';
 import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 const formatDateTime = (value: string) => {
   if (!value) return t('journal.noDate');
@@ -223,9 +224,11 @@ export default function TrainingJournalPage() {
                     });
 
                     await notify({
-                      title: 'Запрос отправлен',
-                      body: `Запрос к тренеру ${selectedCoach.userName} успешно создан.`,
-                      tag: 'journal-access-request',
+                      title: notificationMessages.requestSentTitle,
+                      body: notificationMessages.requestSentBody(
+                        selectedCoach.userName,
+                      ),
+                      tag: notificationTags.journalAccessRequest,
                       data: { url: `/journal/${journalId}` },
                     });
 

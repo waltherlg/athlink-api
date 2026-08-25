@@ -10,6 +10,7 @@ import {
 } from '../../api/journal-access/respond-journal-access-request';
 import { getApiErrorMessage } from '../../api/errors';
 import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 export default function AccessRequestsPage() {
   usePageTitle('Запросы');
@@ -51,9 +52,9 @@ export default function AccessRequestsPage() {
         const requestDetails = requests.find((item) => item.id === requestId);
         const athleteName = requestDetails?.athleteUserName ?? 'спортсмен';
         await notify({
-          title: 'Запрос принят',
-          body: `Вы приняли приглашение от ${athleteName}.`,
-          tag: 'journal-access-accepted',
+          title: notificationMessages.requestAcceptedTitle,
+          body: notificationMessages.requestAcceptedBody(athleteName),
+          tag: notificationTags.journalCoachAccepted,
           data: { url: '/requests' },
         });
       } else {

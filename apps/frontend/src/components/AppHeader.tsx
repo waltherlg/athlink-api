@@ -15,6 +15,7 @@ import {
 import { getIncomingJournalAccessRequestsCount } from '../api/journal-access/get-incoming-journal-access-requests-count';
 import { useDashboardMode } from '../features/dashboard/use-dashboard-mode';
 import { usePushNotifications } from '../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../notifications/notification-messages';
 
 export default function AppHeader() {
   const { userName, isChecking, logout } = useAuth();
@@ -65,9 +66,9 @@ export default function AppHeader() {
           nextCount > 0
         ) {
           void notify({
-            title: 'Новый запрос на доступ',
-            body: `У вас ${nextCount} ${nextCount === 1 ? 'новый запрос' : 'новых запроса'} в очереди.`,
-            tag: 'journal-access-request',
+            title: notificationMessages.newRequestCountTitle,
+            body: notificationMessages.newRequestCountBody(nextCount),
+            tag: notificationTags.journalAccessRequest,
             data: { url: '/requests' },
           });
         }

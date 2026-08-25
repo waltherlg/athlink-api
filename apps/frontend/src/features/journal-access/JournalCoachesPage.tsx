@@ -12,6 +12,7 @@ import { deleteJournalAccess } from '../../api/journal-access/delete-journal-acc
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getApiErrorMessage } from '../../api/errors';
 import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 export default function JournalCoachesPage() {
   usePageTitle('Тренеры дневника');
@@ -51,9 +52,9 @@ export default function JournalCoachesPage() {
       if (newCoaches.length > 0) {
         for (const coach of newCoaches) {
           await notify({
-            title: 'Тренер подключился',
-            body: `Тренер ${coach.userName} принял приглашение и подключился к вашему дневнику.`,
-            tag: 'journal-coach-accepted',
+            title: notificationMessages.coachConnectedTitle,
+            body: notificationMessages.coachConnectedBody(coach.userName),
+            tag: notificationTags.journalCoachAccepted,
             data: { url: `/journal/${journalId}` },
           });
         }
