@@ -1,6 +1,6 @@
 # Athlink API / Frontend Handoff Context
 
-Updated: 2026-05-07
+Updated: 2026-08-26
 Workspace: `C:\Users\user\Desktop\prod\athlink-api`
 
 ## Project Shape
@@ -115,6 +115,31 @@ Endpoint:
 
 ## Frontend Flow Added
 
+### Browser Push Notifications Layer
+
+Main files:
+
+- `apps/frontend/src/notifications/notification-service.ts`
+- `apps/frontend/src/notifications/use-push-notifications.ts`
+- `apps/frontend/src/notifications/notification-messages.ts`
+- `apps/frontend/public/athlink-sw.js`
+- `apps/frontend/src/main.tsx`
+
+Behavior:
+
+- Uses browser Notification API and service worker for web push-style notifications.
+- Notification permission is requested via a reusable hook and stored on the frontend session.
+- Service worker handles `push` and `notificationclick` events and allows navigation when a notification is clicked.
+- Notification messages and tags are centralized to avoid duplication and make future feature additions easier.
+
+Supported trigger cases:
+
+- Athlete sends a journal access request -> browser notification to the athlete after success.
+- Coach request count increases -> browser notification to coach when new incoming requests appear.
+- Coach accepts a request -> browser notification to the coach confirming acceptance.
+- Athlete gains a coach access -> browser notification to athlete when a coach accepts the invitation.
+- Athlete creates a new training record -> browser notification to coach with a deep link to the journal record.
+
 ### API Clients
 
 New folders/files:
@@ -183,6 +208,57 @@ Updated pages:
   - User chooses username, confirms, sends access request.
 - `CreateTrainingRecordPage.tsx`, `TrainingRecordsPage.tsx`, `TrainingRecordPage.tsx`
   - Switched URL param/code from `trainingJournalId` to `journalId`.
+
+## Validation Already Run
+
+These commands passed:
+
+```bash
+pnpm -C apps/frontend build
+```
+
+Also validated the notification refactor and browser push layer no longer breaks the app build.
+
+### Frontend Build Status
+
+```bash
+pnpm -C apps/frontend build
+```
+
+This command passed successfully after the notification architecture updates.
+
+---
+
+## 2026-08-26 Notification Architecture Update
+
+Implemented the first browser-based push-notification layer for the web app.
+
+Files:
+
+- `apps/frontend/src/notifications/notification-service.ts`
+- `apps/frontend/src/notifications/use-push-notifications.ts`
+- `apps/frontend/src/notifications/notification-messages.ts`
+- `apps/frontend/public/athlink-sw.js`
+- `apps/frontend/src/main.tsx`
+
+What changed:
+
+- Added reusable notification API wrapper with permission request + service worker fallback.
+- Registered a service worker in the Vite app bootstrapping flow.
+- Centralized message texts and tag names to keep notification behavior consistent.
+- Added actual browser notifications for:
+  - request created;
+  - incoming request count update;
+  - coach accessed journal after acceptance;
+  - new training record created for coach;
+  - coach approval confirmation.
+
+Architecture note:
+
+- This is still web-browser push, not a full server-to-client push system yet.
+- It is designed to be extended to real push infrastructure (e.g. VAPID/Firebase) later without changing the feature flow.
+
+---
 
 ## Validation Already Run
 
