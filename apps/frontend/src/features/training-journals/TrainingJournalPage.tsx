@@ -13,6 +13,8 @@ import { usePageTitle } from '../../components/page-title-context';
 import { searchCoachProfiles } from '../../api/coaches/search-coach-profiles';
 import { createJournalAccessRequest } from '../../api/journal-access/create-journal-access-request';
 import { getApiErrorMessage } from '../../api/errors';
+import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 const formatDateTime = (value: string) => {
   if (!value) return t('journal.noDate');
@@ -46,6 +48,7 @@ export default function TrainingJournalPage() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { notify } = usePushNotifications();
   const token = useMemo(() => getAccessToken(), []);
   const sportLabel = journal?.sportType
     ? t(`sportType.${journal.sportType}`)
@@ -219,6 +222,16 @@ export default function TrainingJournalPage() {
                       journalId,
                       coachProfileId: selectedCoach.id,
                     });
+
+                    await notify({
+                      title: notificationMessages.requestSentTitle,
+                      body: notificationMessages.requestSentBody(
+                        selectedCoach.userName,
+                      ),
+                      tag: notificationTags.journalAccessRequest,
+                      data: { url: `/journal/${journalId}` },
+                    });
+
                     setCoachRequestStatus('Запрос отправлен.');
                   } catch (err) {
                     setCoachRequestError(

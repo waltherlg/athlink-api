@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type {
   JournalCoachAccessView,
@@ -11,6 +11,8 @@ import { getJournalCoachAccesses } from '../../api/journal-access/get-journal-co
 import { deleteJournalAccess } from '../../api/journal-access/delete-journal-access';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getApiErrorMessage } from '../../api/errors';
+import { usePushNotifications } from '../../notifications/use-push-notifications';
+import { notificationMessages, notificationTags } from '../../notifications/notification-messages';
 
 export default function JournalCoachesPage() {
   usePageTitle('Тренеры дневника');
@@ -21,6 +23,8 @@ export default function JournalCoachesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const previousCoachesRef = useRef<JournalCoachAccessView[]>([]);
+  const { notify } = usePushNotifications();
   const token = useMemo(() => getAccessToken(), []);
 
   const load = async () => {
@@ -35,6 +39,28 @@ export default function JournalCoachesPage() {
         getJournalCoachAccesses(token, journalId),
         getTrainingJournalById(token, journalId),
       ]);
+
+      const previousCoaches = previousCoachesRef.current;
+      const newCoaches =
+        previousCoaches.length > 0
+          ? coachesResponse.filter(
+              (coach) =>
+                !previousCoaches.some((prev) => prev.accessId === coach.accessId),
+            )
+          : [];
+
+      if (newCoaches.length > 0) {
+        for (const coach of newCoaches) {
+          await notify({
+            title: notificationMessages.coachConnectedTitle,
+            body: notificationMessages.coachConnectedBody(coach.userName),
+            tag: notificationTags.journalCoachAccepted,
+            data: { url: `/journal/${journalId}` },
+          });
+        }
+      }
+
+      previousCoachesRef.current = coachesResponse;
       setCoaches(coachesResponse);
       setJournal(journalResponse);
     } catch (err) {
