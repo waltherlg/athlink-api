@@ -48,7 +48,7 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2(prisma@7.4.2(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
       '@shared-types':
-        specifier: workspace:*
+        specifier: file:../../packages/shared-types
         version: link:../../packages/shared-types
       argon2:
         specifier: ^0.44.0
@@ -169,7 +169,7 @@ importers:
   apps/frontend:
     dependencies:
       '@shared-types':
-        specifier: workspace:*
+        specifier: file:../../packages/shared-types
         version: link:../../packages/shared-types
       react:
         specifier: ^18.3.1
