@@ -1,4 +1,4 @@
-import { coachesPaths as coachesPathsShared } from '@shared-types';
+import { coachesPaths as coachesPathsShared } from '@athlink/shared-types';
 
 const coachesBase = `/${coachesPathsShared.controller}`;
 

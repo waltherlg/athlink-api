@@ -1,4 +1,4 @@
-import type { SportEventView, SportTypeEnum } from '@shared-types';
+import type { SportEventView, SportTypeEnum } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { sportEventsPaths } from './paths';
 

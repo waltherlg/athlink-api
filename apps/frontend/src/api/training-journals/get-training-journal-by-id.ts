@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { TrainingJournalWithLatestRecordsView } from '@shared-types';
+import type { TrainingJournalWithLatestRecordsView } from '@athlink/shared-types';
 import { trainingJournalsPaths } from './paths';
 
 export function getTrainingJournalById(

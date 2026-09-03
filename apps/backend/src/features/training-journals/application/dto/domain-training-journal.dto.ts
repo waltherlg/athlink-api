@@ -1,4 +1,4 @@
-import { SportTypeEnum, TrainingRecordTypeEnum } from '@shared-types';
+import { SportTypeEnum, TrainingRecordTypeEnum } from '@athlink/shared-types';
 
 export class CreateTrainingJournalDto {
   athleteId: string;

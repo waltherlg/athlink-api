@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 import { CoachesRepository } from '../../infrastructure/coaches.repository';
 import { BadRequestDomainException } from '../../../../core/exceptions/domain-exceptions';
-import { COACH_ERROS } from '@shared-types';
+import { COACH_ERROS } from '@athlink/shared-types';
 import { createCoachProfileDto } from '../dto/domain-coach.dto';
 
 @Injectable()

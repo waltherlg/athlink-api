@@ -7,7 +7,7 @@ import {
   BadRequestDomainException,
   ErrorMessage,
 } from '../core/exceptions/domain-exceptions';
-import { CommonErrorCodeEnum } from '@shared-types';
+import { CommonErrorCodeEnum } from '@athlink/shared-types';
 
 export const errorFormatter = (
   errors: ValidationError[],

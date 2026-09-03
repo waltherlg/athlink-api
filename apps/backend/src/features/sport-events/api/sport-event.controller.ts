@@ -1,7 +1,7 @@
 import { Controller, Get, ParseEnumPipe, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SportEventQueryRepository } from '../infrastructure/sport-events.query.repository';
-import { ResultTypeEnum, SportTypeEnum, sportEventPaths } from '@shared-types';
+  import { ResultTypeEnum, SportTypeEnum, sportEventPaths } from '@athlink/shared-types';
 import { SportEventViewDto } from './dto/sport-event.dto';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import {

@@ -1,7 +1,7 @@
 import type {
   CoachTrainingRecordsPaginationView,
   RequestQueryParamsModel,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { trainingJournalsPaths } from './paths';
 

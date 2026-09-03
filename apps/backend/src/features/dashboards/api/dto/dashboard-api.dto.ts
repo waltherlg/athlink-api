@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AthleteDashboardDataView, SportTypeEnum } from '@shared-types';
+import { AthleteDashboardDataView, SportTypeEnum } from '@athlink/shared-types';
 
 export class LatestRecordDto {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })

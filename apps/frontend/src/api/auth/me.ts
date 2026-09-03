@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { UserNameResponse } from '@shared-types';
+import type { UserNameResponse } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function getMe(accessToken: string) {

@@ -4,7 +4,7 @@ import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { JOURNAL_ACCESS_ERRORS } from '@shared-types';
+import { JOURNAL_ACCESS_ERRORS } from '@athlink/shared-types';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
 
 export class CreateAccessRequestCommand {

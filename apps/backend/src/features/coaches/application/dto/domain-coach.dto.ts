@@ -1,4 +1,4 @@
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 export class createCoachProfileDto {
   userId: string;

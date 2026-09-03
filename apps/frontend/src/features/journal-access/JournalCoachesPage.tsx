@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import type {
   JournalCoachAccessView,
   TrainingJournalWithLatestRecordsView,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { usePageTitle } from '../../components/page-title-context';
 import { t } from '../../i18n';

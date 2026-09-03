@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type {
   AthleteDashboardDataView,
   CoachDashboardDataView,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getAthleteDashboard } from '../../api/dashboard/get-athlete-dashboard';
 import { getCoachDashboard } from '../../api/dashboard/get-coach-dashboard';

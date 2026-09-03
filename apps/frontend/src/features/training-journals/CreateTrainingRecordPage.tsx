@@ -5,7 +5,7 @@ import type {
   SportEventView,
   TrainingJournalWithLatestRecordsView,
   TrainingRecordTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { createTrainingRecord } from '../../api/training-journals/create-training-record';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';
 import { getSportEventsBySportType } from '../../api/sport-events/get-sport-events';

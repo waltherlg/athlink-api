@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import type { UserRegistrationInput } from '@shared-types';
+import type { UserRegistrationInput } from '@athlink/shared-types';
 import { Link } from 'react-router-dom';
 import { t } from '../../../i18n';
 

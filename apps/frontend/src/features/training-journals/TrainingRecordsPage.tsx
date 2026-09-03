@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { SportEventView, TrainingRecordsPaginationView } from '@shared-types';
+import type { SportEventView, TrainingRecordsPaginationView } from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getTrainingRecords } from '../../api/training-journals/get-training-records';
 import { getTrainingJournalById } from '../../api/training-journals/get-training-journal-by-id';

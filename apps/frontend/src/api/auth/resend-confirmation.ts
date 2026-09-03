@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { ResendConfirmationInput } from '@shared-types';
+import type { ResendConfirmationInput } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function resendConfirmation(input: ResendConfirmationInput) {

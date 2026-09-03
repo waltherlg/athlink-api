@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../api/auth/registration';
-import type { UserRegistrationInput } from '@shared-types';
+import type { UserRegistrationInput } from '@athlink/shared-types';
 import RegistrationForm from './RegistrationForm';
 import { normalizeApiFormErrors } from '../../../api/errors';
 import type { FormErrors } from '../../../api/errors';

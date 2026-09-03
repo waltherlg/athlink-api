@@ -38,7 +38,7 @@ import {
   RegisterUserSwagger,
   SW_AUTH_TITLES,
 } from './swagger/auth.swagger';
-import { authPaths } from '@shared-types';
+import { authPaths } from '@athlink/shared-types';
 import { RefreshTokenGuard } from '../guards/refresh/refresh.token.guard';
 import { LogoutCommand } from '../application/use-cases/auth-use-cases/logout.usecese';
 import { JwtPayloadDto } from '../application/dto/domain-auth.dto';

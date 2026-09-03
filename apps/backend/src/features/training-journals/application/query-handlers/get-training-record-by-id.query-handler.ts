@@ -5,12 +5,12 @@ import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
-import { ACCOUNT_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@athlink/shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
 import { TrainingRecord } from '@prisma/client';
 import { TrainingRecordAthleteViewDto } from '../../api/dto/training-record.dto';
-import { AUTH_ERRORS } from '@shared-types';
-import { TrainingRecordTypeEnum } from '@shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
+import { TrainingRecordTypeEnum } from '@athlink/shared-types';
 
 export class GetTrainingRecordByIdQuery {
   constructor(

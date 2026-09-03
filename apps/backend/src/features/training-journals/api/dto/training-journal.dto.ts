@@ -3,8 +3,8 @@ import {
   SportTypeEnum,
   TrainingJournalView,
   TrainingJournalWithLatestRecordsView,
-} from '@shared-types';
-import { CreateTrainingJournalInput } from '@shared-types';
+} from '@athlink/shared-types';
+import { CreateTrainingJournalInput } from '@athlink/shared-types';
 import { IsEnum, IsNotEmpty } from 'class-validator';
 import { TrainingRecordAthleteViewDto } from './training-record.dto';
 

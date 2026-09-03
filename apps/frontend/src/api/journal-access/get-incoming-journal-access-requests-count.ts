@@ -1,4 +1,4 @@
-import type { IncomingJournalAccessRequestsCountView } from '@shared-types';
+import type { IncomingJournalAccessRequestsCountView } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { journalAccessPaths } from './paths';
 

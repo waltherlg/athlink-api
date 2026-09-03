@@ -7,8 +7,8 @@ import {
   SESSION_ERRORS,
   TRAINING_JOURNAL_ERRORS,
   TRAINING_RECORD_ERRORS,
-} from '@shared-types';
-import type { ErrorCode } from '@shared-types';
+} from '@athlink/shared-types';
+import type { ErrorCode } from '@athlink/shared-types';
 import { getLanguage } from '../i18n';
 import type { ApiError } from './http';
 

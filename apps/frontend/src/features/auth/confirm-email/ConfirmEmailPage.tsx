@@ -5,7 +5,7 @@ import type { ApiError } from '../../../api/http';
 import { getApiErrorMessage, parseApiErrorMessages } from '../../../api/errors';
 import { t } from '../../../i18n';
 import { usePageTitle } from '../../../components/page-title-context';
-import { AccountErrorCodeEnum } from '@shared-types';
+import { AccountErrorCodeEnum } from '@athlink/shared-types';
 
 type ConfirmState = 'idle' | 'loading' | 'success' | 'error';
 

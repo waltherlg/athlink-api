@@ -1,4 +1,4 @@
-import { trainingJournalsPaths as trainingJournalsPathsShared } from '@shared-types';
+import { trainingJournalsPaths as trainingJournalsPathsShared } from '@athlink/shared-types';
 
 const trainingJournalsBase = `/${trainingJournalsPathsShared.controller}`;
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../core/database/prisma/prisma.service';
 import { createCoachProfileDto } from '../application/dto/domain-coach.dto';
 import { CoachProfile } from '@prisma/client';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 @Injectable()
 export class CoachesRepository {

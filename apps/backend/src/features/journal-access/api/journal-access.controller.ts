@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   CreateJournalAccessRequestInput,
   journalAccessPaths,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { AcceptAccessRequestCommand } from '../application/use-cases/accept-access-request.use-case';

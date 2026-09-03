@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { QueryBus } from '@nestjs/cqrs';
-import { dashboardPaths, RequestQueryParamsModel } from '@shared-types';
+import { dashboardPaths, RequestQueryParamsModel } from '@athlink/shared-types';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { GetAthleteDesboardQuery } from '../application/query-handlers/get-athlete-dashboard.query-handler';

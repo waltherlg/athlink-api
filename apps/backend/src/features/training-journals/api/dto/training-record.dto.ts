@@ -5,7 +5,7 @@ import {
   RequestQueryParamsModel,
   TrainingRecordAthleteView,
   TrainingRecordTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import {
   IsEnum,
   IsNumber,

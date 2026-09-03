@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { PasswordRecoveryRequestInput } from '@shared-types';
+import type { PasswordRecoveryRequestInput } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function requestPasswordRecovery(input: PasswordRecoveryRequestInput) {

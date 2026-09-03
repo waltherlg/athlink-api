@@ -1,4 +1,4 @@
-import { authPaths as authPathsShared } from '@shared-types';
+import { authPaths as authPathsShared } from '@athlink/shared-types';
 import { setAccessToken } from '../features/auth/token-storage';
 import {
   getApiErrorMessage,

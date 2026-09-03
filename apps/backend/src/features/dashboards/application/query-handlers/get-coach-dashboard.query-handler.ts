@@ -4,7 +4,7 @@ import {
   SportTypeEnum,
   DEFAULT_QUERY_PARAMS,
   RequestQueryParamsModel,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
 
 export class GetCoachDashboardQuery {

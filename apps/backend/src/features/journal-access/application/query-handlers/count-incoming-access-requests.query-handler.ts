@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { IncomingJournalAccessRequestsCountView } from '@shared-types';
+import { IncomingJournalAccessRequestsCountView } from '@athlink/shared-types';
 import { JournalAccessRepository } from '../../infrastructure/training-journal-access.repository';
 
 export class CountIncomingAccessRequestsQuery {

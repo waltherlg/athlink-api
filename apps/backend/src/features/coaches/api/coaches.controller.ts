@@ -6,7 +6,7 @@ import {
   coachesPaths,
   CreateCoachProfileInput,
   SportTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { CreateCoachProfileCommand } from '../application/use-cases/create-coach-profile.use-case';

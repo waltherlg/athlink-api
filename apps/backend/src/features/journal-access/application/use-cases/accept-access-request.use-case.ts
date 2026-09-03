@@ -7,8 +7,8 @@ import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { JOURNAL_ACCESS_ERRORS } from '@shared-types';
-import { JournalAccessRoleEnum } from '@shared-types';
+import { JOURNAL_ACCESS_ERRORS } from '@athlink/shared-types';
+import { JournalAccessRoleEnum } from '@athlink/shared-types';
 
 export class AcceptAccessRequestCommand {
   constructor(

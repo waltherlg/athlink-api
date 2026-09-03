@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { SportTypeEnum } from '@shared-types';
+import type { SportTypeEnum } from '@athlink/shared-types';
 import { trainingJournalsPaths } from './paths';
 
 export function getAvailableSportTypes(

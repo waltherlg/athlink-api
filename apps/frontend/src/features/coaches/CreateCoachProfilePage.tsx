@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import type { CreateCoachProfileInput } from '@shared-types';
-import { SportTypeEnum } from '@shared-types';
+import type { CreateCoachProfileInput } from '@athlink/shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { t } from '../../i18n';
 import { usePageTitle } from '../../components/page-title-context';

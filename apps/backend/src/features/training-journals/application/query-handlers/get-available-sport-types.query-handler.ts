@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 import { TrainingJournalsRepository } from '../../infrastructure/training-journals.repository';
 
 export class GetAvailableSportTypesQuery {

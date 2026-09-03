@@ -36,7 +36,7 @@
     "@nestjs/swagger": "^11.2.6",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.4.2",
-    "@shared-types": "file:../../packages/shared-types",
+    "@athlink/shared-types": "file:../../packages/shared-types",
     "argon2": "^0.44.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.4",
