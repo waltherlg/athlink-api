@@ -88,11 +88,7 @@ export class TrainingJournalsController {
   ) {
     const athleteId = request.user.userId;
     return this.queryBus.execute(
-      new GetTrainingRecordsByJournalIdQuery(
-        athleteId,
-        journalId,
-        query,
-      ),
+      new GetTrainingRecordsByJournalIdQuery(athleteId, journalId, query),
     );
   }
 

@@ -10,9 +10,10 @@ export class PasswordRecoveryRequestCommand {
 }
 
 @CommandHandler(PasswordRecoveryRequestCommand)
-export class PasswordRecoveryRequestUseCase
-  implements ICommandHandler<PasswordRecoveryRequestCommand, void>
-{
+export class PasswordRecoveryRequestUseCase implements ICommandHandler<
+  PasswordRecoveryRequestCommand,
+  void
+> {
   constructor(
     private userRepo: UsersRepository,
     private eventBus: EventBus,

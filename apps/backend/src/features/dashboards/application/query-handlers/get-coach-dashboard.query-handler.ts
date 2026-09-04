@@ -19,7 +19,9 @@ export class GetCoachDashboardQuery {
 export class GetCoachDashboardQueryHandler implements IQueryHandler<GetCoachDashboardQuery> {
   constructor(private prisma: PrismaService) {}
 
-  async execute(query: GetCoachDashboardQuery): Promise<CoachDashboardDataView> {
+  async execute(
+    query: GetCoachDashboardQuery,
+  ): Promise<CoachDashboardDataView> {
     const params = parseQueryParams(query.query);
 
     const [accesses, totalCount] = await this.prisma.$transaction([

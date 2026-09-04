@@ -212,9 +212,7 @@ export const getServerUnavailableMessage = () =>
 
 export const getDefaultApiErrorMessage = () => getLocalized(DEFAULT_ERROR);
 
-export const parseApiErrorMessages = (
-  details: unknown,
-): ErrorMessageDto[] => {
+export const parseApiErrorMessages = (details: unknown): ErrorMessageDto[] => {
   if (!details || typeof details !== 'object') return [];
   const errorMessages = (details as ErrorResponseDto).errorMessages;
   return Array.isArray(errorMessages) ? errorMessages : [];

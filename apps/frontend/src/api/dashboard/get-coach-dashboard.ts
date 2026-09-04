@@ -1,4 +1,7 @@
-import type { CoachDashboardDataView, RequestQueryParamsModel } from '@athlink/shared-types';
+import type {
+  CoachDashboardDataView,
+  RequestQueryParamsModel,
+} from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { dashboardPaths } from './paths';
 

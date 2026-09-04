@@ -71,7 +71,9 @@ function validateResultForEvent(
   event: { decimals: number | null; maxScore: number | null },
 ) {
   if (result == null || !Number.isFinite(result)) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 
   const decimals = event.decimals ?? 0;
@@ -79,10 +81,14 @@ function validateResultForEvent(
   const hasTooManyDecimals = Math.abs(roundedResult - result) > 1e-9;
 
   if (hasTooManyDecimals) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 
   if (event.maxScore != null && result > event.maxScore) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 }

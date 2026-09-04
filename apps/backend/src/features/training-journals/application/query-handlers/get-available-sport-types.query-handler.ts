@@ -7,9 +7,7 @@ export class GetAvailableSportTypesQuery {
 }
 
 @QueryHandler(GetAvailableSportTypesQuery)
-export class GetAvailableSportTypesQueryHandler
-  implements IQueryHandler<GetAvailableSportTypesQuery>
-{
+export class GetAvailableSportTypesQueryHandler implements IQueryHandler<GetAvailableSportTypesQuery> {
   constructor(private trainingJournalsRepo: TrainingJournalsRepository) {}
 
   async execute(query: GetAvailableSportTypesQuery): Promise<SportTypeEnum[]> {
@@ -27,4 +25,3 @@ export class GetAvailableSportTypesQueryHandler
     );
   }
 }
-

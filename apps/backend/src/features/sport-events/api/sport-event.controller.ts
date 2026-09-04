@@ -1,7 +1,17 @@
-import { Controller, Get, ParseEnumPipe, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  ParseEnumPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SportEventQueryRepository } from '../infrastructure/sport-events.query.repository';
-  import { ResultTypeEnum, SportTypeEnum, sportEventPaths } from '@athlink/shared-types';
+import {
+  ResultTypeEnum,
+  SportTypeEnum,
+  sportEventPaths,
+} from '@athlink/shared-types';
 import { SportEventViewDto } from './dto/sport-event.dto';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import {
@@ -22,9 +32,8 @@ export class SportEventController {
     @Query('sportType', new ParseEnumPipe(SportTypeEnum))
     sportType: SportTypeEnum,
   ): Promise<SportEventViewDto[]> {
-    const sportEvents = await this.sportEventsRepo.getEventsBySportType(
-      sportType,
-    );
+    const sportEvents =
+      await this.sportEventsRepo.getEventsBySportType(sportType);
     return sportEvents.map(mapSportEventView);
   }
 }

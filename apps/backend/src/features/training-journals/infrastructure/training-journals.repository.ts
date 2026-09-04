@@ -45,4 +45,3 @@ export class TrainingJournalsRepository {
     return logs;
   }
 }
-

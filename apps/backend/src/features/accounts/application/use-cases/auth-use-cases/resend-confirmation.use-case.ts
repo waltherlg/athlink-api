@@ -10,9 +10,10 @@ export class ResendConfirmationCommand {
 }
 
 @CommandHandler(ResendConfirmationCommand)
-export class ResendConfirmationUseCase
-  implements ICommandHandler<ResendConfirmationCommand, void>
-{
+export class ResendConfirmationUseCase implements ICommandHandler<
+  ResendConfirmationCommand,
+  void
+> {
   constructor(
     private userRepo: UsersRepository,
     private eventBus: EventBus,

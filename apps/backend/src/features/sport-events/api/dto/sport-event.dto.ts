@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ResultTypeEnum, SportEventView, SportTypeEnum } from '@athlink/shared-types';
+import {
+  ResultTypeEnum,
+  SportEventView,
+  SportTypeEnum,
+} from '@athlink/shared-types';
 
 export class SportEventViewDto implements SportEventView {
   @ApiProperty({ example: '3d057bd4-817d-4f0d-b058-55abc187086a' })

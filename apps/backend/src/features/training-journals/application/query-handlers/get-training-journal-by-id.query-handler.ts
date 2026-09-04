@@ -31,9 +31,7 @@ export class GetTrainingJournalByIdQueryHandler implements IQueryHandler<GetTrai
     query: GetTrainingJournalByIdQuery,
   ): Promise<TrainingJournalWithLatestRecordsViewDto> {
     const trainingJournal =
-      await this.trainingJournalsRepo.getTrainingJournalById(
-        query.journalId,
-      );
+      await this.trainingJournalsRepo.getTrainingJournalById(query.journalId);
 
     if (!trainingJournal)
       throw NotFoundDomainException.create(

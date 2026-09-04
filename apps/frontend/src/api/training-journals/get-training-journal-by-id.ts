@@ -2,14 +2,8 @@ import { apiFetch } from '../http';
 import type { TrainingJournalWithLatestRecordsView } from '@athlink/shared-types';
 import { trainingJournalsPaths } from './paths';
 
-export function getTrainingJournalById(
-  accessToken: string,
-  journalId: string,
-) {
-  const path = trainingJournalsPaths.byId.replace(
-    ':journalId',
-    journalId,
-  );
+export function getTrainingJournalById(accessToken: string, journalId: string) {
+  const path = trainingJournalsPaths.byId.replace(':journalId', journalId);
   return apiFetch<TrainingJournalWithLatestRecordsView>(path, {
     method: 'GET',
     headers: {

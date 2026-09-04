@@ -51,9 +51,7 @@ import {
 } from './dto/confirmation.dto';
 import { PasswordRecoveryRequestInputDto } from './dto/password-recovery.dto';
 import { PasswordResetInputDto } from './dto/password-reset.dto';
-import {
-  PasswordRecoveryRequestCommand,
-} from '../application/use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordRecoveryRequestCommand } from '../application/use-cases/auth-use-cases/password-recovery.use-case';
 import { PasswordResetCommand } from '../application/use-cases/auth-use-cases/password-reset.use-case';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)

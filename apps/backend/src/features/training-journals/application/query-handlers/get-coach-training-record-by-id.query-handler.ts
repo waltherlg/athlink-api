@@ -1,7 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  TrainingRecordTypeEnum,
-} from '@athlink/shared-types';
+import { TrainingRecordTypeEnum } from '@athlink/shared-types';
 import type { TrainingRecordCoachView } from '@athlink/shared-types';
 import {
   ForbiddenDomainException,

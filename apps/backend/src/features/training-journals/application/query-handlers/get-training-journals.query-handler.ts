@@ -8,9 +8,7 @@ export class GetTrainingJournalsQuery {
 }
 
 @QueryHandler(GetTrainingJournalsQuery)
-export class GetTrainingJournalsQueryHandler
-  implements IQueryHandler<GetTrainingJournalsQuery>
-{
+export class GetTrainingJournalsQueryHandler implements IQueryHandler<GetTrainingJournalsQuery> {
   constructor(private trainingJournalsRepo: TrainingJournalsRepository) {}
 
   async execute(

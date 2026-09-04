@@ -9,15 +9,16 @@ export class CreateTrainingJournalCommand {
 }
 
 @CommandHandler(CreateTrainingJournalCommand)
-export class CreateTrainingJournalUseCase
-  implements ICommandHandler<CreateTrainingJournalCommand>
-{
+export class CreateTrainingJournalUseCase implements ICommandHandler<CreateTrainingJournalCommand> {
   constructor(private trainingJournalRepo: TrainingJournalsRepository) {}
 
   async execute(command: CreateTrainingJournalCommand): Promise<string> {
     const { athleteId, sportType } = command.dto;
     if (
-      await this.trainingJournalRepo.isTrainingJournalExist(athleteId, sportType)
+      await this.trainingJournalRepo.isTrainingJournalExist(
+        athleteId,
+        sportType,
+      )
     ) {
       throw BadRequestDomainException.create(
         TRAINING_JOURNAL_ERRORS.TRAINING_JOURNAL_ALREADY_EXISTS,
@@ -29,4 +30,3 @@ export class CreateTrainingJournalUseCase
     return createdJournal.id;
   }
 }
-

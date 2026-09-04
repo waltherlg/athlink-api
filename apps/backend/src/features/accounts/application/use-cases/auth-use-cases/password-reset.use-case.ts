@@ -13,9 +13,10 @@ export class PasswordResetCommand {
 }
 
 @CommandHandler(PasswordResetCommand)
-export class PasswordResetUseCase
-  implements ICommandHandler<PasswordResetCommand, void>
-{
+export class PasswordResetUseCase implements ICommandHandler<
+  PasswordResetCommand,
+  void
+> {
   constructor(
     private userRepo: UsersRepository,
     private cryptoService: CryptoService,
