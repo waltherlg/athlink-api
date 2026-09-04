@@ -6,14 +6,14 @@ import {
   RequestQueryParamsModel,
   TrainingRecordCoachView,
   TrainingRecordTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
-import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
-import { AUTH_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@athlink/shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
 
 export class GetCoachTrainingRecordsByJournalIdQuery {
   constructor(

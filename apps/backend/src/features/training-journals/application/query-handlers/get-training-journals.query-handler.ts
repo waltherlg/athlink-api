@@ -1,16 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { TrainingJournalsRepository } from '../../infrastructure/training-journals.repository';
 import { TrainingJournalViewDto } from '../../api/dto/training-journal.dto';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 export class GetTrainingJournalsQuery {
   constructor(public athleteId: string) {}
 }
 
 @QueryHandler(GetTrainingJournalsQuery)
-export class GetTrainingJournalsQueryHandler
-  implements IQueryHandler<GetTrainingJournalsQuery>
-{
+export class GetTrainingJournalsQueryHandler implements IQueryHandler<GetTrainingJournalsQuery> {
   constructor(private trainingJournalsRepo: TrainingJournalsRepository) {}
 
   async execute(

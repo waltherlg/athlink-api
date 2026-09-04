@@ -1,4 +1,4 @@
-import type { CoachProfileView } from '@shared-types';
+import type { CoachProfileView } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { coachesPaths } from './paths';
 

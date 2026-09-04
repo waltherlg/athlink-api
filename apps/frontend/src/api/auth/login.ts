@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { LoginInput, LoginResponse } from '@shared-types';
+import type { LoginInput, LoginResponse } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function loginUser(input: LoginInput) {

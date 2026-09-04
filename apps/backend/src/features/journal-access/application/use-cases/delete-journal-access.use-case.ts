@@ -3,8 +3,8 @@ import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { AUTH_ERRORS } from '@shared-types';
-import { JOURNAL_ACCESS_ERRORS } from '@shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
+import { JOURNAL_ACCESS_ERRORS } from '@athlink/shared-types';
 import { JournalAccessRepository } from '../../infrastructure/training-journal-access.repository';
 
 export class DeleteJournalAccessCommand {

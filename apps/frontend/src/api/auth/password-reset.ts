@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { PasswordResetInput } from '@shared-types';
+import type { PasswordResetInput } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function resetPassword(input: PasswordResetInput) {

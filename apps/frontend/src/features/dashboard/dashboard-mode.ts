@@ -1,4 +1,4 @@
-import type { CoachProfileView } from '@shared-types';
+import type { CoachProfileView } from '@athlink/shared-types';
 
 const STORAGE_KEY = 'athlink.dashboardMode';
 const CHANGE_EVENT = 'dashboard-mode:change';

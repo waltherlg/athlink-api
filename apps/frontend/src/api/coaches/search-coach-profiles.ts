@@ -1,4 +1,7 @@
-import type { CoachProfileSearchView, SportTypeEnum } from '@shared-types';
+import type {
+  CoachProfileSearchView,
+  SportTypeEnum,
+} from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { coachesPaths } from './paths';
 

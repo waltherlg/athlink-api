@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import { Trim } from '../../../../core/decorators/trim.decorator';
-import type { PasswordResetInput } from '@shared-types';
+import type { PasswordResetInput } from '@athlink/shared-types';
 import { ACCOUNT_VALIDATION_CONSTS } from '../../consts/account-validation.consts';
 
 export class PasswordResetInputDto implements PasswordResetInput {

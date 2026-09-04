@@ -1,4 +1,4 @@
-import type { TrainingRecordCoachView } from '@shared-types';
+import type { TrainingRecordCoachView } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { trainingJournalsPaths } from './paths';
 

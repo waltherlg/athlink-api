@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import type { CreateTrainingJournalInput } from '@shared-types';
-import { SportTypeEnum } from '@shared-types';
+import type { CreateTrainingJournalInput } from '@athlink/shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 import { createTrainingJournal } from '../../api/training-journals/create-training-journal';
 import { getAvailableSportTypes } from '../../api/training-journals/get-available-sport-types';
 import { getAccessToken } from '../auth/token-storage';

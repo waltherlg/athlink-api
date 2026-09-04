@@ -1,4 +1,4 @@
-import type { SportTypeEnum } from '@shared-types';
+import type { SportTypeEnum } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { coachesPaths } from './paths';
 

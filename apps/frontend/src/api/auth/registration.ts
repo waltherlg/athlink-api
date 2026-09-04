@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { UserRegistrationInput, UserView } from '@shared-types';
+import type { UserRegistrationInput } from '@athlink/shared-types';
 import { authPaths } from './paths';
 
 export function registerUser(input: UserRegistrationInput) {

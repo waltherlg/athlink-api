@@ -2,7 +2,7 @@ import { apiFetch } from '../http';
 import type {
   CreateTrainingRecordInput,
   TrainingRecordAthleteView,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { trainingJournalsPaths } from './paths';
 
 export function createTrainingRecord(

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DomainExceptionCode } from './domain-exception-codes';
-import { AccountErrorCodeEnum, ErrorCode } from '@shared-types';
+import { AccountErrorCodeEnum, ErrorCode } from '@athlink/shared-types';
 
 export class ErrorResponse {
   @ApiProperty({

@@ -7,12 +7,12 @@ import {
   BadRequestDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
-import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
-import { ACCOUNT_ERRORS } from '@shared-types';
-import { AUTH_ERRORS } from '@shared-types';
-import { TRAINING_RECORD_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@athlink/shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
+import { TRAINING_RECORD_ERRORS } from '@athlink/shared-types';
 import { SportEventQueryRepository } from '../../../sport-events/infrastructure/sport-events.query.repository';
-import { SportTypeEnum, TrainingRecordTypeEnum } from '@shared-types';
+import { SportTypeEnum, TrainingRecordTypeEnum } from '@athlink/shared-types';
 
 export class CreateTrainingRecordCommand {
   constructor(
@@ -71,7 +71,9 @@ function validateResultForEvent(
   event: { decimals: number | null; maxScore: number | null },
 ) {
   if (result == null || !Number.isFinite(result)) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 
   const decimals = event.decimals ?? 0;
@@ -79,10 +81,14 @@ function validateResultForEvent(
   const hasTooManyDecimals = Math.abs(roundedResult - result) > 1e-9;
 
   if (hasTooManyDecimals) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 
   if (event.maxScore != null && result > event.maxScore) {
-    throw BadRequestDomainException.create(TRAINING_RECORD_ERRORS.RESULT_INVALID);
+    throw BadRequestDomainException.create(
+      TRAINING_RECORD_ERRORS.RESULT_INVALID,
+    );
   }
 }

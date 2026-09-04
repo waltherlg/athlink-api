@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@shared-types': path.resolve(__dirname, '../../packages/shared-types/src'),
+      '@athlink/shared-types': path.resolve(
+        __dirname,
+        '../../packages/shared-types/src',
+      ),
     },
   },
 });

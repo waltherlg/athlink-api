@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import type { LoginInput } from '@shared-types';
-import { AccountErrorCodeEnum } from '@shared-types';
+import type { LoginInput } from '@athlink/shared-types';
+import { AccountErrorCodeEnum } from '@athlink/shared-types';
 import { useAuth } from '../auth-context';
 import { resendConfirmation } from '../../../api/auth/resend-confirmation';
 import type { ApiError } from '../../../api/http';

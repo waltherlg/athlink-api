@@ -1,5 +1,5 @@
 import { apiFetch } from '../http';
-import type { AthleteDashboardDataView } from '@shared-types';
+import type { AthleteDashboardDataView } from '@athlink/shared-types';
 import { dashboardPaths } from './paths';
 
 export function getAthleteDashboard(accessToken: string) {

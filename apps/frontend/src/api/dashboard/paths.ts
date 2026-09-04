@@ -1,4 +1,4 @@
-import { dashboardPaths as dashboardPathsShared } from '@shared-types';
+import { dashboardPaths as dashboardPathsShared } from '@athlink/shared-types';
 
 const dashboardBase = `/${dashboardPathsShared.controller}`;
 

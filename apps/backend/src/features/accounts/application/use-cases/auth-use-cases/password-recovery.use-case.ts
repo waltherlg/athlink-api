@@ -2,7 +2,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'node:crypto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
 import { PasswordResetRequestedEvent } from '../../events/password-reset-requested.event';
 
 export class PasswordRecoveryRequestCommand {
@@ -10,9 +10,10 @@ export class PasswordRecoveryRequestCommand {
 }
 
 @CommandHandler(PasswordRecoveryRequestCommand)
-export class PasswordRecoveryRequestUseCase
-  implements ICommandHandler<PasswordRecoveryRequestCommand, void>
-{
+export class PasswordRecoveryRequestUseCase implements ICommandHandler<
+  PasswordRecoveryRequestCommand,
+  void
+> {
   constructor(
     private userRepo: UsersRepository,
     private eventBus: EventBus,

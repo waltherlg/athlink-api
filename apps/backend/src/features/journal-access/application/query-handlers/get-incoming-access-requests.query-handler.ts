@@ -3,7 +3,7 @@ import {
   JournalAccessRequestStatusEnum,
   JournalAccessRequestView,
   SportTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { JournalAccessRepository } from '../../infrastructure/training-journal-access.repository';
 
 export class GetIncomingAccessRequestsQuery {

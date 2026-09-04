@@ -1,16 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
 
 export class ConfirmEmailCommand {
   constructor(public code: string) {}
 }
 
 @CommandHandler(ConfirmEmailCommand)
-export class ConfirmEmailUseCase
-  implements ICommandHandler<ConfirmEmailCommand, void>
-{
+export class ConfirmEmailUseCase implements ICommandHandler<
+  ConfirmEmailCommand,
+  void
+> {
   constructor(private userRepo: UsersRepository) {}
 
   async execute(command: ConfirmEmailCommand): Promise<void> {
@@ -21,10 +22,15 @@ export class ConfirmEmailUseCase
     }
 
     if (user.isConfirmed) {
-      throw BadRequestDomainException.create(ACCOUNT_ERRORS.CODE_ALREADY_CONFIRMED);
+      throw BadRequestDomainException.create(
+        ACCOUNT_ERRORS.CODE_ALREADY_CONFIRMED,
+      );
     }
 
-    if (!user.confirmCodeExpiryDate || user.confirmCodeExpiryDate < new Date()) {
+    if (
+      !user.confirmCodeExpiryDate ||
+      user.confirmCodeExpiryDate < new Date()
+    ) {
       throw BadRequestDomainException.create(ACCOUNT_ERRORS.CODE_EXPIRED);
     }
 

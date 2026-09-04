@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import type { CoachProfileView } from '@shared-types';
+import type { CoachProfileView } from '@athlink/shared-types';
 import { useAuth } from '../features/auth/auth-context';
 import { t } from '../i18n';
 import { usePageTitleValue } from './page-title-context';

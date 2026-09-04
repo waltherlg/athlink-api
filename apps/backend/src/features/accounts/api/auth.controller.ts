@@ -38,7 +38,7 @@ import {
   RegisterUserSwagger,
   SW_AUTH_TITLES,
 } from './swagger/auth.swagger';
-import { authPaths } from '@shared-types';
+import { authPaths } from '@athlink/shared-types';
 import { RefreshTokenGuard } from '../guards/refresh/refresh.token.guard';
 import { LogoutCommand } from '../application/use-cases/auth-use-cases/logout.usecese';
 import { JwtPayloadDto } from '../application/dto/domain-auth.dto';
@@ -51,9 +51,7 @@ import {
 } from './dto/confirmation.dto';
 import { PasswordRecoveryRequestInputDto } from './dto/password-recovery.dto';
 import { PasswordResetInputDto } from './dto/password-reset.dto';
-import {
-  PasswordRecoveryRequestCommand,
-} from '../application/use-cases/auth-use-cases/password-recovery.use-case';
+import { PasswordRecoveryRequestCommand } from '../application/use-cases/auth-use-cases/password-recovery.use-case';
 import { PasswordResetCommand } from '../application/use-cases/auth-use-cases/password-reset.use-case';
 
 @ApiTags(SW_AUTH_TITLES.AUTH_CONTROLLER)

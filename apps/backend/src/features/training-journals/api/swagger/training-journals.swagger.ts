@@ -15,10 +15,10 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../core/exceptions/domain-exceptions';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { COMMON_ERRORS } from '@shared-types';
-import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
-import { AUTH_ERRORS } from '@shared-types';
-import { SportTypeEnum } from '@shared-types';
+import { COMMON_ERRORS } from '@athlink/shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@athlink/shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 export const SW_TRAINING_JOURNALS_TITLES = {
   TRAINING_JOURNAL_CONTROLLER: 'Training journal operations',

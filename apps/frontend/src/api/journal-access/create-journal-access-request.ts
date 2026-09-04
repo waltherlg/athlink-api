@@ -1,4 +1,4 @@
-import type { CreateJournalAccessRequestInput } from '@shared-types';
+import type { CreateJournalAccessRequestInput } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { journalAccessPaths } from './paths';
 

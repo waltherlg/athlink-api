@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../core/database/prisma/prisma.service';
 import { TrainingJournal } from '@prisma/client';
 import { CreateTrainingJournalDto } from '../application/dto/domain-training-journal.dto';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 @Injectable()
 export class TrainingJournalsRepository {
@@ -45,4 +45,3 @@ export class TrainingJournalsRepository {
     return logs;
   }
 }
-

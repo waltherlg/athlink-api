@@ -14,11 +14,11 @@ import { LoginResponseDto, LoginUserDto } from '../dto/auth.dto';
 import { ResendConfirmationInputDto } from '../dto/confirmation.dto';
 import { PasswordRecoveryRequestInputDto } from '../dto/password-recovery.dto';
 import { PasswordResetInputDto } from '../dto/password-reset.dto';
-import { ACCOUNT_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
 import { SwaggerHelper } from '../../../../core/helpers/swagger.helper';
-import { COMMON_ERRORS } from '@shared-types';
-import { AUTH_ERRORS } from '@shared-types';
-import { SESSION_ERRORS } from '@shared-types';
+import { COMMON_ERRORS } from '@athlink/shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
+import { SESSION_ERRORS } from '@athlink/shared-types';
 
 export const SW_AUTH_TITLES = {
   AUTH_CONTROLLER: 'Auth flow',

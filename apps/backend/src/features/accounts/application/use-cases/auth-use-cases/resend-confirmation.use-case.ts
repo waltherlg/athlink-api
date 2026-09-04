@@ -2,7 +2,7 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { randomUUID } from 'node:crypto';
 import { UsersRepository } from '../../../infrastructure/users.repository';
 import { BadRequestDomainException } from '../../../../../core/exceptions/domain-exceptions';
-import { ACCOUNT_ERRORS } from '@shared-types';
+import { ACCOUNT_ERRORS } from '@athlink/shared-types';
 import { ConfirmationEmailResentEvent } from '../../events/confirmation-email-resent.event';
 
 export class ResendConfirmationCommand {
@@ -10,9 +10,10 @@ export class ResendConfirmationCommand {
 }
 
 @CommandHandler(ResendConfirmationCommand)
-export class ResendConfirmationUseCase
-  implements ICommandHandler<ResendConfirmationCommand, void>
-{
+export class ResendConfirmationUseCase implements ICommandHandler<
+  ResendConfirmationCommand,
+  void
+> {
   constructor(
     private userRepo: UsersRepository,
     private eventBus: EventBus,

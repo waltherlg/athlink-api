@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { LoginInput, LoginResponse, UserNameResponse } from '@shared-types';
+import type { LoginInput, LoginResponse, UserNameResponse } from '@athlink/shared-types';
 import { loginUser } from '../../api/auth/login';
 import { logoutUser } from '../../api/auth/logout';
 import { getMe } from '../../api/auth/me';

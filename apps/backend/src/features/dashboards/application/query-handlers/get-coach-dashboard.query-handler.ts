@@ -4,7 +4,7 @@ import {
   SportTypeEnum,
   DEFAULT_QUERY_PARAMS,
   RequestQueryParamsModel,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
 
 export class GetCoachDashboardQuery {
@@ -19,7 +19,9 @@ export class GetCoachDashboardQuery {
 export class GetCoachDashboardQueryHandler implements IQueryHandler<GetCoachDashboardQuery> {
   constructor(private prisma: PrismaService) {}
 
-  async execute(query: GetCoachDashboardQuery): Promise<CoachDashboardDataView> {
+  async execute(
+    query: GetCoachDashboardQuery,
+  ): Promise<CoachDashboardDataView> {
     const params = parseQueryParams(query.query);
 
     const [accesses, totalCount] = await this.prisma.$transaction([

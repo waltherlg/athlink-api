@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../core/database/prisma/prisma.service';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 import { SportEvent } from '@prisma/client';
 
 @Injectable()

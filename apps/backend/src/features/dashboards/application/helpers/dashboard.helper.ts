@@ -1,6 +1,6 @@
 import { TrainingJournal, TrainingRecord } from '@prisma/client';
 import { AthleteDashboardDataViewDto } from '../../api/dto/dashboard-api.dto';
-import { SportTypeEnum } from '@shared-types';
+import { SportTypeEnum } from '@athlink/shared-types';
 
 export function mapAthleteDashboardDataView(
   journals: TrainingJournal[],

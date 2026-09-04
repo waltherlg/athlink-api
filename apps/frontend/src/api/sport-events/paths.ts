@@ -1,4 +1,4 @@
-import { sportEventPaths as sportEventPathsShared } from '@shared-types';
+import { sportEventPaths as sportEventPathsShared } from '@athlink/shared-types';
 
 const sportEventsBase = `/${sportEventPathsShared.controller}`;
 

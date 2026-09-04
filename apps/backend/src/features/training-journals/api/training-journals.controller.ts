@@ -13,7 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { CreateTrainingJournalInputDto } from './dto/training-journal.dto';
-import { trainingJournalsPaths } from '@shared-types';
+import { trainingJournalsPaths } from '@athlink/shared-types';
 import { CreateTrainingJournalCommand } from '../application/use-cases/create-training-journal.use-case';
 import { CreateTrainingRecordCommand } from '../application/use-cases/create-training-record.use-case';
 import {
@@ -88,11 +88,7 @@ export class TrainingJournalsController {
   ) {
     const athleteId = request.user.userId;
     return this.queryBus.execute(
-      new GetTrainingRecordsByJournalIdQuery(
-        athleteId,
-        journalId,
-        query,
-      ),
+      new GetTrainingRecordsByJournalIdQuery(athleteId, journalId, query),
     );
   }
 

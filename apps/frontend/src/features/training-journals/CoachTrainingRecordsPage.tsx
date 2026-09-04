@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { CoachTrainingRecordsPaginationView } from '@shared-types';
+import type { CoachTrainingRecordsPaginationView } from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { getCoachTrainingRecords } from '../../api/training-journals/get-coach-training-records';
 import { getApiErrorMessage } from '../../api/errors';

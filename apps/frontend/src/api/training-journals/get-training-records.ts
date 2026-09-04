@@ -2,7 +2,7 @@ import { apiFetch } from '../http';
 import type {
   RequestQueryParamsModel,
   TrainingRecordsPaginationView,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { trainingJournalsPaths } from './paths';
 
 type QueryParams = Partial<RequestQueryParamsModel>;

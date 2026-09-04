@@ -1,12 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { JournalCoachAccessView, SportTypeEnum } from '@shared-types';
+import { JournalCoachAccessView, SportTypeEnum } from '@athlink/shared-types';
 import {
   ForbiddenDomainException,
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
-import { TRAINING_JOURNAL_ERRORS } from '@shared-types';
-import { AUTH_ERRORS } from '@shared-types';
+import { TRAINING_JOURNAL_ERRORS } from '@athlink/shared-types';
+import { AUTH_ERRORS } from '@athlink/shared-types';
 import { JournalAccessRepository } from '../../infrastructure/training-journal-access.repository';
 
 export class GetJournalCoachAccessesQuery {

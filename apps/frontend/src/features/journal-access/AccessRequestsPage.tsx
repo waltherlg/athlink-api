@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { JournalAccessRequestView } from '@shared-types';
+import type { JournalAccessRequestView } from '@athlink/shared-types';
 import { getAccessToken } from '../auth/token-storage';
 import { usePageTitle } from '../../components/page-title-context';
 import { t } from '../../i18n';

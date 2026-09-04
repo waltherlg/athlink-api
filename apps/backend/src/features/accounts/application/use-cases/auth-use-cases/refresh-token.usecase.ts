@@ -6,7 +6,7 @@ import {
 } from '../../dto/domain-auth.dto';
 import { TokenService } from '../../services/token.service';
 import { SessionsRepository } from '../../../infrastructure/sessions.repository';
-import { SESSION_ERRORS } from '@shared-types';
+import { SESSION_ERRORS } from '@athlink/shared-types';
 import { CryptoService } from '../../services/crypto.service';
 import { UpdateSessionDto } from '../../dto/domain-session.dto';
 

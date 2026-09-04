@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import {
   CoachProfileSearchView,
@@ -6,7 +14,7 @@ import {
   coachesPaths,
   CreateCoachProfileInput,
   SportTypeEnum,
-} from '@shared-types';
+} from '@athlink/shared-types';
 import { RequestWithUser } from '../../accounts/guards/decorators/rt-payload-from-req.deocrator';
 import { JwtAuthGuard } from '../../accounts/guards/jwt/jwt-auth.guard';
 import { CreateCoachProfileCommand } from '../application/use-cases/create-coach-profile.use-case';
@@ -25,9 +33,8 @@ export class CoachesController {
     @Req() request: RequestWithUser,
   ): Promise<CoachProfileView[]> {
     const userId = request.user.userId;
-    const profiles = await this.coachesRepository.getCoachProfilesByUserId(
-      userId,
-    );
+    const profiles =
+      await this.coachesRepository.getCoachProfilesByUserId(userId);
     return profiles.map((profile) => ({
       id: profile.id,
       sportType: profile.sportType as SportTypeEnum,
@@ -40,11 +47,12 @@ export class CoachesController {
     @Req() request: RequestWithUser,
   ): Promise<SportTypeEnum[]> {
     const userId = request.user.userId;
-    const profiles = await this.coachesRepository.getCoachProfilesByUserId(
-      userId,
-    );
+    const profiles =
+      await this.coachesRepository.getCoachProfilesByUserId(userId);
     const used = new Set(profiles.map((profile) => profile.sportType));
-    return Object.values(SportTypeEnum).filter((sportType) => !used.has(sportType));
+    return Object.values(SportTypeEnum).filter(
+      (sportType) => !used.has(sportType),
+    );
   }
 
   @UseGuards(JwtAuthGuard)

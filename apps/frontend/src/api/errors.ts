@@ -7,8 +7,8 @@ import {
   SESSION_ERRORS,
   TRAINING_JOURNAL_ERRORS,
   TRAINING_RECORD_ERRORS,
-} from '@shared-types';
-import type { ErrorCode } from '@shared-types';
+} from '@athlink/shared-types';
+import type { ErrorCode } from '@athlink/shared-types';
 import { getLanguage } from '../i18n';
 import type { ApiError } from './http';
 
@@ -212,9 +212,7 @@ export const getServerUnavailableMessage = () =>
 
 export const getDefaultApiErrorMessage = () => getLocalized(DEFAULT_ERROR);
 
-export const parseApiErrorMessages = (
-  details: unknown,
-): ErrorMessageDto[] => {
+export const parseApiErrorMessages = (details: unknown): ErrorMessageDto[] => {
   if (!details || typeof details !== 'object') return [];
   const errorMessages = (details as ErrorResponseDto).errorMessages;
   return Array.isArray(errorMessages) ? errorMessages : [];

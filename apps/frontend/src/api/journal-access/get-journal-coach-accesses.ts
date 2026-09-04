@@ -1,4 +1,4 @@
-import type { JournalCoachAccessView } from '@shared-types';
+import type { JournalCoachAccessView } from '@athlink/shared-types';
 import { apiFetch } from '../http';
 import { journalAccessPaths } from './paths';
 

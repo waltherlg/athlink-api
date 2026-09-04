@@ -1,4 +1,4 @@
-import { journalAccessPaths as journalAccessPathsShared } from '@shared-types';
+import { journalAccessPaths as journalAccessPathsShared } from '@athlink/shared-types';
 
 const journalAccessBase = `/${journalAccessPathsShared.controller}`;
 

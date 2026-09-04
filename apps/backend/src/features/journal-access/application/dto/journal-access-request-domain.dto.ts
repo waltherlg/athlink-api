@@ -1,4 +1,4 @@
-import { JournalAccessRoleEnum } from '@shared-types';
+import { JournalAccessRoleEnum } from '@athlink/shared-types';
 
 export class CreateJournalAccessRequestDto {
   journalId: string;

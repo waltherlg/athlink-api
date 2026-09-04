@@ -5,7 +5,7 @@ import {
   NotFoundDomainException,
 } from '../../../../core/exceptions/domain-exceptions';
 import { PrismaService } from '../../../../core/database/prisma/prisma.service';
-import { JOURNAL_ACCESS_ERRORS } from '@shared-types';
+import { JOURNAL_ACCESS_ERRORS } from '@athlink/shared-types';
 
 export class RejectAccessRequestCommand {
   constructor(
